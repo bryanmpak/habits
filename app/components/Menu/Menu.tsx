@@ -1,19 +1,44 @@
 "use client"
 
 import { useCycle } from "framer-motion"
-import React from "react"
+import React, { useEffect } from "react"
 import HamburgerMenuToggle from "./HamburgerMenuToggle"
 import Sidebar from "./Sidebar"
 
 const Menu = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
 
+  useEffect(() => {
+    const handleWindowClick = () => {
+      if (isOpen) {
+        toggleOpen()
+      }
+    }
+    window.addEventListener("click", handleWindowClick)
+
+    return () => {
+      window.removeEventListener("click", handleWindowClick)
+    }
+  }, [isOpen, toggleOpen])
+
   return (
-    <div>
+    <div className="flex right-0">
+      <Sidebar
+        isOpen={isOpen}
+        handleDismiss={(e: React.MouseEvent) => {
+          e.stopPropagation()
+          toggleOpen()
+        }}
+      />
       <div className="fixed top-0 right-0 p-4 z-50">
-        <HamburgerMenuToggle isOpen={isOpen} toggleOpen={() => toggleOpen()} />
+        <HamburgerMenuToggle
+          isOpen={isOpen}
+          toggleOpen={(e: React.MouseEvent) => {
+            e.stopPropagation()
+            toggleOpen()
+          }}
+        />
       </div>
-      <Sidebar isOpen={isOpen} />
     </div>
   )
 }

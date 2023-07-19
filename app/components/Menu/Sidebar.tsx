@@ -19,14 +19,16 @@ const sidebarVariants = {
 
 type Props = {
   isOpen: boolean
+  handleDismiss: (e: React.MouseEvent) => void
 }
 
-const Sidebar = ({ isOpen }: Props) => {
+const Sidebar = ({ isOpen, handleDismiss }: Props) => {
   return (
     <>
       <AnimatePresence>
         {isOpen && (
           <motion.aside
+            onClick={(e) => e.stopPropagation()}
             className="min-h-screen w-[40vw] fixed right-0 bg-neutral px-4 py-3 z-10"
             initial={{ x: "100%" }}
             animate={{ x: 0, transition: { delay: 0.4, duration: 0.2 } }}
