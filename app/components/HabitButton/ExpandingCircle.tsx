@@ -16,7 +16,7 @@ const ExpandingCircle = ({ progress }: Props) => {
   return (
     <motion.div
       layout
-      className="absolute bg-yellow-500 rounded-full w-full h-full"
+      className="absolute bg-shadow rounded-full w-full h-full"
       initial={{ scale: 0 }}
       animate={{ scale: progress / 100, transition: springAnimate }}
       exit={{ scale: 0 }}

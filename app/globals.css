@@ -25,5 +25,5 @@ html {
   --color-light: theme("colors.rose.300");
   --color-neutral: theme("colors.rose.300");
   --color-dark: theme("colors.rose.200");
-  --color-shadow: #aae3ea;
+  --color-shadow: theme("colors.rose.500");
 }

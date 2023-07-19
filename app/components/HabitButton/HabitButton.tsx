@@ -1,16 +1,18 @@
-"use client"
-
 import { motion } from "framer-motion"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import ExpandingCircle from "./ExpandingCircle"
 import { useCounter } from "./useCounter"
 
-const HabitButton = () => {
+const HabitButton = ({
+  habit,
+  onComplete,
+}: {
+  habit: Habit
+  onComplete: (isComplete: boolean) => void
+}) => {
   const { counter, start, stop, reset, isMax } = useCounter(100, 100)
-  const [isComplete, setIsComplete] = useState(false)
 
   const handleMouseDown = () => {
-    setIsComplete(false)
     start()
   }
 
@@ -18,7 +20,9 @@ const HabitButton = () => {
     stop()
     if (isMax) {
       await new Promise((r) => setTimeout(r, 100))
-      setIsComplete(true)
+      onComplete(true)
+    } else {
+      onComplete(false)
     }
     reset()
   }
@@ -27,16 +31,19 @@ const HabitButton = () => {
     <div className="h-[90vh] w-screen flex justify-center items-center p-4">
       {/* max-w temp since i'll have it on a parent div */}
       <motion.button
-        className="relative w-[300px] h-[300px] focus:outline-none bg-black rounded-full flex items-center justify-center"
+        disabled={habit.isComplete}
+        className="relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center disabled:cursor-not-allowed"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
-        whileTap={{ scale: 0.975 }}
+        whileTap={habit.isComplete ? undefined : { scale: 0.975 }}
       >
-        {/* <ProgressBar progress={counter} /> */}
         <ExpandingCircle progress={counter} />
-        {isComplete && <div className="absolute text-white text-2xl">✓</div>}
+        {habit.isComplete && (
+          // should have some fun with this
+          <div className="absolute text-text text-9xl">😍</div>
+        )}
       </motion.button>
     </div>
   )

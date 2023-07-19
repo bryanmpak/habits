@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} theme-pak bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black`}
+        className={`${inter.className} theme-pak bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black`} //"bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300"
       >
         {children}
       </body>

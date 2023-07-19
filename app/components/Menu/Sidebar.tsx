@@ -40,7 +40,7 @@ const Sidebar = ({ isOpen }: Props) => {
               variants={sidebarVariants}
             >
               <UserToggle />
-              <div className="h-[2px] bg-light"></div>
+              <div className="h-[2px] bg-dark"></div>
             </motion.div>
           </motion.aside>
         )}

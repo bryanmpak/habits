@@ -6,7 +6,6 @@ export const useDate = (): {
   isActive: boolean
 }[] => {
   const now = new Date()
-  console.log(now)
   const currentDay = now.getDay()
   const startOfWeek = new Date(
     now.setDate(now.getDate() - currentDay + (currentDay === 0 ? -6 : 1))
