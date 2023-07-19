@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import HabitButton from "./components/HabitButton/HabitButton"
+import HabitMenubar from "./components/HabitMenubar"
 import HabitsFooter from "./components/HabitsFooter/HabitsFooter"
 import Menu from "./components/Menu/Menu"
 import { useDate } from "./lib/useDate"
@@ -34,6 +35,7 @@ export default function Home() {
   return (
     <main className="min-h-full">
       <Menu />
+      <HabitMenubar />
       <HabitButton
         habit={habits[activeId]}
         onComplete={(isComplete) => handleComplete(isComplete, activeId)}
