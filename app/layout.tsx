@@ -1,6 +1,7 @@
 import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { HabitsContext } from "./components/HabitsContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,7 +20,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} theme-pak bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black`} //"bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300"
       >
-        {children}
+        <HabitsContext>{children}</HabitsContext>
       </body>
     </html>
   )

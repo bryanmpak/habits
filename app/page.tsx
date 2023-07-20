@@ -1,34 +1,47 @@
 "use client"
 
-import { useState } from "react"
+import { useContext, useState } from "react"
 import HabitButton from "./components/HabitButton/HabitButton"
-import HabitMenubar from "./components/HabitMenubar"
+import HabitMenubar from "./components/Menubar/HabitMenubar"
 import HabitsFooter from "./components/HabitsFooter/HabitsFooter"
-import Menu from "./components/Menu/Menu"
-import { useDate } from "./lib/useDate"
+import Menu from "./components/Nav/Menu"
+import { Context } from "./components/HabitsContext"
 
 export default function Home() {
-  const datesArr = useDate()
-  // eventually put this in a firestore db
-  const [habits, setHabits] = useState(
-    datesArr.map((date) => {
-      return {
-        isComplete: false,
-        ...date,
-      }
-    })
-  )
+  const { habits, setHabits, activeHabit, setActiveHabit } = useContext(Context)
+
+  /* 
+    active habit:
+      {
+        habitName: blah,
+        completions: [
+          {
+            date: 7-23-23,
+            dayofweek: MON,
+            isComplete: false,
+            isActive: false
+          },
+          {
+            date: 7-23-23,
+            dayofweek: MON,
+            isComplete: false,
+            isActive: false
+          },
+        ]
+    }
+    */
   const [activeId, setActiveId] = useState(
-    habits.findIndex((day) => day.isActive)
+    activeHabit.completions.findIndex((day) => day.isActive)
   )
 
   const handleComplete = (isComplete: boolean, id: number) => {
     if (isComplete) {
-      setHabits((prevHabits) =>
-        prevHabits.map((habit, i) =>
-          i === activeId ? { ...habit, isComplete } : habit
-        )
-      )
+      setActiveHabit((prevHabit) => ({
+        ...prevHabit,
+        completions: prevHabit.completions.map((day, i) =>
+          i === activeId ? { ...day, isComplete } : day
+        ),
+      }))
     }
   }
 
@@ -37,10 +50,11 @@ export default function Home() {
       <Menu />
       <HabitMenubar />
       <HabitButton
-        habit={habits[activeId]}
+        activeHabit={activeHabit}
+        activeId={activeId}
         onComplete={(isComplete) => handleComplete(isComplete, activeId)}
       />
-      <HabitsFooter habits={habits} onDayClick={setActiveId} />
+      <HabitsFooter activeHabit={activeHabit} onDayClick={setActiveId} />
     </main>
   )
 }

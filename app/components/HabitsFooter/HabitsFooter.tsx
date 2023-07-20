@@ -2,14 +2,14 @@ import { useState } from "react"
 import Day from "./Day"
 
 const HabitsFooter = ({
-  habits,
+  activeHabit,
   onDayClick,
 }: {
-  habits: Habit[]
+  activeHabit: Habit
   onDayClick: (id: number) => void
 }) => {
   const [activeId, setActiveId] = useState(
-    habits.findIndex((day) => day.isActive)
+    activeHabit.completions.findIndex((day) => day.isActive)
   )
 
   const handleClick = (id: number) => {
@@ -19,15 +19,15 @@ const HabitsFooter = ({
 
   return (
     <div className="flex px-4 justify-evenly items-center mx-auto mt-auto max-w-md">
-      {habits.map((habit, i) => {
+      {activeHabit.completions.map((day, i) => {
         return (
           <Day
             id={i}
-            key={`${i}-${habits[i].isComplete}`}
-            dayOfWeek={habit.dayOfWeek}
-            dateOfWeek={habit.date.getDate()}
+            key={`${i}-${day.isComplete}`}
+            dayOfWeek={day.dayOfWeek}
+            dateOfWeek={day.date.getDate()}
             isActive={i === activeId}
-            isComplete={habit.isComplete}
+            isComplete={day.isComplete}
             onClick={() => handleClick(i)}
           />
         )

@@ -1,13 +1,31 @@
 import { motion } from "framer-motion"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+import { Context } from "../HabitsContext"
+import InlineForm from "./InlineForm"
 
 const HabitMenubar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const { habits, activeHabit, setActiveHabit } = useContext(Context)
 
   const variants = {
     open: { height: "auto" },
     closed: { height: 0 },
   }
+
+  const habitNamesArr = habits.map((habit, i) => (
+    <div
+      key={i}
+      className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
+      onClick={() => {
+        setActiveHabit(habit)
+        setIsOpen(!isOpen)
+      }}
+    >
+      {habit.habitName}
+    </div>
+  ))
+
+  console.log(activeHabit)
 
   return (
     <div className="relative w-1/2 mx-auto mt-2">
@@ -16,7 +34,9 @@ const HabitMenubar = () => {
         className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-40 "
       >
         <div className="text-title text-center flex-grow">
-          <p className="text-xs font-sans">habits</p>
+          <p className="font-sans text-xs">
+            {habits.length < 1 ? "habits" : activeHabit?.habitName}
+          </p>
         </div>
         <motion.svg
           fill="var(--color-title)"
@@ -34,15 +54,14 @@ const HabitMenubar = () => {
 
       {/* have fun with the animations here */}
       <motion.div
-        className="absolute top-full left-0 w-full overflow-hidden bg-transparent rounded-2xl text-title text-center text-xs font-sans z-10"
+        className="absolute top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10"
         variants={variants}
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         transition={{ duration: 0.3 }}
       >
-        <div className="p-2">Huberman Fitness Protocol</div>
-        <div className="p-2">Deploy on Github Daily</div>
-        <div className="p-2">Wake up at 7AM Daily</div>
+        {habitNamesArr}
+        <InlineForm />
       </motion.div>
     </div>
   )
