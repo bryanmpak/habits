@@ -33,6 +33,7 @@ const HabitsContext = ({ children }: Props) => {
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
+    isIncluded: true,
   }))
 
   const [habits, setHabits] = useState<Habit[]>([])
@@ -46,6 +47,7 @@ const HabitsContext = ({ children }: Props) => {
       habitName,
       completions: datesArr,
     }
+    setActiveHabit(newHabit)
     setHabits((prevHabits) => [...prevHabits, newHabit])
   }
 

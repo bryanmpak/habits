@@ -35,7 +35,7 @@ const HabitButton = ({
       {/* max-w temp since i'll have it on a parent div */}
       <motion.button
         disabled={activeDay.isComplete}
-        className="relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center disabled:cursor-not-allowed"
+        className="relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center shadow-2xl disabled:cursor-not-allowed"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onTouchStart={handleMouseDown}

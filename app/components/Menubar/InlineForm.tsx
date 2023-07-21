@@ -3,7 +3,7 @@ import { Context } from "../HabitsContext"
 
 const InlineForm = () => {
   const [habitInput, setHabitInput] = useState("")
-  const { habits, setHabits, addHabit } = useContext(Context)
+  const { addHabit } = useContext(Context)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -12,10 +12,7 @@ const InlineForm = () => {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-2 flex w-full gap-1 bg-nav_bg border-2 border-neutral rounded-2xl"
-    >
+    <form onSubmit={handleSubmit} className="p-2 flex w-full gap-1">
       <input
         className="flex-grow px-2 bg-title text-black rounded-md"
         type={"text"}
@@ -29,7 +26,7 @@ const InlineForm = () => {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
-          stroke="currentColor"
+          stroke="var(--color-title)"
           className="w-6 h-6"
         >
           <path

@@ -3,6 +3,7 @@ interface HabitCompletion {
   dayOfWeek: string
   isActive: boolean
   isComplete: boolean
+  isIncluded: boolean
 }
 
 interface Habit {

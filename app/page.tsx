@@ -8,40 +8,29 @@ import Menu from "./components/Nav/Menu"
 import { Context } from "./components/HabitsContext"
 
 export default function Home() {
-  const { habits, setHabits, activeHabit, setActiveHabit } = useContext(Context)
-
-  /* 
-    active habit:
-      {
-        habitName: blah,
-        completions: [
-          {
-            date: 7-23-23,
-            dayofweek: MON,
-            isComplete: false,
-            isActive: false
-          },
-          {
-            date: 7-23-23,
-            dayofweek: MON,
-            isComplete: false,
-            isActive: false
-          },
-        ]
-    }
-    */
+  const { setHabits, activeHabit, setActiveHabit } = useContext(Context)
   const [activeId, setActiveId] = useState(
     activeHabit.completions.findIndex((day) => day.isActive)
   )
 
   const handleComplete = (isComplete: boolean, id: number) => {
     if (isComplete) {
-      setActiveHabit((prevHabit) => ({
-        ...prevHabit,
-        completions: prevHabit.completions.map((day, i) =>
-          i === activeId ? { ...day, isComplete } : day
-        ),
-      }))
+      setActiveHabit((prevHabit) => {
+        const updatedHabit = {
+          ...prevHabit,
+          completions: prevHabit.completions.map((day, i) =>
+            i === activeId ? { ...day, isComplete } : day
+          ),
+        }
+
+        setHabits((prevHabits) =>
+          prevHabits.map((habit) =>
+            habit.habitName === updatedHabit.habitName ? updatedHabit : habit
+          )
+        )
+
+        return updatedHabit
+      })
     }
   }
 

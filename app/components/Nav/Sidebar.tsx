@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
+import InlineForm from "../Menubar/InlineForm"
 import UserToggle from "../UserToggle"
+import DaySelector from "./DaySelector"
 
 const sidebarVariants = {
   closed: {
@@ -43,6 +45,8 @@ const Sidebar = ({ isOpen, handleDismiss }: Props) => {
             >
               <UserToggle />
               <div className="h-[2px] bg-dark"></div>
+              <InlineForm />
+              <DaySelector />
             </motion.div>
           </motion.aside>
         )}

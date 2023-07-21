@@ -1,10 +1,10 @@
-import { motion } from "framer-motion"
+import { motion, useCycle } from "framer-motion"
 import React, { useContext, useState } from "react"
 import { Context } from "../HabitsContext"
 import InlineForm from "./InlineForm"
 
 const HabitMenubar = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, toggleOpen] = useCycle(false, true)
   const { habits, activeHabit, setActiveHabit } = useContext(Context)
 
   const variants = {
@@ -18,20 +18,18 @@ const HabitMenubar = () => {
       className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
       onClick={() => {
         setActiveHabit(habit)
-        setIsOpen(!isOpen)
+        toggleOpen()
       }}
     >
       {habit.habitName}
     </div>
   ))
 
-  console.log(activeHabit)
-
   return (
     <div className="relative w-1/2 mx-auto mt-2">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-40 "
+        onClick={() => toggleOpen()}
+        className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-40 shadow-md"
       >
         <div className="text-title text-center flex-grow">
           <p className="font-sans text-xs">
@@ -61,7 +59,7 @@ const HabitMenubar = () => {
         transition={{ duration: 0.3 }}
       >
         {habitNamesArr}
-        <InlineForm />
+        {/* <InlineForm /> */}
       </motion.div>
     </div>
   )
