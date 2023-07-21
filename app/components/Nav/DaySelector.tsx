@@ -14,8 +14,6 @@ export default function DaySelector() {
     }))
   }
 
-  console.log({ activeHabit })
-
   return (
     <div className="flex mx-auto gap-1">
       {activeHabit.completions.map((date, i) => (

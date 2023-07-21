@@ -13,6 +13,8 @@ export default function Home() {
     activeHabit.completions.findIndex((day) => day.isActive)
   )
 
+  console.log({ activeHabit })
+
   const handleComplete = (isComplete: boolean, id: number) => {
     if (isComplete) {
       setActiveHabit((prevHabit) => {

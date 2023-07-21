@@ -25,7 +25,7 @@ const Menu = () => {
     <div className="flex right-0">
       <Sidebar
         isOpen={isOpen}
-        handleDismiss={(e: React.MouseEvent) => {
+        handleDismiss={(e: React.FormEvent) => {
           e.stopPropagation()
           toggleOpen()
         }}

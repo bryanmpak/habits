@@ -7,6 +7,7 @@ type Props = {
   isActive: boolean
   onClick: (id: number) => void
   isComplete: boolean
+  isIncluded: boolean
 }
 
 const Day = ({
@@ -16,13 +17,17 @@ const Day = ({
   isActive,
   onClick,
   isComplete,
+  isIncluded,
 }: Props) => {
   return (
     <button
       type="button"
-      onClick={() => onClick(id)}
+      onClick={() => isIncluded && onClick(id)}
+      disabled={!isIncluded}
       key={id}
-      className="flex flex-col justify-center items-center gap-1 text-xs text-text"
+      className={`flex flex-col justify-center items-center gap-1 text-xs ${
+        isIncluded ? "text-text" : "text-gray-400 cursor-not-allowed"
+      }`}
     >
       {isComplete ? (
         <div

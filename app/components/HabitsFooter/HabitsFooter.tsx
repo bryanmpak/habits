@@ -28,6 +28,7 @@ const HabitsFooter = ({
             dateOfWeek={day.date.getDate()}
             isActive={i === activeId}
             isComplete={day.isComplete}
+            isIncluded={day.isIncluded}
             onClick={() => handleClick(i)}
           />
         )
