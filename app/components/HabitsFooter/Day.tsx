@@ -26,7 +26,7 @@ const Day = ({
       disabled={!isIncluded}
       key={id}
       className={`flex flex-col justify-center items-center gap-1 text-xs ${
-        isIncluded ? "text-text" : "text-gray-400 cursor-not-allowed"
+        isIncluded ? "text-text" : "text-light cursor-not-allowed"
       }`}
     >
       {isComplete ? (
@@ -38,12 +38,14 @@ const Day = ({
         </div>
       ) : (
         <div
-          className={`flex w-8 h-8 rounded-full bg-nav_bg border-2 border-neutral justify-center items-center`}
+          className={`flex w-8 h-8 rounded-full bg-nav_bg border-2 border-neutral justify-center items-center `}
         >
           <p>{dateOfWeek}</p>
         </div>
       )}
-      <p className="text-xs text-text">{dayOfWeek}</p>
+      <p className={`${isIncluded ? "text-text" : "text-light"} text-xs`}>
+        {dayOfWeek}
+      </p>
       {isActive ? (
         <motion.div
           className="bg-shadow h-[2px] w-full"

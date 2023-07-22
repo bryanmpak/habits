@@ -6,7 +6,7 @@ import { useDate } from "../lib/useDate"
 type HabitContextTypes = {
   habits: Habit[]
   setHabits: Dispatch<SetStateAction<Habit[]>>
-  addHabit: (habitName: string) => void
+  addHabit: (habitName: string, completions: HabitCompletion[]) => void
   activeHabit: Habit
   setActiveHabit: Dispatch<SetStateAction<Habit>>
   datesArr: HabitCompletion[]
@@ -42,10 +42,10 @@ const HabitsContext = ({ children }: Props) => {
     completions: [...datesArr],
   })
 
-  const addHabit = (habitName: string) => {
+  const addHabit = (habitName: string, completions: HabitCompletion[]) => {
     const newHabit: Habit = {
       habitName,
-      completions: datesArr,
+      completions: completions,
     }
     setActiveHabit(newHabit)
     setHabits((prevHabits) => [...prevHabits, newHabit])

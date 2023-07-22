@@ -9,12 +9,14 @@ type Props = {
 
 const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("")
-  const { addHabit } = useContext(Context)
+  const { addHabit, datesArr } = useContext(Context)
+  const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    addHabit(habitInput)
+    addHabit(habitInput, completions)
     setHabitInput("")
+    setCompletions([])
     toggleItem()
     setTimeout(() => {
       handleDismiss(e)
@@ -48,7 +50,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
           </svg>
         </button>
       </div>
-      <DaySelector />
+      <DaySelector completions={completions} setCompletions={setCompletions} />
     </form>
   )
 }
