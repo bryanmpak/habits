@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useCycle } from "framer-motion"
 import React from "react"
 import InlineForm from "../Menubar/InlineForm"
 import UserToggle from "../UserToggle"
+import Footer from "./Footer"
 
 const sidebarVariants = {
   closed: {
@@ -32,13 +33,13 @@ const Sidebar = ({ isOpen, handleDismiss }: Props) => {
         {isOpen && (
           <motion.aside
             onClick={(e) => e.stopPropagation()}
-            className="min-h-screen w-[60vw] fixed right-0 bg-neutral px-4 py-3 z-20"
+            className="h-full w-[60vw] fixed right-0 bg-neutral px-4 py-3 z-20"
             initial={{ x: "100%" }}
             animate={{ x: 0, transition: { delay: 0.4, duration: 0.2 } }}
             exit={{ x: "100%", transition: { delay: 0.7, duration: 0.3 } }}
           >
             <motion.div
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-2 min-h-full"
               initial="closed"
               animate="open"
               exit="closed"
@@ -90,6 +91,7 @@ const Sidebar = ({ isOpen, handleDismiss }: Props) => {
                 )}
               </div>
               <div className="h-[2px] bg-dark"></div>
+              <Footer />
             </motion.div>
           </motion.aside>
         )}

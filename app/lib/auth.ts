@@ -12,10 +12,11 @@ export const authOptions: NextAuthOptions = {
     }),
     // add anonymous user function
   ],
-  // adapter: PrismaAdapter(prisma) as Adapter,
+  adapter: PrismaAdapter(prisma) as Adapter,
   session: {
     strategy: "jwt",
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

@@ -6,18 +6,17 @@ const SignIn = () => {
   const { data: session, status } = useSession()
 
   return (
-    <>
-      <main className="h-screen bg-bg_main flex flex-col justify-center items-center">
-        <div className="max-w-[500px] ">
-          <button
-            className="flex gap-1 mx-4 py-2 px-4 text-[#bebebe] bg-bg_secondary justify-between items-center hover:bg-accent_1 hover:text-white rounded"
-            onClick={() => signIn("google")}
-          >
-            <p>sign-in with google</p>
-          </button>
-        </div>
-      </main>
-    </>
+    <div className="w-80 rounded-md mx-auto flex flex-col items-center gap-10 pt-20">
+      <h1 className="text-3xl text-title">placeholder text</h1>
+      <button
+        className="w-full h-12 text-black bg-title hover:bg-text"
+        onClick={() => signIn("google")}
+      >
+        <p>Continue with Google</p>
+      </button>
+      <div className="h-[1px] w-full bg-text"></div>
+      <p className="text-title">Continue as Guest (setup later)</p>
+    </div>
   )
 }
 

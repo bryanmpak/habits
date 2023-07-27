@@ -7,14 +7,16 @@ import HabitsFooter from "./components/HabitsFooter/HabitsFooter"
 import Menu from "./components/Nav/Menu"
 import { Context } from "./components/HabitsContext"
 import SignIn from "./components/SignIn"
+import { useSession } from "next-auth/react"
 
 export default function Home() {
+  const { data: session, status } = useSession()
   const { setHabits, activeHabit, setActiveHabit } = useContext(Context)
   const [activeId, setActiveId] = useState(
     activeHabit.completions.findIndex((day) => day.isActive)
   )
 
-  console.log({ activeHabit })
+  console.log({ session })
 
   const handleComplete = (isComplete: boolean, id: number) => {
     if (isComplete) {
@@ -36,18 +38,20 @@ export default function Home() {
       })
     }
   }
+  if (!session) {
+    return <SignIn />
+  }
 
   return (
-    <main className="min-h-full">
-      <SignIn />
-      {/* <Menu />
+    <main className="min-h-full relative">
+      <Menu />
       <HabitMenubar />
       <HabitButton
         activeHabit={activeHabit}
         activeId={activeId}
         onComplete={(isComplete) => handleComplete(isComplete, activeId)}
       />
-      <HabitsFooter activeHabit={activeHabit} onDayClick={setActiveId} /> */}
+      <HabitsFooter activeHabit={activeHabit} onDayClick={setActiveId} />
     </main>
   )
 }
