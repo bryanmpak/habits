@@ -6,6 +6,7 @@ import HabitMenubar from "./components/Menubar/HabitMenubar"
 import HabitsFooter from "./components/HabitsFooter/HabitsFooter"
 import Menu from "./components/Nav/Menu"
 import { Context } from "./components/HabitsContext"
+import SignIn from "./components/SignIn"
 
 export default function Home() {
   const { setHabits, activeHabit, setActiveHabit } = useContext(Context)
@@ -38,14 +39,15 @@ export default function Home() {
 
   return (
     <main className="min-h-full">
-      <Menu />
+      <SignIn />
+      {/* <Menu />
       <HabitMenubar />
       <HabitButton
         activeHabit={activeHabit}
         activeId={activeId}
         onComplete={(isComplete) => handleComplete(isComplete, activeId)}
       />
-      <HabitsFooter activeHabit={activeHabit} onDayClick={setActiveId} />
+      <HabitsFooter activeHabit={activeHabit} onDayClick={setActiveId} /> */}
     </main>
   )
 }
