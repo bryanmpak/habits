@@ -2,10 +2,11 @@
 
 import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
+import { ExtendedSession } from "../lib/typings"
 
 type Props = {
   children?: React.ReactNode
-  session: Session | null
+  session: ExtendedSession | null
 }
 
 export const NextAuthProvider = ({ children, session }: Props) => {

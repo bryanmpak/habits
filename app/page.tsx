@@ -8,6 +8,7 @@ import Menu from "./components/Nav/Menu"
 import { Context } from "./components/HabitsContext"
 import SignIn from "./components/SignIn"
 import { useSession } from "next-auth/react"
+import { ExtendedSession } from "./lib/typings"
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -15,8 +16,6 @@ export default function Home() {
   const [activeId, setActiveId] = useState(
     activeHabit.completions.findIndex((day) => day.isActive)
   )
-
-  console.log({ session })
 
   const handleComplete = (isComplete: boolean, id: number) => {
     if (isComplete) {

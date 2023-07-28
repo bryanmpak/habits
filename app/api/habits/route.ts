@@ -1,30 +1,64 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "@/app/lib/prisma"
+import { getSession } from "next-auth/react"
+import { Habit, HabitCompletion } from "@/app/types/typings"
 
-export default async function handle(
-  res: NextApiResponse,
-  req: NextApiRequest
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
-  if (req.method === "GET") {
-    const habits = await prisma.habit.findMany()
-    res.json(habits)
-  }
-}
+  const session = await getSession({ req })
 
-/*
-export default async function handle(req, res) {
-  if (req.method === "GET") {
-    const habits = await prisma.habit.findMany()
-    res.json(habits)
-  } else if (req.method === "POST") {
-    const { habitName, completions } = req.body
-    const newHabit = await prisma.habit.create({
-      data: {
+  /*
+  setting up the handler:
+  a GET (retrieve all habits data) & POST (add to habits data)
+  */
+
+  if (!session || !session.user) {
+    return res.status(401).json({ message: "Please log in!" })
+  }
+
+  const userId = session!.user.id as string
+
+  switch (req.method) {
+    case "GET":
+      const habits = await prisma.habit.findMany({
+        where: { userId: userId },
+      })
+      return res.status(200).json(habits)
+
+    case "POST":
+      const {
         habitName,
         completions,
-      },
-    })
-    res.json(newHabit)
+      }: { habitName: string; completions: HabitCompletion[] } = req.body
+
+      try {
+        const newHabit: Habit = await prisma.habit.create({
+          data: {
+            habitName,
+            completions: {
+              create: completions.map((completion) => ({
+                date: completion.date,
+                dayOfWeek: completion.dayOfWeek,
+                isActive: completion.isActive,
+                isComplete: completion.isComplete,
+                isIncluded: completion.isIncluded,
+              })),
+            },
+            userId,
+          },
+          include: {
+            completions: true, // Include the completions field in the returned data
+          },
+        })
+        res.status(200).json(newHabit)
+      } catch (error) {
+        res.status(500).json({ error: "unable to create habit" })
+      }
+
+    default:
+      res.setHeader("Allow", ["GET", "POST"])
+      res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
-*/
