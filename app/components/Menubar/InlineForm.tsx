@@ -1,3 +1,5 @@
+import { Habit, HabitCompletion } from "@/app/types/typings"
+import { useRouter } from "next/navigation"
 import React, { useContext, useState } from "react"
 import { Context } from "../HabitsContext"
 import DaySelector from "../Nav/DaySelector"
@@ -11,14 +13,16 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("")
   const { addHabit, datesArr } = useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    addHabit(habitInput, completions)
+    const newHabit = await addHabit(habitInput, completions)
     setHabitInput("")
     setCompletions([])
     toggleItem()
     setTimeout(() => {
+      router.push(`habits/${newHabit.habitName}`)
       handleDismiss(e)
     }, 100)
   }

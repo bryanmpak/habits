@@ -2,7 +2,7 @@
 
 import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
-import { ExtendedSession } from "../lib/typings"
+import { ExtendedSession } from "../types/typings"
 
 type Props = {
   children?: React.ReactNode

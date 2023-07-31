@@ -8,7 +8,7 @@ import Menu from "./components/Nav/Menu"
 import { Context } from "./components/HabitsContext"
 import SignIn from "./components/SignIn"
 import { useSession } from "next-auth/react"
-import { ExtendedSession } from "./lib/typings"
+import { ExtendedSession } from "./types/typings"
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <main className="min-h-full relative">
       <Menu />
-      <HabitMenubar />
+      {/* <HabitMenubar /> */}
       <HabitButton
         activeHabit={activeHabit}
         activeId={activeId}

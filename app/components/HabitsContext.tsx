@@ -3,13 +3,16 @@
 import { useSession } from "next-auth/react"
 import { createContext, Dispatch, SetStateAction, useState } from "react"
 import { prisma } from "../lib/prisma"
-import { Habit, HabitCompletion } from "../lib/typings"
+import { Habit, HabitCompletion } from "../types/typings"
 import { useDate } from "../lib/useDate"
 
 type HabitContextTypes = {
   habits: Habit[]
   setHabits: Dispatch<SetStateAction<Habit[]>>
-  addHabit: (habitName: string, completions: HabitCompletion[]) => void
+  addHabit: (
+    habitName: string,
+    completions: HabitCompletion[]
+  ) => Promise<Habit>
   activeHabit: Habit
   setActiveHabit: Dispatch<SetStateAction<Habit>>
   datesArr: HabitCompletion[]
@@ -23,7 +26,7 @@ type Props = {
 const defaultHabitContext: HabitContextTypes = {
   habits: [],
   setHabits: () => {},
-  addHabit: () => {},
+  addHabit: async () => ({ habitName: "", completions: [] }),
   activeHabit: { habitName: "", completions: [] },
   setActiveHabit: () => {},
   datesArr: [],
@@ -46,13 +49,26 @@ const HabitsContext = ({ children }: Props) => {
     completions: [...datesArr],
   })
 
-  const addHabit = (habitName: string, completions: HabitCompletion[]) => {
-    const newHabit: Habit = {
-      habitName,
-      completions: completions,
+  const addHabit = async (
+    habitName: string,
+    completions: HabitCompletion[]
+  ): Promise<Habit> => {
+    console.log(habitName, completions)
+    const response = await fetch("/api/habits", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ habitName, completions }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error, status: ${response.status}`)
+    } else {
+      const newHabit: Habit = await response.json()
+      // might to think about if i need to refactor the Habit type to include userId
+      return newHabit
     }
-    setActiveHabit(newHabit)
-    setHabits((prevHabits) => [...prevHabits, newHabit])
   }
 
   return (
@@ -72,35 +88,3 @@ const HabitsContext = ({ children }: Props) => {
 }
 
 export { Context, HabitsContext }
-
-/*
-const addHabit = async (
-    habitName: string,
-    completions: HabitCompletion[]
-  ) => {
-    if (session && session.user) {
-      const userId = session.user.id
-    }
-
-    const newHabit: Habit = await prisma.habit.create({
-      data: {
-        habitName,
-        completions: {
-          create: completions.map((completion) => ({
-            date: completion.date,
-            dayOfWeek: completion.dayOfWeek,
-            isActive: completion.isActive,
-            isComplete: completion.isComplete,
-            isIncluded: completion.isIncluded,
-          })),
-        },
-        userId,
-      },
-      include: {
-        completions: true, // Include the completions field in the returned data
-      },
-    })
-    setActiveHabit(newHabit)
-    setHabits((prevHabits) => [...prevHabits, newHabit])
-  }
-  */

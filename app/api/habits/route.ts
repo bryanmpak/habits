@@ -1,64 +1,47 @@
-import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "@/app/lib/prisma"
-import { getSession } from "next-auth/react"
 import { Habit, HabitCompletion } from "@/app/types/typings"
+import { getAuthSession } from "@/app/lib/auth"
+import { NextRequest, NextResponse } from "next/server"
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const session = await getSession({ req })
+export async function POST(req: NextRequest) {
+  try {
+    const session = await getAuthSession()
+    if (!session?.user) {
+      return new Response("Unauthorized", { status: 401 })
+    }
+    const userId = session.user.id
+    // console.log(userId)
 
-  /*
-  setting up the handler:
-  a GET (retrieve all habits data) & POST (add to habits data)
-  */
+    const body = await req.json()
 
-  if (!session || !session.user) {
-    return res.status(401).json({ message: "Please log in!" })
-  }
+    const {
+      habitName,
+      completions,
+    }: { habitName: string; completions: HabitCompletion[] } = body
 
-  const userId = session!.user.id as string
+    // console.log(habitName)
 
-  switch (req.method) {
-    case "GET":
-      const habits = await prisma.habit.findMany({
-        where: { userId: userId },
-      })
-      return res.status(200).json(habits)
-
-    case "POST":
-      const {
+    const newHabit = await prisma.habit.create({
+      data: {
         habitName,
-        completions,
-      }: { habitName: string; completions: HabitCompletion[] } = req.body
+        completions: {
+          create: completions.map((completion) => ({
+            date: completion.date,
+            dayOfWeek: completion.dayOfWeek,
+            isActive: completion.isActive,
+            isComplete: completion.isComplete,
+            isIncluded: completion.isIncluded,
+          })),
+        },
+        userId: userId as string,
+      },
+      include: {
+        completions: true,
+      },
+    })
 
-      try {
-        const newHabit: Habit = await prisma.habit.create({
-          data: {
-            habitName,
-            completions: {
-              create: completions.map((completion) => ({
-                date: completion.date,
-                dayOfWeek: completion.dayOfWeek,
-                isActive: completion.isActive,
-                isComplete: completion.isComplete,
-                isIncluded: completion.isIncluded,
-              })),
-            },
-            userId,
-          },
-          include: {
-            completions: true, // Include the completions field in the returned data
-          },
-        })
-        res.status(200).json(newHabit)
-      } catch (error) {
-        res.status(500).json({ error: "unable to create habit" })
-      }
-
-    default:
-      res.setHeader("Allow", ["GET", "POST"])
-      res.status(405).end(`Method ${req.method} Not Allowed`)
+    return NextResponse.json({ habitName, completions })
+  } catch (error) {
+    console.log(error)
   }
 }

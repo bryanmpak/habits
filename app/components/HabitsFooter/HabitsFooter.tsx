@@ -1,3 +1,4 @@
+import { Habit } from "@/app/types/typings"
 import { useState } from "react"
 import Day from "./Day"
 

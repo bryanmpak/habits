@@ -3,8 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { HabitsContext } from "./components/HabitsContext"
 import { NextAuthProvider } from "./components/SessionProvider"
-import { getServerSession } from "next-auth"
-import { authOptions } from "./lib/auth"
+import { getAuthSession } from "./lib/auth"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,7 +17,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession(authOptions)
+  const session = await getAuthSession()
+
   return (
     <html lang="en">
       <body
