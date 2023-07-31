@@ -53,8 +53,8 @@ const HabitsContext = ({ children }: Props) => {
     habitName: string,
     completions: HabitCompletion[]
   ): Promise<Habit> => {
-    console.log(habitName, completions)
-    const response = await fetch("/api/habits", {
+    // console.log(habitName, completions)
+    const response = await fetch("/api/addHabit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,21 +1,18 @@
+"use client"
+
 import { Habit } from "@/app/types/typings"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import Day from "./Day"
 
-const HabitsFooter = ({
-  activeHabit,
-  onDayClick,
-}: {
+type Props = {
   activeHabit: Habit
-  onDayClick: (id: number) => void
-}) => {
-  const [activeId, setActiveId] = useState(
-    activeHabit.completions.findIndex((day) => day.isActive)
-  )
+  activeId: number
+  setActiveId: Dispatch<SetStateAction<number>>
+}
 
+const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
   const handleClick = (id: number) => {
     setActiveId(id)
-    onDayClick(id)
   }
 
   return (

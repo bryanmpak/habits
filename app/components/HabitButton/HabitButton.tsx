@@ -1,3 +1,5 @@
+"use client"
+
 import { Habit } from "@/app/types/typings"
 import { motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
@@ -15,6 +17,7 @@ const HabitButton = ({
 }) => {
   const { counter, start, stop, reset, isMax } = useCounter(100, 100)
   const activeDay = activeHabit.completions[activeId]
+  console.log("activeDay", activeDay)
 
   const handleMouseDown = () => {
     start()

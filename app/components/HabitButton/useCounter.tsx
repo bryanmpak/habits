@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useState } from "react"
 
 export const useCounter = (maxValue: number = 100, delay: number = 100) => {
