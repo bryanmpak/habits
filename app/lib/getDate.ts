@@ -1,6 +1,6 @@
 const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 
-export const useDate = (): {
+export const getDate = (): {
   date: Date
   dayOfWeek: string
   isActive: boolean

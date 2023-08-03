@@ -4,14 +4,15 @@ import { useSession } from "next-auth/react"
 import { createContext, Dispatch, SetStateAction, useState } from "react"
 import { prisma } from "../lib/prisma"
 import { Habit, HabitCompletion } from "../types/typings"
-import { useDate } from "../lib/useDate"
+import { getDate } from "../lib/getDate"
 
 type HabitContextTypes = {
   habits: Habit[]
   setHabits: Dispatch<SetStateAction<Habit[]>>
   addHabit: (
     habitName: string,
-    completions: HabitCompletion[]
+    completions: HabitCompletion[],
+    slug: string
   ) => Promise<Habit>
   activeHabit: Habit
   setActiveHabit: Dispatch<SetStateAction<Habit>>
@@ -26,8 +27,8 @@ type Props = {
 const defaultHabitContext: HabitContextTypes = {
   habits: [],
   setHabits: () => {},
-  addHabit: async () => ({ habitName: "", completions: [] }),
-  activeHabit: { habitName: "", completions: [] },
+  addHabit: async () => ({ slug: "", habitName: "", completions: [] }),
+  activeHabit: { slug: "", habitName: "", completions: [] },
   setActiveHabit: () => {},
   datesArr: [],
 }
@@ -36,7 +37,7 @@ const Context = createContext<HabitContextTypes>(defaultHabitContext)
 
 const HabitsContext = ({ children }: Props) => {
   const { data: session } = useSession()
-  const dates = useDate()
+  const dates = getDate()
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
@@ -45,13 +46,15 @@ const HabitsContext = ({ children }: Props) => {
 
   const [habits, setHabits] = useState<Habit[]>([])
   const [activeHabit, setActiveHabit] = useState<Habit>({
+    slug: "",
     habitName: "",
     completions: [...datesArr],
   })
 
   const addHabit = async (
     habitName: string,
-    completions: HabitCompletion[]
+    completions: HabitCompletion[],
+    slug: string
   ): Promise<Habit> => {
     // console.log(habitName, completions)
     const response = await fetch("/api/addHabit", {
@@ -59,7 +62,7 @@ const HabitsContext = ({ children }: Props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ habitName, completions }),
+      body: JSON.stringify({ slug, habitName, completions }),
     })
 
     if (!response.ok) {

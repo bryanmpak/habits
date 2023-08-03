@@ -17,7 +17,7 @@ export default function DaySelector({ completions, setCompletions }: Props) {
   }
 
   return (
-    <div className="flex mx-auto gap-1">
+    <div className="flex justify-evenly">
       {completions.map((date, i) => (
         <button
           type="button"

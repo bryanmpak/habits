@@ -4,11 +4,14 @@ interface HabitCompletion {
   isActive: boolean
   isComplete: boolean
   isIncluded: boolean
+  habitId?: string
 }
 
 interface Habit {
   habitName: string
   completions: HabitCompletion[]
+  id?: string
+  slug: string
 }
 
 import { Session } from "next-auth"

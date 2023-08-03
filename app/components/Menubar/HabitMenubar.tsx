@@ -1,23 +1,28 @@
+"use client"
+
+import { useHabitsData } from "@/app/lib/useHabitsData"
 import { motion, useCycle } from "framer-motion"
-import React, { useContext, useState } from "react"
-import { Context } from "../HabitsContext"
-import InlineForm from "./InlineForm"
+import { useRouter } from "next/navigation"
+import React, { useState } from "react"
 
 const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
-  const { habits, activeHabit, setActiveHabit } = useContext(Context)
+  const router = useRouter()
+  const habitList = useHabitsData()
+  const [habitName, setHabitName] = useState("")
 
   const variants = {
     open: { height: "auto" },
     closed: { height: 0 },
   }
 
-  const habitNamesArr = habits.map((habit, i) => (
+  const habitNamesArr = habitList.map((habit, i) => (
     <div
       key={i}
       className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
       onClick={() => {
-        setActiveHabit(habit)
+        router.push(`/habits/${habit.slug}`)
+        setHabitName(habit.habitName)
         toggleOpen()
       }}
     >
@@ -26,14 +31,14 @@ const HabitMenubar = () => {
   ))
 
   return (
-    <div className="relative w-1/2 mx-auto mt-2">
+    <div className="relative w-2/3 sm:w-1/2 mx-auto mt-2">
       <button
         onClick={() => toggleOpen()}
         className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-40 shadow-md"
       >
         <div className="text-title text-center flex-grow">
           <p className="font-sans text-xs">
-            {habits.length < 1 ? "habits" : activeHabit?.habitName}
+            {habitName === "" ? "habits" : habitName}
           </p>
         </div>
         <motion.svg

@@ -17,7 +17,6 @@ const HabitButton = ({
 }) => {
   const { counter, start, stop, reset, isMax } = useCounter(100, 100)
   const activeDay = activeHabit.completions[activeId]
-  console.log("activeDay", activeDay)
 
   const handleMouseDown = () => {
     start()
@@ -38,7 +37,7 @@ const HabitButton = ({
     <div className="h-[80vh] w-screen flex justify-center items-center p-4">
       {/* max-w temp since i'll have it on a parent div */}
       <motion.button
-        disabled={activeDay.isComplete}
+        disabled={activeDay.isComplete || !activeDay.isIncluded}
         className="relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center shadow-2xl disabled:cursor-not-allowed"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

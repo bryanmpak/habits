@@ -1,8 +1,10 @@
 import { useSession, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import React from "react"
 
 const Footer = () => {
   const { data: session } = useSession()
+  const router = useRouter()
 
   return (
     <div className="w-full flex flex-col text-white mt-auto justify-center items-center gap-2">
@@ -11,7 +13,10 @@ const Footer = () => {
         <p className="flex-grow">{session?.user?.name}</p>
       </div>
       <button
-        onClick={() => signOut()}
+        onClick={async () => {
+          await signOut()
+          router.push("/")
+        }}
         className="text-white text-sm hover:text-text"
       >
         Sign Out

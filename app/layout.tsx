@@ -4,6 +4,8 @@ import { Inter } from "next/font/google"
 import { HabitsContext } from "./components/HabitsContext"
 import { NextAuthProvider } from "./components/SessionProvider"
 import { getAuthSession } from "./lib/auth"
+import HabitMenubar from "./components/Menubar/HabitMenubar"
+import Menu from "./components/Nav/Menu"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,7 +27,11 @@ export default async function RootLayout({
         className={`${inter.className} theme-pak bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black`} //"bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300"
       >
         <NextAuthProvider session={session}>
-          <HabitsContext>{children}</HabitsContext>
+          <HabitsContext>
+            <Menu />
+            <HabitMenubar />
+            {children}
+          </HabitsContext>
         </NextAuthProvider>
       </body>
     </html>

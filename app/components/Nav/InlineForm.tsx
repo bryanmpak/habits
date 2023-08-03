@@ -17,12 +17,13 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const newHabit = await addHabit(habitInput, completions)
+    const slug = habitInput.replace(/\s+/g, "-").toLowerCase()
+    await addHabit(habitInput, completions, slug)
     setHabitInput("")
     setCompletions([])
     toggleItem()
     setTimeout(() => {
-      router.push(`habits/${newHabit.habitName}`)
+      router.push(`/habits/${slug}`)
       handleDismiss(e)
     }, 100)
   }
