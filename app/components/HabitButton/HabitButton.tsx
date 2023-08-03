@@ -2,9 +2,8 @@
 
 import { Habit } from "@/app/types/typings"
 import { motion } from "framer-motion"
-import React, { useEffect, useState } from "react"
 import ExpandingCircle from "./ExpandingCircle"
-import { useCounter } from "./useCounter"
+import { useCounter } from "../../lib/useCounter"
 
 const HabitButton = ({
   activeHabit,

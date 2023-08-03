@@ -1,5 +1,5 @@
 import { HabitCompletion } from "@/app/types/typings"
-import React, { Dispatch, SetStateAction, useContext } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { Context } from "../HabitsContext"
 
 type Props = {

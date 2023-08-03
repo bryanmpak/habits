@@ -1,9 +1,8 @@
 import { useHabitsData } from "@/app/lib/useHabitsData"
 import { AnimatePresence, motion, useCycle } from "framer-motion"
 import React from "react"
-import InlineForm from "../Menubar/InlineForm"
 import UserToggle from "../UserToggle"
-import CreateHabitButton from "./CreateHabitButton"
+import CreateHabitForm from "./CreateHabitForm"
 import Footer from "./Footer"
 
 const sidebarVariants = {
@@ -50,9 +49,8 @@ const Sidebar = ({ isOpen, handleDismiss }: Props) => {
               <UserToggle />
               <div className="h-[2px] bg-dark"></div>
               {/* create habit (component?) */}
-              <CreateHabitButton handleDismiss={handleDismiss} />
+              <CreateHabitForm handleDismiss={handleDismiss} />
               <div className="h-[2px] bg-dark"></div>
-
               <Footer />
             </motion.div>
           </motion.aside>

@@ -14,3 +14,10 @@ export async function GET(res: NextResponse) {
 
   return NextResponse.json(data)
 }
+
+export async function DELETE(res: NextResponse) {
+  const session = await getAuthSession()
+  const userId = session?.user.id
+
+  // remove joined habits where userId & habitName (or id)
+}

@@ -6,7 +6,7 @@ type Props = {
   handleDismiss: (e: React.FormEvent) => void
 }
 
-const CreateHabitButton = ({ handleDismiss }: Props) => {
+const CreateHabitForm = ({ handleDismiss }: Props) => {
   const [addItem, toggleItem] = useCycle(false, true)
 
   return (
@@ -46,4 +46,4 @@ const CreateHabitButton = ({ handleDismiss }: Props) => {
   )
 }
 
-export default CreateHabitButton
+export default CreateHabitForm
