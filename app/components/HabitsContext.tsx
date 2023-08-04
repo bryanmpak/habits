@@ -7,6 +7,7 @@ import { useDate } from "../lib/useDate"
 type HabitContextTypes = {
   habits: Habit[]
   setHabits: Dispatch<SetStateAction<Habit[]>>
+<<<<<<< HEAD
   addHabit: (habitName: string, completions: HabitCompletion[]) => void
 =======
 import {
@@ -29,6 +30,9 @@ type HabitContextTypes = {
     slug: string
   ) => Promise<Habit>
 >>>>>>> Stashed changes
+=======
+  addHabit: (habitName: string) => void
+>>>>>>> parent of 2d5a5ac (working mvp)
   activeHabit: Habit
   setActiveHabit: Dispatch<SetStateAction<Habit>>
   datesArr: HabitCompletion[]
@@ -92,6 +96,7 @@ const HabitsContext = ({ children }: Props) => {
     completions: [...datesArr],
   })
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   const addHabit = (habitName: string, completions: HabitCompletion[]) => {
     const newHabit: Habit = {
@@ -118,6 +123,12 @@ const HabitsContext = ({ children }: Props) => {
       // might to think about if i need to refactor the Habit type to include userId
       return newHabit
 >>>>>>> Stashed changes
+=======
+  const addHabit = (habitName: string) => {
+    const newHabit: Habit = {
+      habitName,
+      completions: datesArr,
+>>>>>>> parent of 2d5a5ac (working mvp)
     }
     setActiveHabit(newHabit)
     setHabits((prevHabits) => [...prevHabits, newHabit])

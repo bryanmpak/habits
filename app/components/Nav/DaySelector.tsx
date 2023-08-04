@@ -1,23 +1,22 @@
-import React, { Dispatch, SetStateAction, useContext } from "react"
+import { useDate } from "@/app/lib/useDate"
+import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
 
-type Props = {
-  completions: HabitCompletion[]
-  setCompletions: Dispatch<SetStateAction<HabitCompletion[]>>
-}
+export default function DaySelector() {
+  const { activeHabit, setActiveHabit } = useContext(Context)
 
-export default function DaySelector({ completions, setCompletions }: Props) {
   const handleOnClick = (i: number) => {
-    setCompletions((prevCompletions) =>
-      prevCompletions.map((day, index) =>
+    setActiveHabit((prevHabit) => ({
+      ...prevHabit,
+      completions: prevHabit.completions.map((day, index) =>
         index === i ? { ...day, isIncluded: !day.isIncluded } : day
-      )
-    )
+      ),
+    }))
   }
 
   return (
     <div className="flex mx-auto gap-1">
-      {completions.map((date, i) => (
+      {activeHabit.completions.map((date, i) => (
         <button
           type="button"
           onClick={() => handleOnClick(i)}

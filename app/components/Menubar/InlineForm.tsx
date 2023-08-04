@@ -9,14 +9,17 @@ type Props = {
 
 const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("")
+<<<<<<< HEAD
   const { addHabit, datesArr, habitsList, setHabitsList } = useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
+=======
+  const { addHabit } = useContext(Context)
+>>>>>>> parent of 2d5a5ac (working mvp)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    addHabit(habitInput, completions)
+    addHabit(habitInput)
     setHabitInput("")
-    setCompletions([])
     toggleItem()
     setHabitsList((prevHabitsList) => [
       ...prevHabitsList,
@@ -54,7 +57,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
           </svg>
         </button>
       </div>
-      <DaySelector completions={completions} setCompletions={setCompletions} />
+      <DaySelector />
     </form>
   )
 }
