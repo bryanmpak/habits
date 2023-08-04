@@ -8,7 +8,6 @@ import {
   useEffect,
   useState,
 } from "react"
-import { prisma } from "../lib/prisma"
 import { Habit, HabitCompletion, HabitName } from "../types/typings"
 import { getDate } from "../lib/getDate"
 
@@ -20,8 +19,8 @@ type HabitContextTypes = {
     completions: HabitCompletion[],
     slug: string
   ) => Promise<Habit>
-  activeHabit: Habit
-  setActiveHabit: Dispatch<SetStateAction<Habit>>
+  selectedHabit: string
+  setSelectedHabit: Dispatch<SetStateAction<string>>
   datesArr: HabitCompletion[]
 }
 
@@ -34,15 +33,14 @@ const defaultHabitContext: HabitContextTypes = {
   habitList: [],
   setHabitList: () => {},
   addHabit: async () => ({ slug: "", habitName: "", completions: [] }),
-  activeHabit: { slug: "", habitName: "", completions: [] },
-  setActiveHabit: () => {},
+  selectedHabit: "",
+  setSelectedHabit: () => {},
   datesArr: [],
 }
 
 const Context = createContext<HabitContextTypes>(defaultHabitContext)
 
 const HabitsContext = ({ children }: Props) => {
-  const { data: session } = useSession()
   const dates = getDate()
   const datesArr = dates.map((date) => ({
     ...date,
@@ -60,13 +58,10 @@ const HabitsContext = ({ children }: Props) => {
     }
 
     fetchData()
+    console.log("habitlist refetched")
   }, [])
 
-  const [activeHabit, setActiveHabit] = useState<Habit>({
-    slug: "",
-    habitName: "",
-    completions: [...datesArr],
-  })
+  const [selectedHabit, setSelectedHabit] = useState("")
 
   const addHabit = async (
     habitName: string,
@@ -97,8 +92,8 @@ const HabitsContext = ({ children }: Props) => {
         habitList,
         setHabitList,
         addHabit,
-        activeHabit,
-        setActiveHabit,
+        selectedHabit,
+        setSelectedHabit,
         datesArr,
       }}
     >

@@ -29,29 +29,35 @@ type Props = {
 }
 
 const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
-  const { habitList } = useContext(Context)
+  const { habitList, setHabitList } = useContext(Context)
   const router = useRouter()
+
   const habitsListArr = habitList.map((habit, i) => (
     <div
       key={i}
-      onClick={async () => {
-        const response = await fetch("/api/habitsList", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(habit),
-        })
-        const data = await response.json()
-        if (data === "OK") {
-          toggleOpen()
-          router.push("/")
-        }
-      }}
       className="flex w-full text-title justify-between items-center p-[2px] hover:bg-light"
     >
       <p className="text-xs pl-2">{habit.habitName}</p>
-      <button className="p-2 border-light border rounded-md hover:bg-red-500">
+      <button
+        onClick={async () => {
+          setHabitList((prevHabits) =>
+            prevHabits.filter((habits) => habits.id !== habit.id)
+          )
+          const response = await fetch("/api/habitsList", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(habit),
+          })
+          const data = await response.json()
+          if (data === "OK") {
+            toggleOpen()
+            router.push("/")
+          }
+        }}
+        className="p-2 border-light border rounded-md hover:bg-red-500"
+      >
         <Trash2 className="w-4 h-4" />
       </button>
     </div>

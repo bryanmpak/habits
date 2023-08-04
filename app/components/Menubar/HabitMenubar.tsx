@@ -1,6 +1,5 @@
 "use client"
 
-import { useHabitsData } from "@/app/lib/useHabitsData"
 import { motion, useCycle } from "framer-motion"
 import { useRouter } from "next/navigation"
 import React, { useContext, useState } from "react"
@@ -9,8 +8,7 @@ import { Context } from "../HabitsContext"
 const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
-  const { habitList } = useContext(Context)
-  const [habitName, setHabitName] = useState("")
+  const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
 
   const variants = {
     open: { height: "auto" },
@@ -22,8 +20,9 @@ const HabitMenubar = () => {
       key={i}
       className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
       onClick={() => {
+        setSelectedHabit(habit.habitName)
+        console.log(habit.habitName)
         router.push(`/habits/${habit.slug}`)
-        setHabitName(habit.habitName)
         toggleOpen()
       }}
     >
@@ -39,7 +38,7 @@ const HabitMenubar = () => {
       >
         <div className="text-title text-center flex-grow">
           <p className="font-sans text-xs">
-            {habitName === "" ? "habits" : habitName}
+            {selectedHabit === "" ? "habits" : selectedHabit}
           </p>
         </div>
         <motion.svg

@@ -11,13 +11,20 @@ type Props = {
 
 const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("")
-  const { addHabit, datesArr } = useContext(Context)
+  const { addHabit, datesArr, setHabitList, setSelectedHabit } =
+    useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const slug = habitInput.replace(/\s+/g, "-").toLowerCase()
+    // create habit object and setHabitList here for optimistic update pattern
+    setHabitList((prevHabits) => [
+      ...prevHabits,
+      { slug, habitName: habitInput },
+    ])
+    setSelectedHabit(habitInput)
     await addHabit(habitInput, completions, slug)
     setHabitInput("")
     setCompletions([])
