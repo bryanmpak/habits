@@ -14,6 +14,12 @@ interface Habit {
   slug: string
 }
 
+interface HabitName {
+  habitName: string
+  id?: string
+  slug: string
+}
+
 import { Session } from "next-auth"
 
 interface UserWithId extends Session["user"] {

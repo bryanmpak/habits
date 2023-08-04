@@ -63,6 +63,6 @@ model HabitCompletion {
   isActive       Boolean
   isComplete     Boolean
   isIncluded     Boolean
-  habit          Habit    @relation(fields: [habitId], references: [id])
+  habit          Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
   habitId        String
 }

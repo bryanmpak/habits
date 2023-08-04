@@ -1,6 +1,6 @@
-import { PartialHabit } from "@/app/types/typings"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, Cycle, motion } from "framer-motion"
 import { Trash2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
 import UserToggle from "../UserToggle"
@@ -25,24 +25,28 @@ const sidebarVariants = {
 type Props = {
   isOpen: boolean
   handleDismiss: (e: React.FormEvent) => void
+  toggleOpen: Cycle
 }
 
-const Sidebar = ({ isOpen, handleDismiss }: Props) => {
-  const { habitsList } = useContext(Context)
-
-  const habitsListArr = habitsList.map((habit, i) => (
+const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
+  const { habitList } = useContext(Context)
+  const router = useRouter()
+  const habitsListArr = habitList.map((habit, i) => (
     <div
       key={i}
       onClick={async () => {
-        const habitName = habit.habitName
         const response = await fetch("/api/habitsList", {
-          method: "DELETE",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ habitName }),
+          body: JSON.stringify(habit),
         })
-        console.log(response)
+        const data = await response.json()
+        if (data === "OK") {
+          toggleOpen()
+          router.push("/")
+        }
       }}
       className="flex w-full text-title justify-between items-center p-[2px] hover:bg-light"
     >

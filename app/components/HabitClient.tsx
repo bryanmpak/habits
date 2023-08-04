@@ -11,13 +11,6 @@ type Props = {
 }
 
 const HabitClient = ({ habitData }: Props) => {
-  /* 
-  determine if there's a user
-    if no, then use context
-    if yes, use the habitData
-  
-*/
-
   const activeWeek = getDate()
   const activeIndex = activeWeek.findIndex((day) => day.isActive)
 

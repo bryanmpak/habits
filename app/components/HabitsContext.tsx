@@ -1,14 +1,20 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { createContext, Dispatch, SetStateAction, useState } from "react"
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react"
 import { prisma } from "../lib/prisma"
-import { Habit, HabitCompletion } from "../types/typings"
+import { Habit, HabitCompletion, HabitName } from "../types/typings"
 import { getDate } from "../lib/getDate"
 
 type HabitContextTypes = {
-  habits: Habit[]
-  setHabits: Dispatch<SetStateAction<Habit[]>>
+  habitList: HabitName[]
+  setHabitList: Dispatch<SetStateAction<HabitName[]>>
   addHabit: (
     habitName: string,
     completions: HabitCompletion[],
@@ -25,8 +31,8 @@ type Props = {
 
 // uhh.. not sure about this...
 const defaultHabitContext: HabitContextTypes = {
-  habits: [],
-  setHabits: () => {},
+  habitList: [],
+  setHabitList: () => {},
   addHabit: async () => ({ slug: "", habitName: "", completions: [] }),
   activeHabit: { slug: "", habitName: "", completions: [] },
   setActiveHabit: () => {},
@@ -44,7 +50,18 @@ const HabitsContext = ({ children }: Props) => {
     isIncluded: true,
   }))
 
-  const [habits, setHabits] = useState<Habit[]>([])
+  const [habitList, setHabitList] = useState<HabitName[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/habitsList")
+      const habitsList: Habit[] = await response.json()
+      setHabitList(habitsList)
+    }
+
+    fetchData()
+  }, [])
+
   const [activeHabit, setActiveHabit] = useState<Habit>({
     slug: "",
     habitName: "",
@@ -77,8 +94,8 @@ const HabitsContext = ({ children }: Props) => {
   return (
     <Context.Provider
       value={{
-        habits,
-        setHabits,
+        habitList,
+        setHabitList,
         addHabit,
         activeHabit,
         setActiveHabit,

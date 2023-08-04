@@ -3,12 +3,13 @@
 import { useHabitsData } from "@/app/lib/useHabitsData"
 import { motion, useCycle } from "framer-motion"
 import { useRouter } from "next/navigation"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+import { Context } from "../HabitsContext"
 
 const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
-  const habitList = useHabitsData()
+  const { habitList } = useContext(Context)
   const [habitName, setHabitName] = useState("")
 
   const variants = {
