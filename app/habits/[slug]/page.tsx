@@ -10,7 +10,6 @@ type PageProps = {
 
 const page = async ({ params }: PageProps) => {
   const { slug } = params
-  console.log(slug)
 
   const habitData = (await prisma.habit.findFirst({
     where: { slug: slug },

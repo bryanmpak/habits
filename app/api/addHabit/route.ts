@@ -10,12 +10,9 @@ export async function POST(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 })
     }
     const userId = session.user.id
-    // console.log(userId)
 
     const body = await req.json()
     const { slug, habitName, completions }: Habit = body
-
-    // console.log(habitName)
 
     const newHabit = await prisma.habit.create({
       data: {
