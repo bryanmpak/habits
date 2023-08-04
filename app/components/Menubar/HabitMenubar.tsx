@@ -1,4 +1,5 @@
 import { motion, useCycle } from "framer-motion"
+<<<<<<< Updated upstream
 import React, { useContext, useState } from "react"
 import { Context } from "../HabitsContext"
 import InlineForm from "./InlineForm"
@@ -6,13 +7,29 @@ import InlineForm from "./InlineForm"
 const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const { habits, activeHabit, setActiveHabit } = useContext(Context)
+=======
+import { useRouter } from "next/navigation"
+import React, { useContext, useState } from "react"
+import { Context } from "../HabitsContext"
+
+const HabitMenubar = () => {
+  const [isOpen, toggleOpen] = useCycle(false, true)
+  const router = useRouter()
+  const { habitsList } = useContext(Context)
+  // i need this to re-render,
+  const [habitName, setHabitName] = useState("")
+>>>>>>> Stashed changes
 
   const variants = {
     open: { height: "auto" },
     closed: { height: 0 },
   }
 
+<<<<<<< Updated upstream
   const habitNamesArr = habits.map((habit, i) => (
+=======
+  const habitNamesArr = habitsList.map((habit, i) => (
+>>>>>>> Stashed changes
     <div
       key={i}
       className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"

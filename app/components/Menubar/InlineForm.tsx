@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { Context } from "../HabitsContext"
-import DaySelector from "../Nav/DaySelector"
+import DaySelector from "./DaySelector"
 
 type Props = {
   toggleItem: () => void
@@ -9,7 +9,7 @@ type Props = {
 
 const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("")
-  const { addHabit, datesArr } = useContext(Context)
+  const { addHabit, datesArr, habitsList, setHabitsList } = useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,6 +18,10 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     setHabitInput("")
     setCompletions([])
     toggleItem()
+    setHabitsList((prevHabitsList) => [
+      ...prevHabitsList,
+      { habitName: habitInput, slug },
+    ])
     setTimeout(() => {
       handleDismiss(e)
     }, 100)
