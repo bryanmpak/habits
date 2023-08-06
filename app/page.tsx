@@ -1,8 +1,6 @@
 import SignIn from "./components/SignIn"
 import { getAuthSession } from "./lib/auth"
 import { getDate } from "./lib/getDate"
-import { prisma } from "./lib/prisma"
-import { Habit } from "./types/typings"
 import HabitClient from "./components/HabitClient"
 
 export default async function Home() {
@@ -27,7 +25,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-full relative">
+    <main className="relative">
       <HabitClient habitData={defaultHabitData} />
     </main>
   )
