@@ -1,6 +1,5 @@
 "use client"
 
-import { useSession } from "next-auth/react"
 import {
   createContext,
   Dispatch,
@@ -41,7 +40,7 @@ const defaultHabitContext: HabitContextTypes = {
 const Context = createContext<HabitContextTypes>(defaultHabitContext)
 
 const HabitsContext = ({ children }: Props) => {
-  const dates = getDate()
+  const dates = getDate(90)
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
@@ -58,7 +57,7 @@ const HabitsContext = ({ children }: Props) => {
     }
 
     fetchData()
-    console.log("habitlist refetched")
+    // console.log("habitlist refetched")
   }, [])
 
   const [selectedHabit, setSelectedHabit] = useState("")

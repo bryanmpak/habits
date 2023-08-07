@@ -1,7 +1,7 @@
 "use client"
 
 import { Habit } from "@/app/types/typings"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 import Day from "./Day"
 
 type Props = {
@@ -15,9 +15,14 @@ const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
     setActiveId(id)
   }
 
+  // set this up so that it maps across the whole thing but only shows this week's 7 days
+  // with the ability to go back (overflow css)
+
+  const recentCompletions = activeHabit.completions.slice(-7)
+
   return (
     <div className="flex px-4 justify-evenly items-center mx-auto mt-auto max-w-md">
-      {activeHabit.completions.map((day, i) => {
+      {recentCompletions.map((day, i) => {
         return (
           <Day
             id={i}

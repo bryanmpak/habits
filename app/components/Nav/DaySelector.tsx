@@ -1,6 +1,5 @@
 import { HabitCompletion } from "@/app/types/typings"
 import React, { Dispatch, SetStateAction } from "react"
-import { Context } from "../HabitsContext"
 
 type Props = {
   completions: HabitCompletion[]
@@ -8,17 +7,22 @@ type Props = {
 }
 
 export default function DaySelector({ completions, setCompletions }: Props) {
-  const handleOnClick = (i: number) => {
+  const DAYS_OF_WEEK = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+
+  const handleOnClick = (clickedDayIndex: number) => {
+    const clickedDay = completions[clickedDayIndex]
     setCompletions((prevCompletions) =>
-      prevCompletions.map((day, index) =>
-        index === i ? { ...day, isIncluded: !day.isIncluded } : day
+      prevCompletions.map((day) =>
+        day.dayOfWeek === clickedDay.dayOfWeek
+          ? { ...day, isIncluded: !day.isIncluded }
+          : day
       )
     )
   }
 
   return (
     <div className="flex justify-evenly">
-      {completions.map((date, i) => (
+      {DAYS_OF_WEEK.map((dayOfWeek, i) => (
         <button
           type="button"
           onClick={() => handleOnClick(i)}
@@ -27,10 +31,10 @@ export default function DaySelector({ completions, setCompletions }: Props) {
         >
           <div
             className={`${
-              date.isIncluded ? "bg-title" : "bg-nav_bg"
+              completions[i]?.isIncluded ? "bg-title" : "bg-nav_bg"
             } flex w-8 h-8 rounded-full border-2 border-neutral justify-center items-center`}
           >
-            <p>{date.dayOfWeek}</p>
+            <p>{dayOfWeek}</p>
           </div>
         </button>
       ))}

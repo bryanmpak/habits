@@ -24,7 +24,7 @@ const HabitMenubar = () => {
       className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
       onClick={() => {
         setSelectedHabit(habit.habitName)
-        console.log(habit.habitName)
+        // console.log(habit.habitName)
         router.push(`/habits/${habit.slug}`)
         toggleOpen()
       }}

@@ -1,6 +1,8 @@
 const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 
-export const getDate = (): {
+export const getDate = (
+  i: number = 7
+): {
   date: Date
   dayOfWeek: string
   isActive: boolean
@@ -10,7 +12,7 @@ export const getDate = (): {
   const startOfWeek = new Date(
     now.setDate(now.getDate() - currentDay + (currentDay === 0 ? -6 : 1))
   )
-  return Array(7)
+  return Array(i)
     .fill(0)
     .map((_, i) => {
       const day = new Date(startOfWeek)

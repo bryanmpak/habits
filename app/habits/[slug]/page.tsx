@@ -1,4 +1,5 @@
 import HabitClient from "@/app/components/HabitClient"
+import { getDate } from "@/app/lib/getDate"
 import { prisma } from "@/app/lib/prisma"
 import { Habit } from "@/app/types/typings"
 
@@ -11,6 +12,19 @@ type PageProps = {
 const page = async ({ params }: PageProps) => {
   const { slug } = params
 
+  // do the habitdata dates check here (is datesArr[0] in habitsData.completions) if not, update DB to include (?)
+  const dates = getDate(90)
+  const datesArr = dates.map((date) => ({
+    ...date,
+    isComplete: false,
+    isIncluded: true,
+  }))
+  const startOfWeek = dates[0].date
+  startOfWeek.setHours(0, 0, 0, 0)
+  const endOfWeek = new Date(startOfWeek)
+  endOfWeek.setDate(startOfWeek.getDate() + 7)
+  endOfWeek.setHours(0, 0, 0, 0)
+
   const habitData = (await prisma.habit.findFirst({
     where: { slug: slug },
     select: {
@@ -18,6 +32,12 @@ const page = async ({ params }: PageProps) => {
       habitName: true,
       slug: true,
       completions: {
+        where: {
+          date: {
+            gte: startOfWeek,
+            lt: endOfWeek,
+          },
+        },
         orderBy: {
           date: "asc",
         },
@@ -32,6 +52,8 @@ const page = async ({ params }: PageProps) => {
       },
     },
   })) as Habit
+
+  // console.log(habitData)
 
   return (
     <main className="min-h-full relative">
