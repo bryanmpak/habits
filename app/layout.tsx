@@ -1,12 +1,12 @@
 import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { HabitsContext } from "./components/HabitsContext"
+
 import { NextAuthProvider } from "./components/SessionProvider"
-import { getAuthSession } from "./lib/auth"
+
 import HabitMenubar from "./components/Menubar/HabitMenubar"
-import Menu from "./components/Nav/Menu"
-import MenuLogo from "./components/MenuLogo"
+import { getAuthSession } from "./lib/auth"
+import { HabitsContext } from "./components/HabitsContext"
 
 const inter = Inter({ subsets: ["latin"] })
 

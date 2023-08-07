@@ -7,8 +7,9 @@ import {
   useEffect,
   useState,
 } from "react"
-import { Habit, HabitCompletion, HabitName } from "../types/typings"
 import { getDate } from "../lib/getDate"
+
+import { Habit, HabitCompletion, HabitName } from "../types/typings"
 
 type HabitContextTypes = {
   habitList: HabitName[]

@@ -1,11 +1,11 @@
 "use client"
-
 import { motion, useCycle } from "framer-motion"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
 import Icons from "../Icons"
+
 import Menu from "../Nav/Menu"
 
 const HabitMenubar = () => {
