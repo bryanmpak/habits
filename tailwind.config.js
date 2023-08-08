@@ -15,6 +15,7 @@ module.exports = {
         neutral: "var(--color-neutral)",
         dark: "var(--color-dark)",
         shadow: "var(--color-shadow)",
+        shadow_accent: "var(--color-shadow_accent)",
         destructive: "var(--color-destructive)",
       },
       backgroundImage: {

@@ -16,6 +16,7 @@ html {
   --color-neutral: theme("colors.zinc.800");
   --color-dark: #1a1a1a;
   --color-shadow: #f7ba2b;
+  --color-shadow_accent: theme("colors.yellow.500")
   --color-destructive: #ff5555;
 }
 
@@ -27,5 +28,6 @@ html {
   --color-neutral: theme("colors.rose.300");
   --color-dark: theme("colors.rose.200");
   --color-shadow: theme("colors.rose.500");
+  --color-shadow_accent: theme("colors.rose.600")
   --color-destructive: #ff5555;
 }

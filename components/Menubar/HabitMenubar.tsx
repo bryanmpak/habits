@@ -10,6 +10,7 @@ import { Context } from "../HabitsContext"
 import Icons from "../Icons"
 
 import Menu from "../Nav/Menu"
+import SignInButton from "../SignInButton"
 
 const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
@@ -52,10 +53,10 @@ const HabitMenubar = () => {
       <Link href="/" className="p-4">
         <Icons.logo />
       </Link>
-      <div className="relative w-full mr-[60px] mt-2">
+      <div className="relative flex w-full mr-[60px] mt-2 gap-2">
         <button
           onClick={() => toggleOpen()}
-          className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-40 shadow-md"
+          className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-20 shadow-md"
         >
           <div className="text-title text-center flex-grow">
             <p className="font-sans text-xs">
@@ -87,7 +88,9 @@ const HabitMenubar = () => {
           {habitNamesArr}
           {/* <InlineForm /> */}
         </motion.div>
+        {!session && <SignInButton />}
       </div>
+
       <Menu />
     </div>
   )
