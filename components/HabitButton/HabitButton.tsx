@@ -1,6 +1,6 @@
 "use client"
 
-import { Habit } from "@/app/types/typings"
+import { Habit } from "@/types/typings"
 import { motion } from "framer-motion"
 import ExpandingCircle from "./ExpandingCircle"
 import { useCounter } from "../../lib/useCounter"

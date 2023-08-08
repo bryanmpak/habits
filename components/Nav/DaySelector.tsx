@@ -1,4 +1,4 @@
-import { HabitCompletion } from "@/app/types/typings"
+import { HabitCompletion } from "@/types/typings"
 import React, { Dispatch, SetStateAction } from "react"
 
 type Props = {

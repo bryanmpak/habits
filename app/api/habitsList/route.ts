@@ -1,12 +1,12 @@
-import { getAuthSession } from "@/app/lib/auth"
-import { prisma } from "@/app/lib/prisma"
+import { getAuthSession } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(res: NextResponse) {
   try {
     const session = await getAuthSession()
     if (!session?.user) {
-      return new Response("Unauthorized, please sign in!", { status: 401 })
+      return new Response("Unauthorized, please sign in.", { status: 401 })
     }
     const userId = session?.user.id
     // remember to remove id & userId since i don't think it's needed
@@ -16,7 +16,7 @@ export async function GET(res: NextResponse) {
 
     return NextResponse.json(data)
   } catch (error) {
-    console.log(error)
+    return new Response("Could not fetch habits", { status: 500 })
   }
 }
 

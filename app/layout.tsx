@@ -2,11 +2,12 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
-import { NextAuthProvider } from "./components/SessionProvider"
+import { NextAuthProvider } from "../components/SessionProvider"
 
-import HabitMenubar from "./components/Menubar/HabitMenubar"
-import { getAuthSession } from "./lib/auth"
-import { HabitsContext } from "./components/HabitsContext"
+import HabitMenubar from "../components/Menubar/HabitMenubar"
+import { getAuthSession } from "../lib/auth"
+import { HabitsContext } from "../components/HabitsContext"
+import { Toaster } from "@/components/ui/Toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -33,6 +34,7 @@ export default async function RootLayout({
             {children}
           </HabitsContext>
         </NextAuthProvider>
+        <Toaster />
       </body>
     </html>
   )

@@ -1,5 +1,6 @@
 "use client"
 
+import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { getDate } from "../lib/getDate"
 import { Habit } from "../types/typings"
@@ -16,6 +17,7 @@ const HabitClient = ({ habitData }: Props) => {
 
   const [activeId, setActiveId] = useState(activeIndex)
   const [activeHabit, setActiveHabit] = useState(habitData)
+  const { data: session } = useSession()
 
   const handleComplete = (isComplete: boolean, id: number) => {
     if (isComplete) {
@@ -26,14 +28,15 @@ const HabitClient = ({ habitData }: Props) => {
             i === activeId ? { ...day, isComplete } : day
           ),
         }
-
-        fetch(`/api/habits/${activeHabit.slug}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedHabit),
-        })
+        if (session?.user) {
+          fetch(`/api/habits/${activeHabit.slug}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedHabit),
+          })
+        }
 
         return updatedHabit
       })

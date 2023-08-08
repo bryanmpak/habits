@@ -1,7 +1,7 @@
-import HabitClient from "@/app/components/HabitClient"
-import { getDate } from "@/app/lib/getDate"
-import { prisma } from "@/app/lib/prisma"
-import { Habit } from "@/app/types/typings"
+import HabitClient from "@/components/HabitClient"
+import { getDate } from "@/lib/getDate"
+import { prisma } from "@/lib/prisma"
+import { Habit } from "@/types/typings"
 
 type PageProps = {
   params: {

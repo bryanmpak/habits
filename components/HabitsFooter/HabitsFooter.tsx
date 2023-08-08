@@ -1,6 +1,6 @@
 "use client"
 
-import { Habit } from "@/app/types/typings"
+import { Habit } from "@/types/typings"
 import { Dispatch, SetStateAction } from "react"
 import Day from "./Day"
 

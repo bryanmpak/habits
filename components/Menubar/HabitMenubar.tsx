@@ -1,5 +1,8 @@
 "use client"
+import { toast } from "@/lib/useToast"
+import { HabitName } from "@/types/typings"
 import { motion, useCycle } from "framer-motion"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
@@ -12,22 +15,33 @@ const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
   const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
+  const { data: session } = useSession()
 
   const variants = {
     open: { height: "auto" },
     closed: { height: 0 },
   }
 
+  const handleClick = (habit: HabitName) => {
+    if (!session) {
+      toast({
+        title: "not signed in",
+        description: "please sign in to edit habits!",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setSelectedHabit(habit.habitName)
+    router.push(`/habits/${habit.slug}`)
+    toggleOpen()
+  }
+
   const habitNamesArr = habitList.map((habit, i) => (
     <div
       key={i}
       className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
-      onClick={() => {
-        setSelectedHabit(habit.habitName)
-        // console.log(habit.habitName)
-        router.push(`/habits/${habit.slug}`)
-        toggleOpen()
-      }}
+      onClick={() => handleClick(habit)}
     >
       {habit.habitName}
     </div>

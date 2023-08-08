@@ -1,8 +1,10 @@
-import { Habit, HabitCompletion } from "@/app/types/typings"
+import { toast } from "@/lib/useToast"
+import { HabitCompletion } from "@/types/typings"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import React, { useContext, useState } from "react"
 import { Context } from "../HabitsContext"
-import DaySelector from "../Nav/DaySelector"
+import DaySelector from "./DaySelector"
 
 type Props = {
   toggleItem: () => void
@@ -15,24 +17,38 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
   const router = useRouter()
+  const { data: session } = useSession()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const slug = habitInput.replace(/\s+/g, "-").toLowerCase()
-    // create habit object and setHabitList here for optimistic update pattern
+    if (session?.user) {
+      await addHabit(habitInput, completions, slug)
+      setTimeout(() => {
+        router.push(`/habits/${slug}`)
+        handleDismiss(e)
+      }, 100)
+    } else {
+      toast({
+        title: "not signed in",
+        description: "sign in to add habits!",
+      })
+      setTimeout(() => {
+        router.push("/")
+        handleDismiss(e)
+      }, 100)
+    }
+    // create habit object and setHabitList here for optimistic UI pattern
     setHabitList((prevHabits) => [
       ...prevHabits,
       { slug, habitName: habitInput },
     ])
+
     setSelectedHabit(habitInput)
-    await addHabit(habitInput, completions, slug)
+
     setHabitInput("")
     setCompletions([])
     toggleItem()
-    setTimeout(() => {
-      router.push(`/habits/${slug}`)
-      handleDismiss(e)
-    }, 100)
   }
 
   return (

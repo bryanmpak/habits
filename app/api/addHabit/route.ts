@@ -1,6 +1,6 @@
-import { prisma } from "@/app/lib/prisma"
-import { Habit } from "@/app/types/typings"
-import { getAuthSession } from "@/app/lib/auth"
+import { prisma } from "@/lib/prisma"
+import { Habit } from "@/types/typings"
+import { getAuthSession } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {

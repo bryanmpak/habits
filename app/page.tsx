@@ -1,7 +1,6 @@
-import { getAuthSession } from "./lib/auth"
-import { getDate } from "./lib/getDate"
-import HabitClient from "./components/HabitClient"
-import SignIn from "./components/SignIn"
+import { getAuthSession } from "../lib/auth"
+import { getDate } from "../lib/getDate"
+import HabitClient from "../components/HabitClient"
 
 export default async function Home() {
   const session = await getAuthSession()

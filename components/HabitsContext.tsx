@@ -1,5 +1,6 @@
 "use client"
 
+import { useSession } from "next-auth/react"
 import {
   createContext,
   Dispatch,
@@ -8,7 +9,6 @@ import {
   useState,
 } from "react"
 import { getDate } from "../lib/getDate"
-
 import { Habit, HabitCompletion, HabitName } from "../types/typings"
 
 type HabitContextTypes = {
@@ -47,11 +47,17 @@ const HabitsContext = ({ children }: Props) => {
     isComplete: false,
     isIncluded: true,
   }))
+  const { data: session } = useSession()
 
   const [habitList, setHabitList] = useState<HabitName[]>([])
 
   useEffect(() => {
+    if (!session) {
+      return
+    }
+
     const fetchData = async () => {
+      //
       const response = await fetch("/api/habitsList")
       const habitsList: Habit[] = await response.json()
       setHabitList(habitsList)
@@ -59,7 +65,8 @@ const HabitsContext = ({ children }: Props) => {
 
     fetchData()
     // console.log("habitlist refetched")
-  }, [])
+    // *** not sure if i need this session here as a dependency
+  }, [session])
 
   const [selectedHabit, setSelectedHabit] = useState("")
 
