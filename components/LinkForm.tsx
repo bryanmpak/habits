@@ -1,5 +1,6 @@
 "use client"
 import { toast } from "@/lib/useToast"
+import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
 const LinkForm = () => {
@@ -7,15 +8,27 @@ const LinkForm = () => {
   const [email, setEmail] = useState("")
   const [secretQuestion, setSecretQuestion] = useState("")
   const [secretAnswer, setSecretAnswer] = useState("")
+  const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {}
-  const handleClick = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true)
     try {
-      toast({
-        title: "request submitted",
-        description: "nudge your partner to finish the linking process 😉",
+      const response = await fetch("/api/link/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, secretQuestion, secretAnswer }),
       })
+      if (response.ok) {
+        toast({
+          title: "request submitted",
+          description: "nudge your partner to finish the linking process 😉",
+        })
+
+        router.push("/")
+      }
+      // *** add an else clause here
     } catch (error) {
       toast({
         title: "request failed",
