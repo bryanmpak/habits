@@ -24,7 +24,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className="w-80 rounded-md mx-auto flex flex-col items-center gap-10 pt-20">
+    <div className="w-80 rounded-md mx-auto flex flex-col items-center gap-8 pt-20">
       <h1 className="text-3xl text-title">placeholder text</h1>
       <button
         disabled={isLoading}
@@ -34,9 +34,16 @@ const SignIn = () => {
         <Icons.google className="w-6 h-6" />
         <p>Continue with Google</p>
       </button>
-      <div className="h-[1px] w-full bg-text"></div>
-      <Link href="/" className="text-title">
-        Continue as Guest (setup later)
+      <div className="relative flex w-full items-center">
+        <div className="h-[1px] w-full bg-text"></div>
+        <p className="text-title px-2">OR</p>
+        <div className="h-[1px] w-full bg-text"></div>
+      </div>
+      <Link
+        href="/"
+        className="text-title text-sm hover:decoration-white hover:underline"
+      >
+        Continue as Guest
       </Link>
     </div>
   )

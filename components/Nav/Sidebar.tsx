@@ -70,10 +70,6 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
           <motion.aside
             onClick={(e) => e.stopPropagation()}
             className="h-full w-[80vw] sm:w-[60vw] fixed right-0 bg-neutral px-4 py-3 z-20"
-            style={{
-              right: `calc((100% - 650px) / 2)`,
-              padding: "1rem",
-            }}
             initial={{ x: "100%" }}
             animate={{ x: 0, transition: { delay: 0.4, duration: 0.2 } }}
             exit={{ x: "100%", transition: { delay: 0.7, duration: 0.3 } }}

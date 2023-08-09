@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
 import Icons from "../Icons"
+import LinkButton from "../LinkButton"
 
 import Menu from "../Nav/Menu"
 import SignInButton from "../SignInButton"
@@ -56,7 +57,7 @@ const HabitMenubar = () => {
       <div className="relative flex w-full mr-[60px] mt-2 gap-2">
         <button
           onClick={() => toggleOpen()}
-          className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-[40px] flex justify-center items-center z-20 shadow-md"
+          className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-10 flex justify-center items-center z-20 shadow-md"
         >
           <div className="text-title text-center flex-grow">
             <p className="font-sans text-xs">
@@ -86,9 +87,8 @@ const HabitMenubar = () => {
           transition={{ duration: 0.3 }}
         >
           {habitNamesArr}
-          {/* <InlineForm /> */}
         </motion.div>
-        {!session && <SignInButton />}
+        {!session && <LinkButton />}
       </div>
 
       <Menu />

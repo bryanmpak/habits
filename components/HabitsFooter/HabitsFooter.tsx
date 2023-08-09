@@ -18,6 +18,7 @@ const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
   // set this up so that it maps across the whole thing but only shows this week's 7 days
   // with the ability to go back (overflow css)
 
+  // *** i don't think this works with most recent refactor
   const recentCompletions = activeHabit.completions.slice(-7)
 
   return (

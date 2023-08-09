@@ -46,6 +46,21 @@ model User {
   accounts      Account[]
   sessions      Session[]
   habits        Habit[]
+  linkedUserId    String?   @db.ObjectId
+  linkingRequests LinkingRequest[]
+
+  @@index([linkedUserId], name: "linkedUserId_idx")
+}
+
+model LinkingRequest {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  requestorId      String   @map("requestor_id") @db.ObjectId
+  responderEmail   String
+  secretQuestion   String
+  secretAnswerHash String
+  expiryDate       DateTime
+  linkType         String
+  requestor        User     @relation(fields: [requestorId], references: [id])
 }
 
 model Habit {
