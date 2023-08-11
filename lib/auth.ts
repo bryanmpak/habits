@@ -30,6 +30,12 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email
         session.user.image = token.picture
         session.user.username = token.username
+        if (
+          typeof token.linkedUserId === "string" ||
+          token.linkedUserId === null
+        ) {
+          session.user.linkedUserId = token.linkedUserId
+        }
       }
 
       return session
@@ -58,6 +64,7 @@ export const authOptions: NextAuthOptions = {
         name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
+        linkedUserId: dbUser.linkedUserId ? dbUser.linkedUserId : null,
       }
     },
     redirect() {

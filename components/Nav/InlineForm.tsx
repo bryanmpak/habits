@@ -35,6 +35,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
       })
       setTimeout(() => {
         router.push("/")
+        router.refresh()
         handleDismiss(e)
       }, 100)
     }

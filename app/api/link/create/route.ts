@@ -13,6 +13,13 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { email, secretQuestion, secretAnswer } = body
 
+    const emailLookup = await prisma.user.findFirst({
+      where: { email: email },
+    })
+    if (!emailLookup) {
+      return new Response("Invalid credentials", { status: 400 })
+    }
+
     // *** for now, until i figure out hashing
     const secretAnswerHash = secretAnswer
 
@@ -27,7 +34,7 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return new Response("OK")
+    return new Response("OK", { status: 200 })
   } catch (error) {
     return new Response("Something went wrong", { status: 400 })
   }

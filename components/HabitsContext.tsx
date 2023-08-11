@@ -88,7 +88,7 @@ const HabitsContext = ({ children }: Props) => {
       throw new Error(`HTTP Error, status: ${response.status}`)
     } else {
       const newHabit: Habit = await response.json()
-      // might to think about if i need to refactor the Habit type to include userId
+      // *** might to think about if i need to refactor the Habit type to include userId
       return newHabit
     }
   }

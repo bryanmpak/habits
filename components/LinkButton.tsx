@@ -1,7 +1,6 @@
 "use client"
 import { motion, useCycle } from "framer-motion"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 const LinkButton = () => {
   // *** i don't like the flickering (on HabitMenubar, maybe do a useSWR or something)
@@ -42,11 +41,11 @@ const LinkButton = () => {
           create link
         </Link>
         <Link
-          href="/link-user"
+          href="/connect-link"
           className="hover:underline hover:decoration-shadow"
           onClick={() => toggleOpen()}
         >
-          link user
+          connect link
         </Link>
       </motion.div>
     </div>

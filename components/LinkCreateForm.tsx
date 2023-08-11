@@ -3,7 +3,7 @@ import { toast } from "@/lib/useToast"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
-const LinkForm = () => {
+const LinkCreateForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState("")
   const [secretQuestion, setSecretQuestion] = useState("")
@@ -11,6 +11,8 @@ const LinkForm = () => {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
     setIsLoading(true)
     try {
       const response = await fetch("/api/link/create", {
@@ -20,6 +22,7 @@ const LinkForm = () => {
         },
         body: JSON.stringify({ email, secretQuestion, secretAnswer }),
       })
+
       if (response.ok) {
         toast({
           title: "request submitted",
@@ -27,6 +30,7 @@ const LinkForm = () => {
         })
 
         router.push("/")
+        router.refresh()
       }
       // *** add an else clause here
     } catch (error) {
@@ -77,4 +81,4 @@ const LinkForm = () => {
   )
 }
 
-export default LinkForm
+export default LinkCreateForm

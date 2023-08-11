@@ -19,6 +19,9 @@ const HabitMenubar = () => {
   const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
   const { data: session } = useSession()
 
+  console.log(session?.user.linkedUserId)
+  console.log(session)
+
   const variants = {
     open: { height: "auto" },
     closed: { height: 0 },
@@ -88,7 +91,8 @@ const HabitMenubar = () => {
         >
           {habitNamesArr}
         </motion.div>
-        {!session && <LinkButton />}
+        {!session && <SignInButton />}
+        {session && !session?.user.linkedUserId ? <LinkButton /> : ""}
       </div>
 
       <Menu />
