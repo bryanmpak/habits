@@ -2,6 +2,7 @@
 import { toast } from "@/lib/useToast"
 import { HabitName } from "@/types/typings"
 import { motion, useCycle } from "framer-motion"
+import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -9,18 +10,18 @@ import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
 import Icons from "../Icons"
 import LinkButton from "../LinkButton"
-
 import Menu from "../Nav/Menu"
 import SignInButton from "../SignInButton"
+
+type Props = {
+  session: Session | null
+}
 
 const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
   const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
   const { data: session } = useSession()
-
-  console.log(session?.user.linkedUserId)
-  console.log(session)
 
   const variants = {
     open: { height: "auto" },
@@ -83,7 +84,7 @@ const HabitMenubar = () => {
 
         {/* have fun with the animations here */}
         <motion.div
-          className="absolute top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10"
+          className="absolute px-4 flex flex-col top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10"
           variants={variants}
           initial="closed"
           animate={isOpen ? "open" : "closed"}
@@ -91,8 +92,12 @@ const HabitMenubar = () => {
         >
           {habitNamesArr}
         </motion.div>
-        {!session && <SignInButton />}
-        {session && !session?.user.linkedUserId ? <LinkButton /> : ""}
+
+        {!session ? (
+          <SignInButton />
+        ) : !session.user.linkedUserId ? (
+          <LinkButton />
+        ) : null}
       </div>
 
       <Menu />

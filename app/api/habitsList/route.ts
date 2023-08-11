@@ -42,11 +42,4 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.log(error)
   }
-
-  const session = await getAuthSession()
-  const userId = session?.user.id
-
-  const body = await req.json()
-
-  return NextResponse.json("OK")
 }

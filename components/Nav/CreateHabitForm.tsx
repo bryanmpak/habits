@@ -30,7 +30,6 @@ const CreateHabitForm = ({ handleDismiss }: Props) => {
       </button>
       {addItem && (
         <motion.div
-          className="p-2 flex"
           initial={{ opacity: 0, translateY: "-25%" }}
           animate={
             addItem
