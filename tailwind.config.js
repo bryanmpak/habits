@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "400px",
+      },
       colors: {
         title: "var(--color-title)",
         text: "var(--color-text)",

@@ -21,6 +21,7 @@ const Menu = () => {
     }
   }, [isOpen, toggleOpen])
 
+  // *** at certain size, display sidebar & get rid of menu
   return (
     <div className="flex right-0">
       <Sidebar
@@ -31,7 +32,7 @@ const Menu = () => {
           toggleOpen()
         }}
       />
-      <div className="fixed top-0 right-0 p-4 z-50">
+      <div className="fixed top-0 right-0 p-4 z-50 lg:hidden">
         <HamburgerMenuToggle
           isOpen={isOpen}
           toggleOpen={(e: React.MouseEvent) => {

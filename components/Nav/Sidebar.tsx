@@ -57,9 +57,13 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
   const habitsListArr = habitList.map((habit, i) => (
     <div
       key={i}
-      className="flex w-full text-title justify-between items-center p-[2px] hover:bg-light"
+      className="flex w-full text-title items-center py-[2px] px-2 gap-2 hover:bg-light"
     >
-      <p className="text-xs pl-2">{habit.habitName}</p>
+      <div
+        className="w-4 h-4 rounded-full"
+        style={{ backgroundColor: habit.color }}
+      ></div>
+      <p className="text-xs flex-1">{habit.habitName}</p>
       <button
         onClick={() => handleClick(habit)}
         className="p-2 border-light border rounded-md hover:bg-red-500"
@@ -75,7 +79,7 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
         {isOpen && (
           <motion.aside
             onClick={(e) => e.stopPropagation()}
-            className="h-full w-[90vw] sm:w-[60vw] fixed right-0 bg-neutral px-1 sm:px-4 py-3 z-20"
+            className="h-full w-[90vw] xs:w-[60vw] max-w-[400px] fixed right-0 bg-neutral px-1 sm:px-4 py-3 z-20"
             initial={{ x: "100%" }}
             animate={{ x: 0, transition: { delay: 0.4, duration: 0.2 } }}
             exit={{ x: "100%", transition: { delay: 0.7, duration: 0.3 } }}

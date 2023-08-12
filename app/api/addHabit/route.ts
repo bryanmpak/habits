@@ -12,12 +12,13 @@ export async function POST(req: NextRequest) {
     const userId = session.user.id
 
     const body = await req.json()
-    const { slug, habitName, completions }: Habit = body
+    const { slug, habitName, completions, color }: Habit = body
 
     const newHabit = await prisma.habit.create({
       data: {
         slug,
         habitName,
+        color,
         completions: {
           create: completions.map((completion) => ({
             date: completion.date,

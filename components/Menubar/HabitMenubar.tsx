@@ -88,9 +88,9 @@ const HabitMenubar = () => {
           variants={variants}
           initial="closed"
           animate={isOpen ? "open" : "closed"}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
-          {habitNamesArr}
+          <div className="border border-light rounded-md">{habitNamesArr}</div>
         </motion.div>
 
         {!session ? (

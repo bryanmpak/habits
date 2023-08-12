@@ -2,7 +2,7 @@ import { toast } from "@/lib/useToast"
 import { HabitCompletion } from "@/types/typings"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { Context } from "../HabitsContext"
 import DaySelector from "./DaySelector"
 
@@ -13,18 +13,25 @@ type Props = {
 
 const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("")
-  const [habitColor, setHabitColor] = useState("#FFFFFF")
+  const [color, setColor] = useState("#FFFFFF")
   const { addHabit, datesArr, setHabitList, setSelectedHabit } =
     useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
   const router = useRouter()
   const { data: session } = useSession()
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const slug = habitInput.replace(/\s+/g, "-").toLowerCase()
     if (session?.user) {
-      await addHabit(habitInput, completions, slug)
+      await addHabit(habitInput, completions, slug, color)
       setTimeout(() => {
         router.push(`/habits/${slug}`)
         router.refresh()
@@ -42,7 +49,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     // create habit object and setHabitList here for optimistic UI pattern
     setHabitList((prevHabits) => [
       ...prevHabits,
-      { slug, habitName: habitInput },
+      { slug, habitName: habitInput, color },
     ])
 
     setSelectedHabit(habitInput)
@@ -52,22 +59,24 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     toggleItem()
   }
 
+  // *** maybe add a way for the "create habit" button to spin onClick
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="flex w-full  mt-2 justify-center items-center gap-1 border border-light"
+      className="flex w-full p-2 justify-center items-center gap-1 "
     >
-      <div className="p-1 h-16 flex justify-center items-center">
+      <div className="w-12 h-16 flex justify-center items-center">
         <input
-          className="rounded-sm w-6 h-6 cursor-pointer bg-title"
+          className="rounded-sm w-8 h-8 cursor-pointer bg-title"
           type="color"
-          value={habitColor}
-          onChange={(e) => setHabitColor(e.target.value)}
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
         />
       </div>
-      <div className="flex flex-col gap-1 flex-1 justify-center">
+      <div className="flex flex-col gap-1 flex-1 justify-center p-2">
         <input
-          className="flex-grow px-2 bg-title text-black focus:outline-none"
+          ref={inputRef}
+          className="flex-grow px-2 bg-neutral border border-light text-title rounded-sm focus:border-white focus:outline-none"
           type={"text"}
           placeholder="Add New Habit"
           value={habitInput}
@@ -79,8 +88,9 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
         />
       </div>
       <button
-        className="w-16 h-16 rounded-md flex justify-center items-center hover:bg-shadow"
+        className="w-12 h-16 rounded-md flex justify-center items-center border border-light bg-shadow disabled:bg-transparent disabled:cursor-not-allowed hover:bg-shadow_accent"
         type="submit"
+        disabled={habitInput === ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

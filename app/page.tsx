@@ -16,6 +16,7 @@ export default async function Home() {
     id: "",
     slug: "",
     habitName: "",
+    color: "",
     completions: datesArr,
   }
 

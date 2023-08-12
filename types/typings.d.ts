@@ -12,9 +12,11 @@ interface Habit {
   completions: HabitCompletion[]
   id?: string
   slug: string
+  color: string
 }
 
 interface HabitName {
+  color?: string
   habitName: string
   id?: string
   slug: string

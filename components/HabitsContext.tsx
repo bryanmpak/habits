@@ -17,7 +17,8 @@ type HabitContextTypes = {
   addHabit: (
     habitName: string,
     completions: HabitCompletion[],
-    slug: string
+    slug: string,
+    habitColor: string
   ) => Promise<Habit>
   selectedHabit: string
   setSelectedHabit: Dispatch<SetStateAction<string>>
@@ -32,7 +33,12 @@ type Props = {
 const defaultHabitContext: HabitContextTypes = {
   habitList: [],
   setHabitList: () => {},
-  addHabit: async () => ({ slug: "", habitName: "", completions: [] }),
+  addHabit: async () => ({
+    slug: "",
+    habitName: "",
+    completions: [],
+    color: "",
+  }),
   selectedHabit: "",
   setSelectedHabit: () => {},
   datesArr: [],
@@ -73,7 +79,8 @@ const HabitsContext = ({ children }: Props) => {
   const addHabit = async (
     habitName: string,
     completions: HabitCompletion[],
-    slug: string
+    slug: string,
+    color: string
   ): Promise<Habit> => {
     // console.log(habitName, completions)
     const response = await fetch("/api/addHabit", {
@@ -81,7 +88,7 @@ const HabitsContext = ({ children }: Props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ slug, habitName, completions }),
+      body: JSON.stringify({ slug, habitName, completions, color }),
     })
 
     if (!response.ok) {
