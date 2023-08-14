@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from "react"
-import { getDate } from "../lib/getDate"
+import { getDate } from "../lib/dates"
 import { Habit, HabitCompletion, HabitName } from "../types/typings"
 
 type HabitContextTypes = {

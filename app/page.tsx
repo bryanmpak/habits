@@ -1,5 +1,5 @@
 import { getAuthSession } from "../lib/auth"
-import { getDate } from "../lib/getDate"
+import { getDate } from "../lib/dates"
 import HabitClient from "../components/HabitClient"
 
 export default async function Home() {
