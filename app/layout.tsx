@@ -9,7 +9,6 @@ import { getAuthSession } from "../lib/auth"
 import { HabitsContext } from "../components/HabitsContext"
 import { Toaster } from "@/components/ui/Toaster"
 import { Context, UserContext } from "@/components/UserContext"
-import { useContext } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
 

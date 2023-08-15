@@ -14,7 +14,7 @@ const defaultUserContextTypes: UserContextTypes = {
 
 const Context = createContext<UserContextTypes[]>([defaultUserContextTypes])
 
-const UserContext = async (children: React.ReactNode) => {
+const UserContext = async ({ children }: { children: React.ReactNode }) => {
   const session = await getAuthSession()
   if (!session) {
     return
