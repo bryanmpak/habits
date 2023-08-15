@@ -15,10 +15,10 @@ const CreateHabitForm = ({ handleDismiss }: Props) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 20 20"
           strokeWidth="1.5"
           stroke="var(--color-title)"
-          className="w-5 h-5"
+          className="w-3 h-3"
         >
           <path
             strokeLinecap="round"
@@ -26,7 +26,7 @@ const CreateHabitForm = ({ handleDismiss }: Props) => {
             d="M12 4.5v15m7.5-7.5h-15"
           />
         </svg>
-        <p className="flex-grow text-left text-sm px-1">Create New Habit</p>
+        <p className="flex-grow text-left text-xs px-2">create new habit</p>
       </button>
       {addItem && (
         <motion.div

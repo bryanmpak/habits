@@ -2,6 +2,7 @@ import { HabitName } from "@/types/typings"
 import { AnimatePresence, Cycle, motion } from "framer-motion"
 import { Trash2 } from "lucide-react"
 import { useSession } from "next-auth/react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
@@ -63,7 +64,13 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
         className="w-4 h-4 rounded-full"
         style={{ backgroundColor: habit.color }}
       ></div>
-      <p className="text-xs flex-1">{habit.habitName}</p>
+      <Link
+        href={`/habits/${habit.slug}`}
+        onClick={() => toggleOpen()}
+        className="text-xs flex-1"
+      >
+        {habit.habitName}
+      </Link>
       <button
         onClick={() => handleClick(habit)}
         className="p-2 border-light border rounded-md hover:bg-red-500"
@@ -97,6 +104,14 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
               <CreateHabitForm handleDismiss={handleDismiss} />
               <div className="h-[2px] bg-dark"></div>
               <div>{habitsListArr}</div>
+              <div className="h-[2px] bg-dark"></div>
+              <Link
+                onClick={() => toggleOpen()}
+                className="text-title text-xs px-2 hover:underline hover:decoration-shadow"
+                href="/calendar"
+              >
+                calendar
+              </Link>
               <Footer />
             </motion.div>
           </motion.aside>

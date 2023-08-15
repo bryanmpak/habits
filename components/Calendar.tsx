@@ -82,7 +82,7 @@ const Calendar = async ({ users, habits }: Props) => {
     ))
 
   return (
-    <div className="flex gap-12">
+    <div className="flex gap-6">
       <div className="flex flex-col gap-1 items-center">
         <div className="h-4"></div>
         {datesEl}

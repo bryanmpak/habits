@@ -78,7 +78,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
           ref={inputRef}
           className="flex-grow px-2 bg-neutral border border-light text-title rounded-sm focus:border-white focus:outline-none"
           type={"text"}
-          placeholder="Add New Habit"
+          placeholder="add new habit"
           value={habitInput}
           onChange={(e) => setHabitInput(e.target.value)}
         ></input>
