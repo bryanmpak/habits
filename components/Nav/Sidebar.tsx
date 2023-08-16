@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
 import { Context } from "../HabitsContext"
-import UserToggle from "../UserToggle"
+import ThemeToggle from "../ThemeToggle"
 import CreateHabitForm from "./CreateHabitForm"
 import Footer from "./Footer"
 
@@ -86,7 +86,7 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
         {isOpen && (
           <motion.aside
             onClick={(e) => e.stopPropagation()}
-            className="h-full w-[90vw] xs:w-[60vw] max-w-[400px] fixed right-0 bg-neutral px-1 sm:px-4 py-3 z-20"
+            className="h-full w-[90vw] xs:w-[60vw] max-w-[400px] fixed right-0 bg-light px-1 sm:px-4 py-3 z-20"
             initial={{ x: "100%" }}
             animate={{ x: 0, transition: { delay: 0.4, duration: 0.2 } }}
             exit={{ x: "100%", transition: { delay: 0.7, duration: 0.3 } }}
@@ -98,7 +98,7 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
               exit="closed"
               variants={sidebarVariants}
             >
-              <UserToggle />
+              <ThemeToggle />
               <div className="h-[2px] bg-dark"></div>
               {/* create habit (component?) */}
               <CreateHabitForm handleDismiss={handleDismiss} />

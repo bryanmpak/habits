@@ -4,11 +4,12 @@ import { Inter } from "next/font/google"
 
 import { NextAuthProvider } from "../components/SessionProvider"
 
-import HabitMenubar from "../components/Menubar/HabitMenubar"
+import HabitMenubar from "../components/HabitMenubar"
 import { getAuthSession } from "../lib/auth"
 import { HabitsContext } from "../components/HabitsContext"
 import { Toaster } from "@/components/ui/Toaster"
-import { Context, UserContext } from "@/components/UserContext"
+import { cookies } from "next/headers"
+import ThemeProvider from "@/components/ThemeContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,17 +24,23 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const session = await getAuthSession()
+  const savedTheme = cookies().get("color-theme")
+  const theme = savedTheme?.value || "light"
+  const customBg =
+    theme === "light"
+      ? "bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300"
+      : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black"
 
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} min-h-full theme-mar bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300`} //"bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300" "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black"
-      >
+    <html lang="en" data-color-theme={theme}>
+      <body className={`${inter.className} min-h-full ${customBg}`}>
         <NextAuthProvider session={session}>
-          <HabitsContext>
-            <HabitMenubar />
-            {children}
-          </HabitsContext>
+          <ThemeProvider>
+            <HabitsContext>
+              <HabitMenubar />
+              {children}
+            </HabitsContext>
+          </ThemeProvider>
         </NextAuthProvider>
         <Toaster />
       </body>

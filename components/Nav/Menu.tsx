@@ -5,7 +5,7 @@ import React, { useEffect } from "react"
 import HamburgerMenuToggle from "./HamburgerMenuToggle"
 import Sidebar from "./Sidebar"
 
-const Menu = () => {
+const Menu = ({ initialTheme }: { initialTheme: string }) => {
   const [isOpen, toggleOpen] = useCycle(false, true)
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const Menu = () => {
           e.stopPropagation()
           toggleOpen()
         }}
+        initialTheme={initialTheme}
       />
       <div className="fixed top-0 right-0 p-4 z-50 lg:hidden">
         <HamburgerMenuToggle

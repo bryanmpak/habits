@@ -17,7 +17,7 @@ type Props = {
   session: Session | null
 }
 
-const HabitMenubar = () => {
+const HabitMenubar = ({ initialTheme }: { initialTheme: string }) => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
   const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
@@ -103,7 +103,7 @@ const HabitMenubar = () => {
         ) : null}
       </div>
 
-      <Menu />
+      <Menu initialTheme={initialTheme} />
     </div>
   )
 }

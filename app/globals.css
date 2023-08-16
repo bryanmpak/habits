@@ -8,26 +8,26 @@ html {
   height: 100%;
 }
 
-.theme-pak {
-  --color-title: theme("colors.white");
+[data-color-theme="dark"] {
+  --color-title: #ffffff;
   --color-text: #bebebe;
-  --color-nav_bg: theme("colors.black");
-  --color-light: theme("colors.zinc.700");
-  --color-neutral: theme("colors.zinc.800");
+  --color-nav_bg: #000000;
+  --color-light: #3f3f46;
+  --color-neutral: #27272a;
   --color-dark: #1a1a1a;
   --color-shadow: #f7ba2b;
-  --color-shadow_accent: theme("colors.yellow.500");
+  --color-shadow_accent: #eab308;
   --color-destructive: #ff5555;
 }
 
-.theme-mar {
-  --color-title: theme("colors.white");
-  --color-text: theme("colors.rose.500");
-  --color-nav_bg: theme("colors.rose.300");
-  --color-light: theme("colors.rose.300");
-  --color-neutral: theme("colors.rose.300");
-  --color-dark: theme("colors.rose.200");
-  --color-shadow: theme("colors.rose.500");
-  --color-shadow_accent: theme("colors.rose.700");
+[data-color-theme="light"] {
+  --color-title: #ffffff;
+  --color-text: #f43f5e;
+  --color-nav_bg: #fda4af;
+  --color-light: #deafb8;
+  --color-neutral: #fda4af;
+  --color-dark: #fecdd3;
+  --color-shadow: #f43f5e;
+  --color-shadow_accent: #be123c;
   --color-destructive: #ff5555;
 }
