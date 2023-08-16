@@ -1,4 +1,3 @@
-import { HabitName } from "@/types/typings"
 import { AnimatePresence, Cycle, motion } from "framer-motion"
 import { Trash2 } from "lucide-react"
 import { useSession } from "next-auth/react"
@@ -99,12 +98,11 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
               variants={sidebarVariants}
             >
               <ThemeToggle />
-              <div className="h-[2px] bg-dark"></div>
-              {/* create habit (component?) */}
+              <div className="h-[1px] bg-dark"></div>
               <CreateHabitForm handleDismiss={handleDismiss} />
-              <div className="h-[2px] bg-dark"></div>
+              <div className="h-[1px] bg-dark"></div>
               <div>{habitsListArr}</div>
-              <div className="h-[2px] bg-dark"></div>
+              <div className="h-[1px] bg-dark"></div>
               <Link
                 onClick={() => toggleOpen()}
                 className="text-title text-xs px-2 hover:underline hover:decoration-shadow"

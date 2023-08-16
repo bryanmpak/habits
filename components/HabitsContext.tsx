@@ -9,7 +9,6 @@ import {
   useState,
 } from "react"
 import { getDate } from "../lib/dates"
-import { Habit, HabitCompletion, HabitName } from "../types/typings"
 
 type HabitContextTypes = {
   habitList: HabitName[]

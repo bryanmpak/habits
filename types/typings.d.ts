@@ -21,13 +21,3 @@ interface HabitName {
   id?: string
   slug: string
 }
-
-import { Session } from "next-auth"
-
-interface UserWithId extends Session["user"] {
-  id: string
-}
-
-interface ExtendedSession extends Session {
-  user: UserWithId
-}

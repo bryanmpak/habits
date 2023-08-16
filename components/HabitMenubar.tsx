@@ -1,6 +1,5 @@
 "use client"
 import { toast } from "@/lib/useToast"
-import { HabitName } from "@/types/typings"
 import { motion, useCycle } from "framer-motion"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
@@ -13,11 +12,7 @@ import LinkButton from "./LinkButton"
 import Menu from "./Nav/Menu"
 import SignInButton from "./SignInButton"
 
-type Props = {
-  session: Session | null
-}
-
-const HabitMenubar = ({ initialTheme }: { initialTheme: string }) => {
+const HabitMenubar = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
   const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
@@ -103,7 +98,7 @@ const HabitMenubar = ({ initialTheme }: { initialTheme: string }) => {
         ) : null}
       </div>
 
-      <Menu initialTheme={initialTheme} />
+      <Menu />
     </div>
   )
 }

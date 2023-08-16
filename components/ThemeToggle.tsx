@@ -42,10 +42,12 @@ const ThemeToggle = () => {
       onClick={handleClick}
     >
       <motion.div
-        className="bg-neutral border-light border-2 w-[24px] h-[24px] rounded-full"
+        className="bg-neutral border-light border-2 w-[24px] h-[24px] rounded-full flex justify-center items-center"
         layout
         transition={spring}
-      />
+      >
+        <p className="text-sm items-center">{theme === "dark" ? "🍆" : "🍑"}</p>
+      </motion.div>
     </div>
   )
 }
