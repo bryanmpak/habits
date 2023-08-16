@@ -29,7 +29,6 @@ export default async function RootLayout({
       <body
         className={`${inter.className} min-h-full theme-mar bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300`} //"bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300" "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black"
       >
-        {/* <UserContext> */}
         <NextAuthProvider session={session}>
           <HabitsContext>
             <HabitMenubar />
@@ -37,7 +36,6 @@ export default async function RootLayout({
           </HabitsContext>
         </NextAuthProvider>
         <Toaster />
-        {/* </UserContext> */}
       </body>
     </html>
   )

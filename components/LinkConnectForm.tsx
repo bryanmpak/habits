@@ -28,14 +28,6 @@ const LinkConnectForm = () => {
         router.push("/")
         router.refresh()
       }
-
-      if (!response.ok) {
-        toast({
-          title: "efff",
-          description: "wtf",
-          variant: "destructive",
-        })
-      }
     } catch (error) {
       console.log(error)
       toast({

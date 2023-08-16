@@ -7,11 +7,11 @@ import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
-import { Context } from "../HabitsContext"
-import Icons from "../Icons"
-import LinkButton from "../LinkButton"
-import Menu from "../Nav/Menu"
-import SignInButton from "../SignInButton"
+import { Context } from "./HabitsContext"
+import Icons from "./Icons"
+import LinkButton from "./LinkButton"
+import Menu from "./Nav/Menu"
+import SignInButton from "./SignInButton"
 
 type Props = {
   session: Session | null
@@ -40,6 +40,7 @@ const HabitMenubar = () => {
 
     setSelectedHabit(habit.habitName)
     router.push(`/habits/${habit.slug}`)
+    router.refresh()
     toggleOpen()
   }
 
