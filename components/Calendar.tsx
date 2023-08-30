@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/lib/auth"
-import { Habit } from "@/types/typings"
-import { Session, User } from "next-auth"
+import { User } from "next-auth"
 
 type Props = {
   users: User[]
@@ -14,14 +13,19 @@ const Calendar = async ({ users, habits }: Props) => {
   }
 
   const datesEl = habits[0].completions.map((habit, i) => (
-    <div key={i} className="h-4 text-text text-xs text-center">{`${(
-      habit.date.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, "0")}-${habit.date
-      .getDate()
-      .toString()
-      .padStart(2, "0")}`}</div>
+    <div key={i} className="flex gap-2">
+      <div className="h-4 text-text text-xs text-center">{`${(
+        habit.date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${habit.date
+        .getDate()
+        .toString()
+        .padStart(2, "0")}`}</div>
+      <div className="h-4 text-text text-[8px] leading-loose">
+        {habit.dayOfWeek}
+      </div>
+    </div>
   ))
 
   const isIncludedCSS = "w-[2px] h-[2px] rounded-full bg-title"

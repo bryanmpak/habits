@@ -6,17 +6,16 @@ export async function GET(res: NextResponse) {
   try {
     const session = await getAuthSession()
     if (!session?.user) {
-      return new Response("Unauthorized, please sign in.", { status: 401 })
+      return NextResponse.json("Unauthorized, please sign in.", { status: 401 })
     }
     const userId = session?.user.id
-    // remember to remove id & userId since i don't think it's needed
     const data = await prisma.habit.findMany({
       where: { userId: userId },
     })
 
     return NextResponse.json(data)
   } catch (error) {
-    return new Response("Could not fetch habits", { status: 500 })
+    return NextResponse.json("Could not fetch habits", { status: 500 })
   }
 }
 
@@ -24,7 +23,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getAuthSession()
     if (!session?.user) {
-      return new Response("Unauthorized, please sign in!", { status: 401 })
+      return NextResponse.json("Unauthorized, please sign in.", { status: 401 })
     }
     const userId = session.user.id
     const body = await req.json()

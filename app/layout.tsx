@@ -25,6 +25,7 @@ export default async function RootLayout({
 }) {
   const session = await getAuthSession()
   const savedTheme = cookies().get("color-theme")
+
   const theme = savedTheme?.value || "light"
   const customBg =
     theme === "light"

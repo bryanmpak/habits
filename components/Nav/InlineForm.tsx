@@ -1,5 +1,4 @@
 import { toast } from "@/lib/useToast"
-import { HabitCompletion } from "@/types/typings"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import React, { useContext, useEffect, useRef, useState } from "react"
