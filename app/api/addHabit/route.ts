@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma"
-import { Habit } from "@/types/typings"
 import { getAuthSession } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server"
 

@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma"
-import { HabitCompletion } from "@/types/typings"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function PATCH(
