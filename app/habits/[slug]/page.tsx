@@ -1,7 +1,6 @@
 import HabitClient from "@/components/HabitClient"
 import { getDate } from "@/lib/dates"
 import { prisma } from "@/lib/prisma"
-import { Habit } from "@/types/typings"
 
 type PageProps = {
   params: {

@@ -1,7 +1,6 @@
 "use client"
 import { toast } from "@/lib/useToast"
 import { motion, useCycle } from "framer-motion"
-import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"

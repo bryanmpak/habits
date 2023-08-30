@@ -13,7 +13,7 @@ export async function GET() {
       where: { userId: userId },
     })
 
-    return new Response(JSON.stringify(data))
+    return new Response(JSON.stringify(data), { status: 200 })
   } catch (error) {
     return new Response("Could not fetch habits", { status: 500 })
   }

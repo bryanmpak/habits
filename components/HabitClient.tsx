@@ -3,7 +3,6 @@
 import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { getDate } from "../lib/dates"
-import { Habit } from "../types/typings"
 import HabitButton from "./HabitButton/HabitButton"
 import HabitsFooter from "./HabitsFooter/HabitsFooter"
 
