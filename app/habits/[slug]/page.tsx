@@ -54,11 +54,7 @@ const page = async ({ params }: PageProps) => {
 
   // console.log(habitData)
 
-  return (
-    <main className="min-h-full relative">
-      <HabitClient habitData={habitData} />
-    </main>
-  )
+  return <HabitClient habitData={habitData} />
 }
 
 export default page

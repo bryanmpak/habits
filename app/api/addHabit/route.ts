@@ -34,8 +34,12 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ habitName, completions })
+    return new Response(JSON.stringify(newHabit), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return new Response("Internal Server Error", { status: 500 })
   }
 }

@@ -34,7 +34,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en" data-color-theme={theme}>
-      <body className={`${inter.className} min-h-full ${customBg}`}>
+      <body
+        className={`${inter.className} min-h-full ${customBg} flex flex-col`}
+      >
         <NextAuthProvider session={session}>
           <ThemeProvider>
             <HabitsContext>

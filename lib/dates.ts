@@ -9,18 +9,19 @@ const getDate = (
 }[] => {
   const now = new Date()
   const currentDay = now.getDay()
-  const startOfWeek = new Date(
-    now.setDate(now.getDate() - currentDay + (currentDay === 0 ? -6 : 1))
-  )
+  const startOfWeek = new Date(now)
+  startOfWeek.setDate(now.getDate() - currentDay + (currentDay === 0 ? -6 : 1)) // Reset to the start of the week
+
   return Array(i)
     .fill(0)
     .map((_, i) => {
-      const day = new Date(startOfWeek)
-      day.setDate(day.getDate() + i)
+      const day = new Date(startOfWeek) // Create a new Date object for each day
+      day.setDate(startOfWeek.getDate() + i)
+
       return {
         date: day,
         dayOfWeek: days[day.getDay()],
-        isActive: day.getDay() === currentDay ? true : false,
+        isActive: day.toDateString() === now.toDateString(), // Compare the full date strings
       }
     })
 }

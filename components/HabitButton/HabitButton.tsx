@@ -32,7 +32,7 @@ const HabitButton = ({
   }
 
   return (
-    <div className="h-[80vh] flex justify-center items-center p-4">
+    <div className="flex flex-1 justify-center items-center p-4">
       {/* max-w temp since i'll have it on a parent div */}
       <motion.button
         disabled={activeDay.isComplete || !activeDay.isIncluded}

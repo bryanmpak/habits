@@ -18,7 +18,6 @@ const ThemeToggle = () => {
   const { theme, setTheme } = themeContext
 
   const toggleCSS = theme === "dark" ? "justify-start" : "justify-end"
-  console.log("toggleCSS", toggleCSS)
 
   function handleClick() {
     const nextTheme = theme === "light" ? "dark" : "light"

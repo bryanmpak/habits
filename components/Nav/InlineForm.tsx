@@ -42,7 +42,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
         description: "sign in to add habits!",
       })
       router.push("/")
-      router.refresh()
+      // router.refresh()
       handleDismiss(e)
     }
     // create habit object and setHabitList here for optimistic UI pattern
