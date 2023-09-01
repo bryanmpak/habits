@@ -19,7 +19,6 @@ const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
 
   // *** i don't think this works with most recent refactor
   const recentCompletions = activeHabit.completions.slice(-7)
-  console.log("recentCompletions", recentCompletions)
 
   return (
     <div className="flex p-4 justify-evenly items-center mx-auto mt-auto max-w-lg gap-4">

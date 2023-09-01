@@ -19,7 +19,13 @@ const HabitClient = ({ habitData }: Props) => {
   const { data: session } = useSession()
 
   const handleComplete = (isComplete: boolean, id: number) => {
+    // need to split id & activeId since anon users won't be logged to DBs
     if (isComplete) {
+      let activeCompletion = { ...activeHabit.completions[id] }
+      activeCompletion.isComplete = true
+
+      console.log("activeCompletion before sending:", activeCompletion)
+
       setActiveHabit((prevHabit) => {
         const updatedHabit = {
           ...prevHabit,
@@ -27,13 +33,17 @@ const HabitClient = ({ habitData }: Props) => {
             i === activeId ? { ...day, isComplete } : day
           ),
         }
+
         if (session?.user) {
+          const requestBody = JSON.stringify(activeCompletion)
+          console.log("Stringified request body:", requestBody)
+
           fetch(`/api/habits/${activeHabit.slug}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedHabit),
+            body: requestBody,
           })
         }
 

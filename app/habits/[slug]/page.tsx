@@ -13,11 +13,7 @@ const page = async ({ params }: PageProps) => {
 
   // do the habitdata dates check here (is datesArr[0] in habitsData.completions) if not, update DB to include (?)
   const dates = getDate(90)
-  const datesArr = dates.map((date) => ({
-    ...date,
-    isComplete: false,
-    isIncluded: true,
-  }))
+
   const startOfWeek = dates[0].date
   startOfWeek.setHours(0, 0, 0, 0)
   const endOfWeek = new Date(startOfWeek)
@@ -47,12 +43,11 @@ const page = async ({ params }: PageProps) => {
           isComplete: true,
           isIncluded: true,
           habitId: true,
+          id: true,
         },
       },
     },
   })) as Habit
-
-  // console.log(habitData)
 
   return <HabitClient habitData={habitData} />
 }

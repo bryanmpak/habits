@@ -5,6 +5,7 @@ interface HabitCompletion {
   isComplete: boolean
   isIncluded: boolean
   habitId?: string
+  id?: string
 }
 
 interface Habit {
