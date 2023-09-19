@@ -33,19 +33,19 @@ export default async function RootLayout({
       : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black"
 
   return (
-    <html lang="en" data-color-theme={theme}>
-      <body
-        className={`${inter.className} min-h-full ${customBg} flex flex-col`}
-      >
-        <NextAuthProvider session={session}>
-          <ThemeProvider>
-            <HabitsContext>
-              <HabitMenubar />
-              {children}
-            </HabitsContext>
-          </ThemeProvider>
-        </NextAuthProvider>
-        <Toaster />
+    <html lang='en' data-color-theme={theme}>
+      <body className={`${inter.className} ${customBg}`}>
+        <div className='min-h-full flex flex-col'>
+          <NextAuthProvider session={session}>
+            <ThemeProvider>
+              <HabitsContext>
+                <HabitMenubar />
+                {children}
+              </HabitsContext>
+            </ThemeProvider>
+          </NextAuthProvider>
+          <Toaster />
+        </div>
       </body>
     </html>
   )

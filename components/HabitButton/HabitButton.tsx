@@ -32,11 +32,11 @@ const HabitButton = ({
   }
 
   return (
-    <div className="flex flex-1 justify-center items-center p-4">
+    <div className='flex flex-1 justify-center items-center p-4'>
       {/* max-w temp since i'll have it on a parent div */}
       <motion.button
         disabled={activeDay.isComplete || !activeDay.isIncluded}
-        className="relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center shadow-2xl disabled:cursor-not-allowed"
+        className='relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center shadow-2xl disabled:cursor-not-allowed select-none'
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onTouchStart={handleMouseDown}
@@ -46,7 +46,7 @@ const HabitButton = ({
         <ExpandingCircle progress={counter} />
         {activeDay.isComplete && (
           // should have some fun with this
-          <div className="absolute text-text text-9xl">😍</div>
+          <div className='absolute text-text text-9xl select-none'>😍</div>
         )}
       </motion.button>
     </div>
