@@ -24,24 +24,24 @@ const SignIn = () => {
   }
 
   return (
-    <div className="w-80 rounded-md mx-auto flex flex-col items-center gap-8 pt-20">
-      <h1 className="text-3xl text-title">placeholder text</h1>
+    <div className='w-80 rounded-md mx-auto flex flex-col items-center gap-8 pt-20'>
+      <h1 className='text-3xl text-title'>1% better everyday</h1>
       <button
         disabled={isLoading}
-        className="flex items-center justify-center gap-2 p-2 w-full h-12 text-black bg-title hover:bg-text"
+        className='flex items-center justify-center gap-2 p-2 w-full h-12 text-black bg-title hover:bg-text'
         onClick={handleLogin}
       >
-        <Icons.google className="w-6 h-6" />
+        <Icons.google className='w-6 h-6' />
         <p>Continue with Google</p>
       </button>
-      <div className="relative flex w-full items-center">
-        <div className="h-[1px] w-full bg-text"></div>
-        <p className="text-title px-2">OR</p>
-        <div className="h-[1px] w-full bg-text"></div>
+      <div className='relative flex w-full items-center'>
+        <div className='h-[1px] w-full bg-text'></div>
+        <p className='text-title px-2'>OR</p>
+        <div className='h-[1px] w-full bg-text'></div>
       </div>
       <Link
-        href="/"
-        className="text-title text-sm hover:decoration-white hover:underline"
+        href='/'
+        className='text-title text-sm hover:decoration-white hover:underline'
       >
         Continue as Guest
       </Link>
