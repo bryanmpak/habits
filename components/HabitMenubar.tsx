@@ -41,7 +41,7 @@ const HabitMenubar = () => {
   const habitNamesArr = habitList.map((habit, i) => (
     <div
       key={i}
-      className="py-1 text-xs cursor-pointer hover:underline decoration-shadow"
+      className='py-1 text-xs cursor-pointer hover:underline decoration-shadow'
       onClick={() => handleClick(habit)}
     >
       {habit.habitName}
@@ -49,43 +49,43 @@ const HabitMenubar = () => {
   ))
 
   return (
-    <div className="flex">
-      <Link href="/" className="p-4">
+    <div className='flex'>
+      <Link href='/' className='p-4'>
         <Icons.logo />
       </Link>
-      <div className="relative flex w-full mr-[60px] mt-2 gap-2">
+      <div className='relative flex w-full mr-[60px] mt-2 gap-2'>
         <button
           onClick={() => toggleOpen()}
-          className="bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-10 flex justify-center items-center z-20 shadow-md"
+          className='bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-10 flex justify-center items-center z-20 shadow-md'
         >
-          <div className="text-title text-center flex-grow">
-            <p className="font-sans text-xs">
+          <div className='text-title text-center flex-grow'>
+            <p className='font-sans text-xs'>
               {selectedHabit === "" ? "habits" : selectedHabit}
             </p>
           </div>
           <motion.svg
-            fill="var(--color-title)"
-            width="12"
-            height="12"
-            viewBox="0 0 20 20"
+            fill='var(--color-title)'
+            width='12'
+            height='12'
+            viewBox='0 0 20 20'
             initial={false}
             animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
             transition={{ duration: 0.2 }}
             style={{ originY: 0.55 }}
           >
-            <path d="M0 7 L 20 7 L 10 16" />
+            <path d='M0 7 L 20 7 L 10 16' />
           </motion.svg>
         </button>
 
         {/* have fun with the animations here */}
         <motion.div
-          className="absolute px-4 flex flex-col top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10"
+          className='absolute px-4 flex flex-col top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10'
           variants={variants}
-          initial="closed"
+          initial='closed'
           animate={isOpen ? "open" : "closed"}
           transition={{ duration: 0.2 }}
         >
-          <div className="border border-light bg-nav_bg rounded-md">
+          <div className='border border-light bg-nav_bg rounded-md'>
             {habitNamesArr}
           </div>
         </motion.div>

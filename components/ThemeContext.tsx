@@ -13,7 +13,7 @@ export const ThemeContext = React.createContext<ThemeContextType | undefined>(
 )
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const savedTheme = Cookie.get("color-theme") || "light"
+  const savedTheme = Cookie.get("color-theme") || "dark"
 
   const [theme, setTheme] = useState(savedTheme)
 
