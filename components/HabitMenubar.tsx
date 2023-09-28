@@ -50,11 +50,12 @@ const HabitMenubar = () => {
 
   return (
     <div className='flex'>
-      <Link href='/' className='p-4'>
+      <Link aria-label='Logo' href='/' className='p-4'>
         <Icons.logo />
       </Link>
       <div className='relative flex w-full mr-[60px] mt-2 gap-2'>
         <button
+          aria-label='Menu Toggle'
           onClick={() => toggleOpen()}
           className='bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-10 flex justify-center items-center z-20 shadow-md'
         >

@@ -27,6 +27,7 @@ const SignIn = () => {
     <div className='w-80 rounded-md mx-auto flex flex-col items-center gap-8 pt-20'>
       <h1 className='text-3xl text-title'>1% better everyday</h1>
       <button
+        aria-label='Google sign-in'
         disabled={isLoading}
         className='flex items-center justify-center gap-2 p-2 w-full h-12 text-black bg-title hover:bg-text'
         onClick={handleLogin}
@@ -40,6 +41,7 @@ const SignIn = () => {
         <div className='h-[1px] w-full bg-text'></div>
       </div>
       <Link
+        aria-label='Continue as guest'
         href='/'
         className='text-title text-sm hover:decoration-white hover:underline'
       >

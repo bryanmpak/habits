@@ -41,19 +41,20 @@ const LinkConnectForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-2 w-full"
+      className='flex flex-col gap-2 w-full'
       onSubmit={(e) => handleSubmit(e)}
     >
       <input
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         required
-        placeholder="enter secret answer"
-        className="p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none"
+        placeholder='enter secret answer'
+        className='p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none'
       ></input>
       <button
-        className="flex mt-8 items-center justify-center p-2 w-full h-12 text-black bg-title hover:bg-text"
-        type="submit"
+        aria-label='Submit secret answer'
+        className='flex mt-8 items-center justify-center p-2 w-full h-12 text-black bg-title hover:bg-text'
+        type='submit'
       >
         {isLoading ? "checking answer.." : "submit answer"}
       </button>

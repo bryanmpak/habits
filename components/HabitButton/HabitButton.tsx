@@ -35,6 +35,7 @@ const HabitButton = ({
     <div className='flex flex-1 justify-center items-center p-4'>
       {/* max-w temp since i'll have it on a parent div */}
       <motion.button
+        aria-label='Press and hold to complete habit'
         disabled={activeDay.isComplete || !activeDay.isIncluded}
         className='relative w-[300px] h-[300px] focus:outline-none bg-nav_bg rounded-full flex items-center justify-center shadow-2xl disabled:cursor-not-allowed select-none'
         onMouseDown={handleMouseDown}

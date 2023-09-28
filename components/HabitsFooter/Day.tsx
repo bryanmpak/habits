@@ -21,7 +21,8 @@ const Day = ({
 }: Props) => {
   return (
     <button
-      type="button"
+      aria-label='navigate to specific date'
+      type='button'
       onClick={() => isIncluded && onClick(id)}
       disabled={!isIncluded}
       key={id}
@@ -48,14 +49,14 @@ const Day = ({
       </p>
       {isActive ? (
         <motion.div
-          className="bg-shadow h-[2px] w-full"
+          className='bg-shadow h-[2px] w-full'
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.2, duration: 0.2 }}
           style={{ originX: 0.5 }}
         ></motion.div>
       ) : (
-        <div className="h-[2px]"></div>
+        <div className='h-[2px]'></div>
       )}
     </button>
   )

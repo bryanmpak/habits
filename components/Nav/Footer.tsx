@@ -11,24 +11,25 @@ const Footer = () => {
   }
 
   return (
-    <div className="w-full text-white mt-auto">
-      <div className="w-full h-[1px] bg-dark"></div>
-      <div className="flex items-center p-4 gap-4">
+    <div className='w-full text-white mt-auto'>
+      <div className='w-full h-[1px] bg-dark'></div>
+      <div className='flex items-center p-4 gap-4'>
         <img
-          className="rounded-full border-2 border-text w-12 h-12"
+          className='rounded-full border-2 border-text w-12 h-12'
           src={session.user.image as string}
-          alt="profile picture"
+          alt='profile picture'
         />
 
-        <div className="flex flex-col">
-          <p className="lowercase text-sm">{session.user.name}</p>
+        <div className='flex flex-col'>
+          <p className='lowercase text-sm'>{session.user.name}</p>
 
           <button
+            aria-label='Sign Out'
             onClick={async () => {
               await signOut()
               router.push("/")
             }}
-            className="text-xs text-left rounded-sm hover:underline hover:decoration-shadow hover:text-text lowercase"
+            className='text-xs text-left rounded-sm hover:underline hover:decoration-shadow hover:text-text lowercase'
           >
             Sign Out
           </button>

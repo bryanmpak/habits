@@ -46,34 +46,35 @@ const LinkCreateForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-2 w-full"
+      className='flex flex-col gap-2 w-full'
       onSubmit={(e) => handleSubmit(e)}
     >
       <input
-        type="email"
+        type='email'
         required
         placeholder="partner's email"
-        className="p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none"
+        className='p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
         required
-        placeholder="secret question"
-        className="p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none"
+        placeholder='secret question'
+        className='p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none'
         value={secretQuestion}
         onChange={(e) => setSecretQuestion(e.target.value)}
       />
       <input
         required
-        placeholder="secret answer"
-        className="p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none"
+        placeholder='secret answer'
+        className='p-2 bg-neutral border border-neutral text-title focus:border-shadow border-1 focus:outline-none'
         value={secretAnswer}
         onChange={(e) => setSecretAnswer(e.target.value)}
       />
       <button
-        type="submit"
-        className="flex mt-8 items-center justify-center p-2 w-full h-12 text-black bg-title hover:bg-text"
+        aria-label='Submit secret question and answer'
+        type='submit'
+        className='flex mt-8 items-center justify-center p-2 w-full h-12 text-black bg-title hover:bg-text'
       >
         {isLoading ? "submitting..." : "submit request"}
       </button>

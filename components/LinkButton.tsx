@@ -11,7 +11,7 @@ const LinkButton = () => {
   }
   return (
     <div className='relative flex bg-shadow text-xs z-40 font-semibold w-28 py-4 px-2 rounded-md h-8 mt-[3px] items-center shadow-md hover:bg-shadow_accent'>
-      <button onClick={() => toggleOpen()} className='flex w-full'>
+      <button aria-label="Link account" onClick={() => toggleOpen()} className='flex w-full'>
         <div className='flex-grow'>link</div>
         <motion.svg
           width='12'
