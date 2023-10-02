@@ -63,13 +63,7 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
         className='w-4 h-4 rounded-full'
         style={{ backgroundColor: habit.color }}
       ></div>
-      <Link
-        href={`/habits/${habit.slug}`}
-        onClick={() => toggleOpen()}
-        className='text-xs flex-1'
-      >
-        {habit.habitName}
-      </Link>
+      <p className='text-xs flex-1'>{habit.habitName}</p>
       <button
         onClick={() => handleClick(habit)}
         className='p-2 border-light border rounded-md hover:bg-red-500'
