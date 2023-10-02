@@ -57,7 +57,7 @@ const HabitMenubar = () => {
         <button
           aria-label='Menu Toggle'
           onClick={() => toggleOpen()}
-          className='bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-10 flex justify-center items-center z-20 shadow-md'
+          className='bg-nav_bg border-2 border-neutral p-4 rounded-2xl w-full h-10 flex justify-center items-center z-20 shadow-md hover:shadow-lg'
         >
           <div className='text-title text-center flex-grow'>
             <p className='font-sans text-xs'>

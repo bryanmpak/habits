@@ -24,7 +24,7 @@ const HabitClient = ({ habitData }: Props) => {
       let activeCompletion = { ...activeHabit.completions[id] }
       activeCompletion.isComplete = true
 
-      console.log("activeCompletion before sending:", activeCompletion)
+      // console.log("activeCompletion before sending:", activeCompletion)
 
       setActiveHabit((prevHabit) => {
         const updatedHabit = {
@@ -36,7 +36,7 @@ const HabitClient = ({ habitData }: Props) => {
 
         if (session?.user) {
           const requestBody = JSON.stringify(activeCompletion)
-          console.log("Stringified request body:", requestBody)
+          // console.log("Stringified request body:", requestBody)
 
           fetch(`/api/habits/${activeHabit.slug}`, {
             method: "PATCH",
