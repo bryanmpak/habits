@@ -71,7 +71,7 @@ model LinkingRequest {
   secretAnswerHash String
   // expiryDate       DateTime
   linkType         String
-  requestor        User     @relation(fields: [requestorId], references: [id])
+  requestor        User     @relation(fields: [requestorId], references: [userId])
 
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -82,7 +82,7 @@ model Habit {
   id                String  @id @default(uuid())
   habitName      String
   completions    HabitCompletion[]
-  user           User  @relation(fields: [userId], references: [id])
+  user           User  @relation(fields: [userId], references: [userId])
   userId         String
   color          String
   slug           String @unique
