@@ -2,19 +2,18 @@ import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(res: NextResponse) {
+export async function GET() {
   try {
     const session = await getAuthSession()
     if (!session?.user) {
       return new Response("Unauthorized, please sign in.", { status: 401 })
     }
     const userId = session?.user.id
-    // remember to remove id & userId since i don't think it's needed
     const data = await prisma.habit.findMany({
       where: { userId: userId },
     })
 
-    return NextResponse.json(data)
+    return new Response(JSON.stringify(data), { status: 200 })
   } catch (error) {
     return new Response("Could not fetch habits", { status: 500 })
   }

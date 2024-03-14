@@ -55,8 +55,7 @@ const page = async () => {
 
   return (
     // set up an overflow section on the calendar div
-    <div className="flex justify-center mt-6">
-      {/* @ts-expect-error server component */}
+    <div className='flex justify-center mt-6'>
       <Calendar users={userInfo} habits={habits} />
     </div>
   )

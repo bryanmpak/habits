@@ -5,7 +5,7 @@ import React, { useEffect } from "react"
 import HamburgerMenuToggle from "./HamburgerMenuToggle"
 import Sidebar from "./Sidebar"
 
-const Menu = ({ initialTheme }: { initialTheme: string }) => {
+const Menu = () => {
   const [isOpen, toggleOpen] = useCycle(false, true)
 
   useEffect(() => {
@@ -31,9 +31,8 @@ const Menu = ({ initialTheme }: { initialTheme: string }) => {
           e.stopPropagation()
           toggleOpen()
         }}
-        initialTheme={initialTheme}
       />
-      <div className="fixed top-0 right-0 p-4 z-50 lg:hidden">
+      <div className="fixed top-0 right-0 p-4 z-50">
         <HamburgerMenuToggle
           isOpen={isOpen}
           toggleOpen={(e: React.MouseEvent) => {

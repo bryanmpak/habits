@@ -1,6 +1,5 @@
 "use client"
 
-import { Habit } from "@/types/typings"
 import { Dispatch, SetStateAction } from "react"
 import Day from "./Day"
 
@@ -22,7 +21,7 @@ const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
   const recentCompletions = activeHabit.completions.slice(-7)
 
   return (
-    <div className="flex px-4 justify-evenly items-center mx-auto mt-auto max-w-md">
+    <div className="flex p-4 justify-evenly items-center mx-auto mt-auto max-w-lg gap-4">
       {recentCompletions.map((day, i) => {
         return (
           <Day

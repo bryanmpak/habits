@@ -8,10 +8,10 @@ type Props = {
 
 const Path = (props: any) => (
   <motion.path
-    fill="transparent"
-    strokeWidth="2"
-    stroke="var(--color-title)"
-    strokeLinecap="round"
+    fill='transparent'
+    strokeWidth='2'
+    stroke='var(--color-title)'
+    strokeLinecap='round'
     {...props}
   />
 )
@@ -19,11 +19,12 @@ const Path = (props: any) => (
 export default function HamburgerMenuToggle({ isOpen, toggleOpen }: Props) {
   return (
     <button
-      type="button"
+      aria-label='Hamburger Menu'
+      type='button'
       onClick={toggleOpen}
-      className="bg-transparent border-none cursor-pointer focus:outline-none"
+      className='bg-transparent border-none cursor-pointer focus:outline-none'
     >
-      <svg width="24" height="24" viewBox="0 0 24 24">
+      <svg width='24' height='24' viewBox='0 0 24 24'>
         <Path
           variants={{
             closed: { d: "M 2 2.5 L 20 2.5" },
@@ -33,7 +34,7 @@ export default function HamburgerMenuToggle({ isOpen, toggleOpen }: Props) {
           animate={isOpen ? "open" : "closed"}
         />
         <Path
-          d="M 2 9.423 L 20 9.423"
+          d='M 2 9.423 L 20 9.423'
           variants={{
             closed: { opacity: 1 },
             open: { opacity: 0 },

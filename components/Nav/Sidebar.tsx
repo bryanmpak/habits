@@ -57,24 +57,18 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
   const habitsListArr = habitList.map((habit, i) => (
     <div
       key={i}
-      className="flex w-full text-title items-center py-[2px] px-2 gap-2 hover:bg-light"
+      className='flex w-full text-title items-center py-[2px] px-2 gap-2 hover:bg-light'
     >
       <div
-        className="w-4 h-4 rounded-full"
+        className='w-4 h-4 rounded-full'
         style={{ backgroundColor: habit.color }}
       ></div>
-      <Link
-        href={`/habits/${habit.slug}`}
-        onClick={() => toggleOpen()}
-        className="text-xs flex-1"
-      >
-        {habit.habitName}
-      </Link>
+      <p className='text-xs flex-1'>{habit.habitName}</p>
       <button
         onClick={() => handleClick(habit)}
-        className="p-2 border-light border rounded-md hover:bg-red-500"
+        className='p-2 border-light border rounded-md hover:bg-red-500'
       >
-        <Trash2 className="w-4 h-4" />
+        <Trash2 className='w-4 h-4' />
       </button>
     </div>
   ))
@@ -85,28 +79,28 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
         {isOpen && (
           <motion.aside
             onClick={(e) => e.stopPropagation()}
-            className="h-full w-[90vw] xs:w-[60vw] max-w-[400px] fixed right-0 bg-light px-1 sm:px-4 py-3 z-20"
+            className='h-full w-[90vw] xs:w-[60vw] max-w-[400px] fixed right-0 bg-light px-1 sm:px-4 py-3 z-20'
             initial={{ x: "100%" }}
             animate={{ x: 0, transition: { delay: 0.4, duration: 0.2 } }}
             exit={{ x: "100%", transition: { delay: 0.7, duration: 0.3 } }}
           >
             <motion.div
-              className="flex flex-col gap-2 min-h-full"
-              initial="closed"
-              animate="open"
-              exit="closed"
+              className='flex flex-col gap-3 min-h-full'
+              initial='closed'
+              animate='open'
+              exit='closed'
               variants={sidebarVariants}
             >
               <ThemeToggle />
-              <div className="h-[1px] bg-dark"></div>
+              <div className='h-[1px] bg-dark'></div>
               <CreateHabitForm handleDismiss={handleDismiss} />
-              <div className="h-[1px] bg-dark"></div>
+              <div className='h-[1px] bg-dark'></div>
               <div>{habitsListArr}</div>
-              <div className="h-[1px] bg-dark"></div>
+              <div className='h-[1px] bg-dark'></div>
               <Link
                 onClick={() => toggleOpen()}
-                className="text-title text-xs px-2 hover:underline hover:decoration-shadow"
-                href="/calendar"
+                className='text-title text-xs px-2 hover:underline hover:decoration-shadow'
+                href='/calendar'
               >
                 calendar
               </Link>

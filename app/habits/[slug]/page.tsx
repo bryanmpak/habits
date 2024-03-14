@@ -1,7 +1,6 @@
 import HabitClient from "@/components/HabitClient"
 import { getDate } from "@/lib/dates"
 import { prisma } from "@/lib/prisma"
-import { Habit } from "@/types/typings"
 
 type PageProps = {
   params: {
@@ -14,11 +13,7 @@ const page = async ({ params }: PageProps) => {
 
   // do the habitdata dates check here (is datesArr[0] in habitsData.completions) if not, update DB to include (?)
   const dates = getDate(90)
-  const datesArr = dates.map((date) => ({
-    ...date,
-    isComplete: false,
-    isIncluded: true,
-  }))
+
   const startOfWeek = dates[0].date
   startOfWeek.setHours(0, 0, 0, 0)
   const endOfWeek = new Date(startOfWeek)
@@ -48,18 +43,13 @@ const page = async ({ params }: PageProps) => {
           isComplete: true,
           isIncluded: true,
           habitId: true,
+          id: true,
         },
       },
     },
   })) as Habit
 
-  // console.log(habitData)
-
-  return (
-    <main className="min-h-full relative">
-      <HabitClient habitData={habitData} />
-    </main>
-  )
+  return <HabitClient habitData={habitData} />
 }
 
 export default page

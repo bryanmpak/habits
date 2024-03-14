@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
 
     return new Response(JSON.stringify(data), { status: 200 })
   } catch (error) {
-    console.log(error)
     return new Response(null, { status: 500 })
   }
 }
@@ -34,7 +33,6 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const { answer } = body
-    console.log(answer)
 
     // *** for now, need to figure out a hash solution
     const hashedAnswer = answer

@@ -28,7 +28,6 @@ type Props = {
   children: React.ReactNode
 }
 
-// uhh.. not sure about this...
 const defaultHabitContext: HabitContextTypes = {
   habitList: [],
   setHabitList: () => {},
@@ -69,7 +68,6 @@ const HabitsContext = ({ children }: Props) => {
     }
 
     fetchData()
-    // console.log("habitlist refetched")
     // *** not sure if i need this session here as a dependency
   }, [session])
 
@@ -81,7 +79,6 @@ const HabitsContext = ({ children }: Props) => {
     slug: string,
     color: string
   ): Promise<Habit> => {
-    // console.log(habitName, completions)
     const response = await fetch("/api/addHabit", {
       method: "POST",
       headers: {

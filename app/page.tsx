@@ -1,10 +1,7 @@
-import { getAuthSession } from "../lib/auth"
 import { getDate } from "../lib/dates"
 import HabitClient from "../components/HabitClient"
 
 export default async function Home() {
-  const session = await getAuthSession()
-
   const dates = getDate()
   const datesArr = dates.map((date) => ({
     ...date,
@@ -20,9 +17,5 @@ export default async function Home() {
     completions: datesArr,
   }
 
-  return (
-    <main className="relative">
-      <HabitClient habitData={defaultHabitData} />
-    </main>
-  )
+  return <HabitClient habitData={defaultHabitData} />
 }

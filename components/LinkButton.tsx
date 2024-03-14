@@ -10,39 +10,39 @@ const LinkButton = () => {
     closed: { height: 0 },
   }
   return (
-    <div className="relative flex bg-shadow text-xs z-40 font-semibold w-28 py-4 px-2 rounded-md h-8 mt-[2px] items-center shadow-md hover:bg-shadow_accent">
-      <button onClick={() => toggleOpen()} className="flex w-full">
-        <div className="flex-grow">link</div>
+    <div className='relative flex bg-shadow text-xs z-40 font-semibold w-28 py-4 px-2 rounded-md h-8 mt-[3px] items-center shadow-md hover:bg-shadow_accent'>
+      <button aria-label="Link account" onClick={() => toggleOpen()} className='flex w-full'>
+        <div className='flex-grow'>link</div>
         <motion.svg
-          width="12"
-          height="12"
-          viewBox="0 0 20 20"
+          width='12'
+          height='12'
+          viewBox='0 0 20 20'
           initial={false}
           animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
           transition={{ duration: 0.2 }}
           style={{ originY: 0.55 }}
         >
-          <path d="M0 7 L 20 7 L 10 16" />
+          <path d='M0 7 L 20 7 L 10 16' />
         </motion.svg>
       </button>
 
       <motion.div
-        className="absolute flex flex-col top-full left-0 w-full mt-2 gap-1 overflow-hidden bg-transparent text-center text-title font-sans z-10"
+        className='absolute flex flex-col top-full left-0 w-full mt-2 gap-1 overflow-hidden bg-transparent text-center text-title font-sans z-10'
         variants={variants}
-        initial="closed"
+        initial='closed'
         animate={isOpen ? "open" : "closed"}
         transition={{ duration: 0.3 }}
       >
         <Link
-          href="/create-link"
-          className="hover:underline hover:decoration-shadow"
+          href='/create-link'
+          className='hover:underline hover:decoration-shadow'
           onClick={() => toggleOpen()}
         >
           create link
         </Link>
         <Link
-          href="/connect-link"
-          className="hover:underline hover:decoration-shadow"
+          href='/connect-link'
+          className='hover:underline hover:decoration-shadow'
           onClick={() => toggleOpen()}
         >
           connect link

@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/lib/auth"
-import { Habit } from "@/types/typings"
-import { Session, User } from "next-auth"
+import { User } from "next-auth"
 
 type Props = {
   users: User[]
@@ -14,14 +13,19 @@ const Calendar = async ({ users, habits }: Props) => {
   }
 
   const datesEl = habits[0].completions.map((habit, i) => (
-    <div key={i} className="h-4 text-text text-xs text-center">{`${(
-      habit.date.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, "0")}-${habit.date
-      .getDate()
-      .toString()
-      .padStart(2, "0")}`}</div>
+    <div key={i} className='flex gap-2'>
+      <div className='h-4 text-text text-xs text-center'>{`${(
+        habit.date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${habit.date
+        .getDate()
+        .toString()
+        .padStart(2, "0")}`}</div>
+      <div className='h-4 text-text text-[8px] leading-loose'>
+        {habit.dayOfWeek}
+      </div>
+    </div>
   ))
 
   const isIncludedCSS = "w-[2px] h-[2px] rounded-full bg-title"
@@ -30,13 +34,13 @@ const Calendar = async ({ users, habits }: Props) => {
   const mainUserHabitsEl = habits
     .filter((habit) => habit.userId === session.user.id)
     .map((habit) => (
-      <div key={habit.id} className="flex flex-col gap-1">
+      <div key={habit.id} className='flex flex-col gap-1'>
         {habit.completions.map((completion, i) => (
-          <div key={i} className="w-4 h-4 flex justify-center items-center">
+          <div key={i} className='w-4 h-4 flex justify-center items-center'>
             {completion.isIncluded ? (
               completion.isComplete ? (
                 <div
-                  className="h-3 w-3 rounded-full"
+                  className='h-3 w-3 rounded-full'
                   style={{ backgroundColor: habit.color }}
                 ></div>
               ) : (
@@ -61,13 +65,13 @@ const Calendar = async ({ users, habits }: Props) => {
   const linkedUserHabitsEl = habits
     .filter((habit) => habit.userId === session.user.linkedUserId)
     .map((habit) => (
-      <div key={habit.id} className="flex flex-col gap-1">
+      <div key={habit.id} className='flex flex-col gap-1'>
         {habit.completions.map((completion, i) => (
-          <div className="w-4 h-4 flex justify-center items-center" key={i}>
+          <div className='w-4 h-4 flex justify-center items-center' key={i}>
             {completion.isIncluded ? (
               completion.isComplete ? (
                 <div
-                  className="h-3 w-3 rounded-full"
+                  className='h-3 w-3 rounded-full'
                   style={{ backgroundColor: habit.color }}
                 ></div>
               ) : (
@@ -82,24 +86,24 @@ const Calendar = async ({ users, habits }: Props) => {
     ))
 
   return (
-    <div className="flex gap-6">
-      <div className="flex flex-col gap-1 items-center">
-        <div className="h-4"></div>
+    <div className='flex gap-6'>
+      <div className='flex flex-col gap-1 items-center'>
+        <div className='h-4'></div>
         {datesEl}
       </div>
-      <div className="flex gap-8">
-        <div className="flex flex-col gap-1 items-center">
-          <p className="text-text text-xs underline decoration-shadow">
+      <div className='flex gap-8'>
+        <div className='flex flex-col gap-1 items-center'>
+          <p className='text-text text-xs underline decoration-shadow'>
             {session.user.name}
           </p>
-          <div className="flex gap-1">{mainUserHabitsEl}</div>
+          <div className='flex gap-1'>{mainUserHabitsEl}</div>
         </div>
 
-        <div className="flex flex-col gap-1 items-center">
-          <p className="text-text text-xs underline decoration-shadow">
+        <div className='flex flex-col gap-1 items-center'>
+          <p className='text-text text-xs underline decoration-shadow'>
             {linkedUser[0].name}
           </p>
-          <div className="flex gap-1">{linkedUserHabitsEl}</div>
+          <div className='flex gap-1'>{linkedUserHabitsEl}</div>
         </div>
       </div>
     </div>

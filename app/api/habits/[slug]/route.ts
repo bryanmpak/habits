@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma"
-import { HabitCompletion } from "@/types/typings"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function PATCH(
@@ -7,26 +6,22 @@ export async function PATCH(
   { params }: { params: { slug: string } }
 ) {
   const name = params.slug
-  const body = await req.json()
-  const { id, completions }: { id: string; completions: HabitCompletion[] } =
-    body
-  // this is pretty sloppy, i need to refactor to make all database connections cleaner
+  const body: HabitCompletion = await req.json()
+
   try {
-    for (let completion of completions) {
-      await prisma.habitCompletion.updateMany({
-        where: {
-          habitId: id,
-          date: completion.date,
-        },
-        data: {
-          date: completion.date,
-          dayOfWeek: completion.dayOfWeek,
-          isActive: completion.isActive,
-          isComplete: completion.isComplete,
-          isIncluded: completion.isIncluded,
-        },
-      })
-    }
+    await prisma.habitCompletion.update({
+      where: {
+        id: body.id,
+      },
+      data: {
+        date: body.date,
+        dayOfWeek: body.dayOfWeek,
+        isActive: body.isActive,
+        isComplete: body.isComplete,
+        isIncluded: body.isIncluded,
+        habitId: body.habitId,
+      },
+    })
   } catch (error) {
     console.error(error)
   }

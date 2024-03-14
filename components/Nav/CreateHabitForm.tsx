@@ -11,22 +11,26 @@ const CreateHabitForm = ({ handleDismiss }: Props) => {
 
   return (
     <div>
-      <button onClick={() => toggleItem()} className="flex w-full text-title">
+      <button
+        onClick={() => toggleItem()}
+        className='flex w-full text-title'
+        aria-label='open to create habit'
+      >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 20"
-          strokeWidth="1.5"
-          stroke="var(--color-title)"
-          className="w-3 h-3"
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 20 20'
+          strokeWidth='1.5'
+          stroke='var(--color-title)'
+          className='w-3 h-3'
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 4.5v15m7.5-7.5h-15"
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M12 4.5v15m7.5-7.5h-15'
           />
         </svg>
-        <p className="flex-grow text-left text-xs px-2">create new habit</p>
+        <p className='flex-grow text-left text-xs px-2'>create new habit</p>
       </button>
       {addItem && (
         <motion.div

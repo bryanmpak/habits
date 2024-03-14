@@ -25,24 +25,27 @@ export default async function RootLayout({
 }) {
   const session = await getAuthSession()
   const savedTheme = cookies().get("color-theme")
-  const theme = savedTheme?.value || "light"
+
+  const theme = savedTheme?.value || "dark"
   const customBg =
     theme === "light"
       ? "bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300"
       : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black"
 
   return (
-    <html lang="en" data-color-theme={theme}>
-      <body className={`${inter.className} min-h-full ${customBg}`}>
-        <NextAuthProvider session={session}>
-          <ThemeProvider>
-            <HabitsContext>
-              <HabitMenubar />
-              {children}
-            </HabitsContext>
-          </ThemeProvider>
-        </NextAuthProvider>
-        <Toaster />
+    <html lang='en' data-color-theme={theme}>
+      <body className={`${inter.className} ${customBg}`}>
+        <div className='min-h-full flex flex-col'>
+          <NextAuthProvider session={session}>
+            <ThemeProvider>
+              <HabitsContext>
+                <HabitMenubar />
+                {children}
+              </HabitsContext>
+            </ThemeProvider>
+          </NextAuthProvider>
+          <Toaster />
+        </div>
       </body>
     </html>
   )
