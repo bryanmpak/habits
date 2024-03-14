@@ -1,10 +1,11 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { getDate } from "../lib/dates"
 import HabitButton from "./HabitButton/HabitButton"
 import HabitsFooter from "./HabitsFooter/HabitsFooter"
+import { useUser } from "@clerk/nextjs"
 
 type Props = {
   habitData: Habit
@@ -16,7 +17,8 @@ const HabitClient = ({ habitData }: Props) => {
 
   const [activeId, setActiveId] = useState(activeIndex)
   const [activeHabit, setActiveHabit] = useState(habitData)
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
+  const { user } = useUser()
 
   const handleComplete = (isComplete: boolean, id: number) => {
     // need to split id & activeId since anon users won't be logged to DBs
@@ -34,7 +36,7 @@ const HabitClient = ({ habitData }: Props) => {
           ),
         }
 
-        if (session?.user) {
+        if (user) {
           const requestBody = JSON.stringify(activeCompletion)
           // console.log("Stringified request body:", requestBody)
 

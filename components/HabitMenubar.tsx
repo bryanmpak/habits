@@ -1,7 +1,7 @@
 "use client"
 import { toast } from "@/lib/useToast"
 import { motion, useCycle } from "framer-motion"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
@@ -10,12 +10,17 @@ import Icons from "./Icons"
 import LinkButton from "./LinkButton"
 import Menu from "./Nav/Menu"
 import SignInButton from "./SignInButton"
+import { User } from "@prisma/client"
 
-const HabitMenubar = () => {
+type HabitMenubarProps = {
+  user: User | null
+}
+
+const HabitMenubar = ({ user }: HabitMenubarProps) => {
   const [isOpen, toggleOpen] = useCycle(false, true)
   const router = useRouter()
   const { habitList, selectedHabit, setSelectedHabit } = useContext(Context)
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
 
   const variants = {
     open: { height: "auto" },
@@ -23,7 +28,7 @@ const HabitMenubar = () => {
   }
 
   const handleClick = (habit: HabitName) => {
-    if (!session) {
+    if (!user) {
       toast({
         title: "not signed in",
         description: "please sign in to edit habits!",
@@ -91,11 +96,7 @@ const HabitMenubar = () => {
           </div>
         </motion.div>
 
-        {!session ? (
-          <SignInButton />
-        ) : !session.user.linkedUserId ? (
-          <LinkButton />
-        ) : null}
+        {!user ? <SignInButton /> : !user.linkedUserId ? <LinkButton /> : null}
       </div>
 
       <Menu />

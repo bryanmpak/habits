@@ -1,6 +1,6 @@
 import { AnimatePresence, Cycle, motion } from "framer-motion"
 import { Trash2 } from "lucide-react"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useContext } from "react"
@@ -8,6 +8,7 @@ import { Context } from "../HabitsContext"
 import ThemeToggle from "../ThemeToggle"
 import CreateHabitForm from "./CreateHabitForm"
 import Footer from "./Footer"
+import { useUser } from "@clerk/nextjs"
 
 const sidebarVariants = {
   closed: {
@@ -33,14 +34,15 @@ type Props = {
 const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
   const { habitList, setHabitList } = useContext(Context)
   const router = useRouter()
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
+  const { user } = useUser()
 
   const handleClick = async (habit: HabitName) => {
     setHabitList((prevHabits) =>
       prevHabits.filter((habits) => habits.id !== habit.id)
     )
 
-    if (session) {
+    if (user) {
       await fetch("/api/habitsList", {
         method: "POST",
         headers: {

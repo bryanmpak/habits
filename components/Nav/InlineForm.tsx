@@ -1,9 +1,10 @@
 import { toast } from "@/lib/useToast"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { Context } from "../HabitsContext"
 import DaySelector from "./DaySelector"
+import { useUser } from "@clerk/nextjs"
 
 type Props = {
   toggleItem: () => void
@@ -17,7 +18,8 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     useContext(Context)
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr)
   const router = useRouter()
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
+  const { user } = useUser()
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const slug = habitInput.replace(/\s+/g, "-").toLowerCase()
-    if (session?.user) {
+    if (user) {
       await addHabit(habitInput, completions, slug, color)
       setTimeout(() => {
         router.push(`/habits/${slug}`)

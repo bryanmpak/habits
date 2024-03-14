@@ -10,7 +10,9 @@ import { HabitsContext } from "../components/HabitsContext"
 import { Toaster } from "@/components/ui/Toaster"
 import { cookies } from "next/headers"
 import ThemeProvider from "@/components/ThemeContext"
-import { ClerkProvider } from "@clerk/nextjs"
+import { ClerkProvider, auth } from "@clerk/nextjs"
+import { prisma } from "@/lib/prisma"
+import { User } from "@prisma/client"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -33,6 +35,11 @@ export default async function RootLayout({
       ? "bg-gradient-to-t from-rose-200 via-rose-200 to-rose-300"
       : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-700 via-zinc-900 to-black"
 
+  const { userId } = auth()
+  const user: User | null = userId
+    ? await prisma.user.findFirst({ where: { userId } })
+    : null
+
   return (
     <html lang='en' data-color-theme={theme}>
       <body className={`${inter.className} ${customBg}`}>
@@ -41,7 +48,7 @@ export default async function RootLayout({
           <ClerkProvider>
             <ThemeProvider>
               <HabitsContext>
-                <HabitMenubar />
+                <HabitMenubar user={user} />
                 {children}
               </HabitsContext>
             </ThemeProvider>
