@@ -5,11 +5,12 @@ import { Inter } from "next/font/google"
 import { NextAuthProvider } from "../components/SessionProvider"
 
 import HabitMenubar from "../components/HabitMenubar"
-import { getAuthSession } from "../lib/auth"
+// import { getAuthSession } from "../lib/auth"
 import { HabitsContext } from "../components/HabitsContext"
 import { Toaster } from "@/components/ui/Toaster"
 import { cookies } from "next/headers"
 import ThemeProvider from "@/components/ThemeContext"
+import { ClerkProvider } from "@clerk/nextjs"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,7 +24,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getAuthSession()
+  // const session = await getAuthSession()
   const savedTheme = cookies().get("color-theme")
 
   const theme = savedTheme?.value || "dark"
@@ -36,14 +37,16 @@ export default async function RootLayout({
     <html lang='en' data-color-theme={theme}>
       <body className={`${inter.className} ${customBg}`}>
         <div className='min-h-full flex flex-col'>
-          <NextAuthProvider session={session}>
+          {/* <NextAuthProvider session={session}> */}
+          <ClerkProvider>
             <ThemeProvider>
               <HabitsContext>
                 <HabitMenubar />
                 {children}
               </HabitsContext>
             </ThemeProvider>
-          </NextAuthProvider>
+          </ClerkProvider>
+          {/* </NextAuthProvider> */}
           <Toaster />
         </div>
       </body>
