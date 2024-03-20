@@ -7,12 +7,12 @@ import { NextAuthProvider } from "../components/SessionProvider"
 import HabitMenubar from "../components/HabitMenubar"
 // import { getAuthSession } from "../lib/auth"
 import { HabitsContext } from "../components/HabitsContext"
-import { Toaster } from "@/components/ui/Toaster"
 import { cookies } from "next/headers"
 import ThemeProvider from "@/components/ThemeContext"
 import { ClerkProvider, auth } from "@clerk/nextjs"
 import { prisma } from "@/lib/prisma"
 import { User } from "@prisma/client"
+import { Toaster } from "@/components/ui/Toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 

@@ -53,6 +53,7 @@ model User {
   // sessions      Session[]
   habits        Habit[]
   // linkedUserId    String?   @db.ObjectId
+  isAccountLinked Boolean @default(false)
   linkedUserId    String? 
   linkingRequests LinkingRequest[]
   createdAt       DateTime  @default(now())
@@ -65,16 +66,21 @@ model LinkingRequest {
   // id               String   @id @default(auto()) @map("_id") @db.ObjectId
   id                String  @id @default(uuid())
   // requestorId      String   @map("requestor_id") @db.ObjectId
-  requestorId      String   @map("requestor_id")
-  responderEmail   String
-  secretQuestion   String
-  secretAnswerHash String
+  requestorUserId      String   @map("requestor_id")
+  responderUserId      String?
+  responderEmail   String?
+  // secretQuestion   String
+  // secretAnswerHash String
+  passcode        String
   // expiryDate       DateTime
-  linkType         String
-  requestor        User     @relation(fields: [requestorId], references: [userId])
+  // linkType         String
+  requestor        User     @relation(fields: [requestorUserId], references: [userId])
 
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@index([requestorUserId], name: "by_user")
+  @@unique([requestorUserId, responderEmail], name: "unique_user_responderEmail")
 }
 
 model Habit {
