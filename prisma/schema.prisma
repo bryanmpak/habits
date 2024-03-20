@@ -10,7 +10,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// don't need account & session data with clerk
+// commented out sections are refactors based on DB migration + nextauth -> clerk refactor
+
 // model Account {
 //   // mongodb
 //   // id                String  @id @default(auto()) @map("_id") @db.ObjectId

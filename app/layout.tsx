@@ -13,6 +13,7 @@ import { ClerkProvider, auth } from "@clerk/nextjs"
 import { prisma } from "@/lib/prisma"
 import { User } from "@prisma/client"
 import { Toaster } from "@/components/ui/Toaster"
+import ModalProvider from "@/components/Modals/modal-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -49,6 +50,7 @@ export default async function RootLayout({
             <ThemeProvider>
               <HabitsContext>
                 <HabitMenubar user={user} />
+                <ModalProvider />
                 {children}
               </HabitsContext>
             </ThemeProvider>
