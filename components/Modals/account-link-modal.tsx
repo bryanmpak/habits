@@ -101,8 +101,8 @@ const AccountLinkModal = () => {
 
   return (
     <Dialog open={accountLink.isOpen} onOpenChange={accountLink.onClose}>
-      <DialogContent className=' px-10'>
-        <DialogHeader className='border-b pb-3'>
+      <DialogContent className='text-white px-10 border-neutral'>
+        <DialogHeader className='border-b border-shadow pb-3'>
           <h2 className='font-medium text-lg'>link to account</h2>
         </DialogHeader>
         <Tabs defaultValue='create'>
@@ -115,7 +115,7 @@ const AccountLinkModal = () => {
               <div className='flex flex-col space-y-4'>
                 <Label>partner&apos;s account email </Label>
                 <Input
-                  className='h-10 px-2 focus-visible:ring-transparent hover:border-muted-foreground focus-within:border-muted-foreground'
+                  className='h-10 px-2 focus-visible:ring-transparent border-neutral hover:border-title focus-within:border-title'
                   type='email'
                   placeholder='enter email address here...'
                   value={emailValue}

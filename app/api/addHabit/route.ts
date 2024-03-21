@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma"
 import { getAuthSession } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
+import { revalidatePath } from "next/cache"
 
 export async function POST(req: NextRequest) {
   const { userId } = auth()
@@ -41,6 +42,9 @@ export async function POST(req: NextRequest) {
     status: 200,
     headers: { "Content-Type": "application/json" },
   })
+
+  // TODO: check if this helps
+  revalidatePath("/habits")
 
   return response
 }
