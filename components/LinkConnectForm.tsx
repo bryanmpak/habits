@@ -1,7 +1,8 @@
 "use client"
-import { toast } from "@/lib/useToast"
+
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
+import { toast } from "sonner"
 
 const LinkConnectForm = () => {
   const [answer, setAnswer] = useState("")
@@ -21,8 +22,7 @@ const LinkConnectForm = () => {
         body: JSON.stringify({ answer }),
       })
       if (response.ok) {
-        toast({
-          title: "correct answer",
+        toast("correct answer", {
           description: "enjoy using your shared habits app 🥳",
         })
         router.push("/")
@@ -30,8 +30,7 @@ const LinkConnectForm = () => {
       }
     } catch (error) {
       console.log(error)
-      toast({
-        title: "something went wrong",
+      toast.error("something went wrong", {
         description: "please try again",
       })
     } finally {

@@ -1,7 +1,8 @@
 "use client"
-import { toast } from "@/lib/useToast"
+
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
+import { toast } from "sonner"
 
 const LinkCreateForm = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -24,8 +25,7 @@ const LinkCreateForm = () => {
       })
 
       if (response.ok) {
-        toast({
-          title: "request submitted",
+        toast("request submitted", {
           description: "nudge your partner to finish the linking process 😉",
         })
 
@@ -34,10 +34,8 @@ const LinkCreateForm = () => {
       }
       // *** add an else clause here
     } catch (error) {
-      toast({
-        title: "request failed",
+      toast.error("request failed", {
         description: "check the inputs & try again!",
-        variant: "destructive",
       })
     } finally {
       setIsLoading(false)

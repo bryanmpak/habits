@@ -2,7 +2,6 @@ import Calendar from "@/components/Calendar"
 // import { getAuthSession } from "@/lib/auth"
 import { getDateRange } from "@/lib/dates"
 import { prisma } from "@/lib/prisma"
-import { toast } from "@/lib/useToast"
 import { auth } from "@clerk/nextjs"
 
 const page = async () => {
@@ -11,8 +10,7 @@ const page = async () => {
   const { userId } = auth()
 
   if (!userId) {
-    toast({
-      title: "sign in to see this feature",
+    toast("sign in to see this feature", {
       description: "only signed-in users can save and view habits",
     })
     return

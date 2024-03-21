@@ -1,5 +1,4 @@
 "use client"
-import { toast } from "@/lib/useToast"
 import { motion, useCycle } from "framer-motion"
 // import { useSession } from "next-auth/react"
 import Link from "next/link"
@@ -11,6 +10,7 @@ import LinkButton from "./LinkButton"
 import Menu from "./Nav/Menu"
 import SignInButton from "./SignInButton"
 import { User } from "@prisma/client"
+import { toast } from "sonner"
 
 type HabitMenubarProps = {
   user: User | null
@@ -29,10 +29,8 @@ const HabitMenubar = ({ user }: HabitMenubarProps) => {
 
   const handleClick = (habit: HabitName) => {
     if (!user) {
-      toast({
-        title: "not signed in",
-        description: "please sign in to edit habits!",
-        variant: "destructive",
+      toast.warning("not signed in", {
+        description: "please sign in to edit habits",
       })
       return
     }

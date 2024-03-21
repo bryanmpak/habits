@@ -12,8 +12,9 @@ import ThemeProvider from "@/components/ThemeContext"
 import { ClerkProvider, auth } from "@clerk/nextjs"
 import { prisma } from "@/lib/prisma"
 import { User } from "@prisma/client"
-import { Toaster } from "@/components/ui/Toaster"
+
 import ModalProvider from "@/components/Modals/modal-provider"
+import { Toaster } from "@/components/ui/Sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -56,7 +57,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </ClerkProvider>
           {/* </NextAuthProvider> */}
-          <Toaster />
+          <Toaster richColors />
         </div>
       </body>
     </html>

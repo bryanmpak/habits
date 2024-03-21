@@ -1,10 +1,10 @@
-import { toast } from "@/lib/useToast"
 // import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { Context } from "../HabitsContext"
 import DaySelector from "./DaySelector"
 import { useUser } from "@clerk/nextjs"
+import { toast } from "sonner"
 
 type Props = {
   toggleItem: () => void
@@ -39,8 +39,7 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
         handleDismiss(e)
       }, 100)
     } else {
-      toast({
-        title: "not signed in",
+      toast.warning("not signed in", {
         description: "sign in to add habits!",
       })
       router.push("/")
