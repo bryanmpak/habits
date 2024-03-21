@@ -51,16 +51,17 @@ export async function POST(req: Request) {
     })
   }
 
-  // push id to db when user is created
+  // push id & name to db when user is created
 
   const eventType = evt.type
 
   if (eventType === "user.created") {
-    const { id, ...attributes } = evt.data
+    const { id, first_name, last_name, ...attributes } = evt.data
 
     await prisma.user.create({
       data: {
         userId: id,
+        name: first_name + " " + last_name,
       },
     })
   }

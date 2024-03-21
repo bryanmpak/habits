@@ -42,7 +42,7 @@ export default async function RootLayout({
     : null
 
   return (
-    <html lang='en' data-color-theme={theme}>
+    <html lang='en' data-color-theme={theme} suppressHydrationWarning>
       <body className={`${inter.className} ${customBg}`}>
         <div className='min-h-full flex flex-col'>
           {/* <NextAuthProvider session={session}> */}

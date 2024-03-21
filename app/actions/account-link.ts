@@ -26,61 +26,76 @@ export const createLink = async (newLink: unknown) => {
 
   const link = await prisma.linkingRequest.upsert({
     where: {
-      unique_user_responderEmail: {
-        requestorUserId: userId,
-        responderEmail: validateResult.data.email,
+      unique_user_partnerEmail: {
+        userId: userId,
+        partnerEmail: validateResult.data.email,
       },
     },
     create: {
-      requestorUserId: userId,
-      responderEmail: validateResult.data.email,
+      userId: userId,
+      partnerEmail: validateResult.data.email,
       passcode: validateResult.data.passcode,
     },
     update: {
       passcode: validateResult.data.passcode,
     },
     select: {
-      id: true, // Select only the necessary fields
+      id: true,
     },
   })
 
   return link
 }
 
-export const submitLink = async (responderEmail: string, passcode: string) => {
+export const submitLink = async (partnerEmail: string, passcode: string) => {
   const { userId } = auth()
   if (!userId) {
     throw new Error("unauthorized")
   }
-
-  const submit = await prisma.linkingRequest.findFirst({
+  const linkingRequest = await prisma.linkingRequest.findFirst({
     where: {
-      responderEmail,
+      partnerEmail,
+    },
+    select: {
+      id: true,
+      userId: true,
+      partnerEmail: true,
+      passcode: true,
+      partnerId: true,
     },
   })
-  if (!submit || submit.responderEmail !== responderEmail) {
+  if (!linkingRequest || linkingRequest.partnerEmail !== partnerEmail) {
     throw new Error("request not found or you're not the intended recipient")
   }
-  if (submit.passcode !== passcode) {
+  if (linkingRequest.passcode !== passcode) {
     throw new Error("incorrect passcode")
   }
-
   await prisma.linkingRequest.update({
     where: {
-      id: submit.id,
+      id: linkingRequest.id,
     },
     data: {
-      responderUserId: userId,
+      partnerId: userId,
     },
   })
-  if (!!submit.requestorUserId) {
+  if (!!linkingRequest.partnerId) {
     await prisma.user.update({
       where: {
-        userId: submit.requestorUserId,
+        userId: linkingRequest.partnerId,
       },
       data: {
         isAccountLinked: true,
-        linkedUserId: submit.requestorUserId,
+        linkedUserId: linkingRequest.userId,
+      },
+    })
+
+    await prisma.user.update({
+      where: {
+        userId: linkingRequest.userId,
+      },
+      data: {
+        isAccountLinked: true,
+        linkedUserId: linkingRequest.partnerId,
       },
     })
   }
