@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { getAuthSession } from "@/lib/auth"
+// import { getAuthSession } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs"
 import { revalidatePath } from "next/cache"
