@@ -1,6 +1,6 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import {
   createContext,
   Dispatch,
@@ -9,6 +9,7 @@ import {
   useState,
 } from "react"
 import { getDate } from "../lib/dates"
+import { useUser } from "@clerk/nextjs"
 
 type HabitContextTypes = {
   habitList: HabitName[]
@@ -51,12 +52,13 @@ const HabitsContext = ({ children }: Props) => {
     isComplete: false,
     isIncluded: true,
   }))
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
+  const { user } = useUser()
 
   const [habitList, setHabitList] = useState<HabitName[]>([])
 
   useEffect(() => {
-    if (!session) {
+    if (!user) {
       return
     }
 
@@ -69,7 +71,7 @@ const HabitsContext = ({ children }: Props) => {
 
     fetchData()
     // *** not sure if i need this session here as a dependency
-  }, [session])
+  }, [user])
 
   const [selectedHabit, setSelectedHabit] = useState("")
 

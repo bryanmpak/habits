@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 const SignInButton = () => {
   const router = useRouter()
 
-  // *** i don't like the flickering (on HabitMenubar, maybe do a useSWR or something)
   return (
     <button
       aria-label='Go to sign in page'

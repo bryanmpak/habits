@@ -1,14 +1,18 @@
-import { getAuthSession } from "@/lib/auth"
-import { User } from "next-auth"
+// import { getAuthSession } from "@/lib/auth"
+// import { User } from "next-auth"
+
+import { auth } from "@clerk/nextjs"
+import { User } from "@prisma/client"
 
 type Props = {
-  users: User[]
+  users: Pick<User, "userId" | "name" | "linkedUserId">[]
   habits: (Habit & { userId: string })[]
 }
 
 const Calendar = async ({ users, habits }: Props) => {
-  const session = await getAuthSession()
-  if (!session) {
+  // const session = await getAuthSession()
+  const { userId } = auth()
+  if (!userId) {
     return
   }
 
@@ -32,7 +36,7 @@ const Calendar = async ({ users, habits }: Props) => {
   const isNotIncludedCSS = "w-[2px] h-[2px] rounded-full bg-light"
 
   const mainUserHabitsEl = habits
-    .filter((habit) => habit.userId === session.user.id)
+    .filter((habit) => habit.userId === userId)
     .map((habit) => (
       <div key={habit.id} className='flex flex-col gap-1'>
         {habit.completions.map((completion, i) => (
@@ -54,16 +58,16 @@ const Calendar = async ({ users, habits }: Props) => {
       </div>
     ))
 
-  if (!session.user.linkedUserId) {
+  if (!users[0].linkedUserId) {
     return
   }
 
-  const linkedUser = users.filter(
-    (user) => user.id === session.user.linkedUserId
-  )
+  const linkedUser = users.filter((user) => userId === user.linkedUserId)
+
+  console.log(linkedUser)
 
   const linkedUserHabitsEl = habits
-    .filter((habit) => habit.userId === session.user.linkedUserId)
+    .filter((habit) => habit.userId === linkedUser[0].linkedUserId)
     .map((habit) => (
       <div key={habit.id} className='flex flex-col gap-1'>
         {habit.completions.map((completion, i) => (
@@ -94,7 +98,7 @@ const Calendar = async ({ users, habits }: Props) => {
       <div className='flex gap-8'>
         <div className='flex flex-col gap-1 items-center'>
           <p className='text-text text-xs underline decoration-shadow'>
-            {session.user.name}
+            {users[0].name}
           </p>
           <div className='flex gap-1'>{mainUserHabitsEl}</div>
         </div>

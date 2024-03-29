@@ -1,5 +1,7 @@
 import { getDate } from "../lib/dates"
 import HabitClient from "../components/HabitClient"
+import { prisma } from "@/lib/prisma"
+import { auth } from "@clerk/nextjs"
 
 export default async function Home() {
   const dates = getDate()

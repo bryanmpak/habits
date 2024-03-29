@@ -1,12 +1,15 @@
-import { useSession, signOut } from "next-auth/react"
+import { SignOutButton, useClerk, useUser } from "@clerk/nextjs"
+// import { useSession, signOut } from "next-auth/react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import React from "react"
 
 const Footer = () => {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
+  const { user } = useUser()
+  const { signOut } = useClerk()
   const router = useRouter()
-  if (!session) {
+  if (!user) {
     return null
   }
 
@@ -16,23 +19,21 @@ const Footer = () => {
       <div className='flex items-center p-4 gap-4'>
         <img
           className='rounded-full border-2 border-text w-12 h-12'
-          src={session.user.image as string}
+          src={user.imageUrl as string}
           alt='profile picture'
         />
 
         <div className='flex flex-col'>
-          <p className='lowercase text-sm'>{session.user.name}</p>
+          <p className='lowercase text-sm'>{user.fullName}</p>
 
-          <button
-            aria-label='Sign Out'
-            onClick={async () => {
-              await signOut()
+          <SignOutButton
+            signOutCallback={() => {
+              signOut()
               router.push("/")
             }}
-            className='text-xs text-left rounded-sm hover:underline hover:decoration-shadow hover:text-text lowercase'
           >
-            Sign Out
-          </button>
+            log out
+          </SignOutButton>
         </div>
       </div>
     </div>

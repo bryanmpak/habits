@@ -1,38 +1,52 @@
 import Calendar from "@/components/Calendar"
-import { getAuthSession } from "@/lib/auth"
+// import { getAuthSession } from "@/lib/auth"
 import { getDateRange } from "@/lib/dates"
 import { prisma } from "@/lib/prisma"
-import { toast } from "@/lib/useToast"
+import { auth } from "@clerk/nextjs"
+import { toast } from "sonner"
 
 const page = async () => {
   const [startDate, endDate] = getDateRange()
-  const session = await getAuthSession()
+  // const session = await getAuthSession()
+  const { userId } = auth()
 
-  if (!session) {
-    toast({
-      title: "sign in to see this feature",
+  if (!userId) {
+    toast("sign in to see this feature", {
       description: "only signed-in users can save and view habits",
     })
     return
   }
 
-  const userId = session.user.id
+  const linkedUser = await prisma.user.findFirst({
+    where: {
+      userId,
+    },
+    select: {
+      linkedUserId: true,
+    },
+  })
+
+  console.log("linkedUser", linkedUser)
+
   let userIds = [userId]
-  if (session.user.linkedUserId) {
-    userIds.push(session.user.linkedUserId)
+  if (!!linkedUser?.linkedUserId) {
+    userIds.push(linkedUser.linkedUserId)
   }
+
+  // if (session.user.linkedUserId) {
+  //   userIds.push(session.user.linkedUserId)
+  // }
 
   const userInfo = await prisma.user.findMany({
     where: {
-      id: {
+      userId: {
         in: userIds,
       },
     },
     select: {
-      id: true,
-      email: true,
+      userId: true,
       name: true,
-      image: true,
+      linkedUserId: true,
     },
   })
 
@@ -52,6 +66,8 @@ const page = async () => {
       },
     },
   })
+
+  console.log(habits)
 
   return (
     // set up an overflow section on the calendar div
