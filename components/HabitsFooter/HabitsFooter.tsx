@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction } from "react";
 import Day from "./Day";
+import { getDate } from "@/lib/dates";
 
 type Props = {
   activeHabit: Habit;
@@ -14,25 +15,24 @@ const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
     setActiveId(id);
   };
 
-  const currentWeekCompletions = activeHabit.completions.filter(
-    (completion) => completion.isIncluded
-  );
-
-  currentWeekCompletions.sort((a, b) => a.date.getTime() - b.date.getTime());
+  const weekDates = getDate(7);
 
   return (
     <div className="flex p-4 justify-evenly items-center mx-auto mt-auto max-w-lg gap-4">
-      {currentWeekCompletions.map((day, i) => {
+      {weekDates.map((dayInfo, index) => {
+        const completion = activeHabit.completions.find(
+          (c) => new Date(c.date).toDateString() === dayInfo.date.toDateString()
+        );
         return (
           <Day
-            id={i}
-            key={`${i}-${day.isComplete}`}
-            dayOfWeek={day.dayOfWeek}
-            dateOfWeek={day.date.getDate()}
-            isActive={i === activeId}
-            isComplete={day.isComplete}
-            isIncluded={day.isIncluded}
-            onClick={() => handleClick(i)}
+            key={dayInfo.date.toISOString()}
+            id={index}
+            dayOfWeek={dayInfo.dayOfWeek}
+            dateOfWeek={dayInfo.date.getDate()}
+            isActive={dayInfo.isActive}
+            isComplete={completion?.isComplete || false}
+            isIncluded={completion?.isIncluded || false}
+            onClick={() => handleClick(index)}
           />
         );
       })}

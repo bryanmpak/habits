@@ -11,7 +11,6 @@ type PageProps = {
 const page = async ({ params }: PageProps) => {
   const { slug } = params;
 
-  // do the habitdata dates check here (is datesArr[0] in habitsData.completions) if not, update DB to include (?)
   const dates = getDate(90);
 
   const startOfWeek = dates[0].date;
@@ -46,6 +45,12 @@ const page = async ({ params }: PageProps) => {
       habitName: true,
       slug: true,
       completions: {
+        where: {
+          date: {
+            gte: startOfWeek,
+            lt: endOfWeek,
+          },
+        },
         orderBy: {
           date: "asc",
         },

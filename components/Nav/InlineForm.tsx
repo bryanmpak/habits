@@ -14,8 +14,7 @@ type Props = {
 const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
   const [habitInput, setHabitInput] = useState("");
   const [color, setColor] = useState("#FFFFFF");
-  const { addHabit, datesArr, setHabitList, setSelectedHabit } =
-    useContext(Context);
+  const { addHabit, datesArr } = useContext(Context);
   const [completions, setCompletions] = useState<HabitCompletion[]>(datesArr);
   const router = useRouter();
   // const { data: session } = useSession()
@@ -53,7 +52,8 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     toggleItem();
   };
 
-  // *** maybe add a way for the "create habit" button to spin onClick
+  console.log("completions", completions);
+
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}

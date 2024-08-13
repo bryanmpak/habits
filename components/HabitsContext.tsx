@@ -52,7 +52,7 @@ const HabitsContext = ({ children }: Props) => {
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
-    isIncluded: true,
+    isIncluded: false,
   }));
   // const { data: session } = useSession()
   const { user, isLoaded } = useUser();
@@ -87,12 +87,22 @@ const HabitsContext = ({ children }: Props) => {
     slug: string,
     color: string
   ): Promise<Habit> => {
+    // Filter out completions where isIncluded is false
+    const includedCompletions = completions.filter(
+      (completion) => completion.isIncluded
+    );
+
     const response = await fetch("/api/addHabit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ slug, habitName, completions, color }),
+      body: JSON.stringify({
+        slug,
+        habitName,
+        completions: includedCompletions,
+        color,
+      }),
     });
 
     if (!response.ok) {
