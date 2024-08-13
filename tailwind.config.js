@@ -15,6 +15,7 @@ module.exports = {
         text: "var(--color-text)",
         nav_bg: "var(--color-nav_bg)",
         light: "var(--color-light)",
+        lighter: "var(--color-lighter)",
         neutral: "var(--color-neutral)",
         dark: "var(--color-dark)",
         shadow: "var(--color-shadow)",
@@ -48,4 +49,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

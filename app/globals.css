@@ -12,6 +12,7 @@ html {
   --color-title: #ffffff;
   --color-text: #bebebe;
   --color-nav_bg: #000000;
+  --color-lighter: #5a5a61;
   --color-light: #3f3f46;
   --color-neutral: #27272a;
   --color-dark: #1a1a1a;
@@ -24,7 +25,8 @@ html {
   --color-title: #ffffff;
   --color-text: #f43f5e;
   --color-nav_bg: #fda4af;
-  --color-light: #deafb8;
+  --color-lighter: #e7c2c8;
+  --color-light: #d199a5;
   --color-neutral: #fda4af;
   --color-dark: #fecdd3;
   --color-shadow: #f43f5e;
