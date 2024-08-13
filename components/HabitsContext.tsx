@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 // import { useSession } from "next-auth/react"
 import {
@@ -7,27 +7,28 @@ import {
   SetStateAction,
   useEffect,
   useState,
-} from "react"
-import { getDate } from "../lib/dates"
-import { useUser } from "@clerk/nextjs"
+} from "react";
+import { getDate } from "../lib/dates";
+import { useUser } from "@clerk/nextjs";
 
 type HabitContextTypes = {
-  habitList: HabitName[]
-  setHabitList: Dispatch<SetStateAction<HabitName[]>>
+  habitList: HabitName[];
+  setHabitList: Dispatch<SetStateAction<HabitName[]>>;
   addHabit: (
     habitName: string,
     completions: HabitCompletion[],
     slug: string,
     habitColor: string
-  ) => Promise<Habit>
-  selectedHabit: string
-  setSelectedHabit: Dispatch<SetStateAction<string>>
-  datesArr: HabitCompletion[]
-}
+  ) => Promise<Habit>;
+  selectedHabit: string;
+  setSelectedHabit: Dispatch<SetStateAction<string>>;
+  datesArr: HabitCompletion[];
+  clearHabitData: () => void;
+};
 
 type Props = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 const defaultHabitContext: HabitContextTypes = {
   habitList: [],
@@ -41,39 +42,44 @@ const defaultHabitContext: HabitContextTypes = {
   selectedHabit: "",
   setSelectedHabit: () => {},
   datesArr: [],
-}
+  clearHabitData: () => {},
+};
 
-const Context = createContext<HabitContextTypes>(defaultHabitContext)
+const Context = createContext<HabitContextTypes>(defaultHabitContext);
 
 const HabitsContext = ({ children }: Props) => {
-  const dates = getDate(90)
+  const dates = getDate(90);
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
     isIncluded: true,
-  }))
+  }));
   // const { data: session } = useSession()
-  const { user } = useUser()
+  const { user, isLoaded } = useUser();
 
-  const [habitList, setHabitList] = useState<HabitName[]>([])
+  const [habitList, setHabitList] = useState<HabitName[]>([]);
+  const [selectedHabit, setSelectedHabit] = useState("");
 
   useEffect(() => {
-    if (!user) {
-      return
+    if (isLoaded) {
+      if (user) {
+        fetchHabits();
+      } else {
+        clearHabitData();
+      }
     }
+  }, [user, isLoaded]);
 
-    const fetchData = async () => {
-      //
-      const response = await fetch("/api/habitsList")
-      const habitsList: Habit[] = await response.json()
-      setHabitList(habitsList)
-    }
+  const fetchHabits = async () => {
+    const response = await fetch("/api/habitsList");
+    const habitsList: Habit[] = await response.json();
+    setHabitList(habitsList);
+  };
 
-    fetchData()
-    // *** not sure if i need this session here as a dependency
-  }, [user])
-
-  const [selectedHabit, setSelectedHabit] = useState("")
+  const clearHabitData = () => {
+    setHabitList([]);
+    setSelectedHabit("");
+  };
 
   const addHabit = async (
     habitName: string,
@@ -87,16 +93,21 @@ const HabitsContext = ({ children }: Props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ slug, habitName, completions, color }),
-    })
+    });
 
     if (!response.ok) {
-      throw new Error(`HTTP Error, status: ${response.status}`)
+      throw new Error(`HTTP Error, status: ${response.status}`);
     } else {
-      const newHabit: Habit = await response.json()
-      // *** might to think about if i need to refactor the Habit type to include userId
-      return newHabit
+      const newHabit: Habit = await response.json();
+      // Update habitList state immediately
+      setHabitList((prevList) => [...prevList, { slug, habitName, color }]);
+
+      // Update selectedHabit
+      setSelectedHabit(habitName);
+
+      return newHabit;
     }
-  }
+  };
 
   return (
     <Context.Provider
@@ -107,11 +118,12 @@ const HabitsContext = ({ children }: Props) => {
         selectedHabit,
         setSelectedHabit,
         datesArr,
+        clearHabitData,
       }}
     >
       {children}
     </Context.Provider>
-  )
-}
+  );
+};
 
-export { Context, HabitsContext }
+export { Context, HabitsContext };

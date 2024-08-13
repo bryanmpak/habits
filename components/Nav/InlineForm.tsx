@@ -32,27 +32,21 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     e.preventDefault();
     const slug = habitInput.replace(/\s+/g, "-").toLowerCase();
     if (user) {
-      await addHabit(habitInput, completions, slug, color);
-      setTimeout(() => {
+      try {
+        await addHabit(habitInput, completions, slug, color);
         router.push(`/habits/${slug}`);
-        router.refresh();
         handleDismiss(e);
-      }, 100);
+      } catch (error) {
+        console.error("Error adding habit:", error);
+        toast.error("Failed to add habit");
+      }
     } else {
       toast.warning("not signed in", {
         description: "sign in to add habits!",
       });
       router.push("/");
-      // router.refresh()
       handleDismiss(e);
     }
-    // create habit object and setHabitList here for optimistic UI pattern
-    setHabitList((prevHabits) => [
-      ...prevHabits,
-      { slug, habitName: habitInput, color },
-    ]);
-
-    setSelectedHabit(habitInput);
 
     setHabitInput("");
     setCompletions([]);

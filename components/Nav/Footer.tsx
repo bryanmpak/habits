@@ -1,15 +1,20 @@
-import { SignOutButton, useClerk, useUser } from "@clerk/nextjs";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { useClerk, useUser } from "@clerk/nextjs";
+import React, { useContext } from "react";
+import { Context } from "../HabitsContext";
+import { Button } from "../ui/Button";
 
 const Footer = () => {
   const { user } = useUser();
-  const { signOut } = useClerk();
-  const router = useRouter();
   if (!user) {
     return null;
   }
+  const { signOut } = useClerk();
+  const { clearHabitData } = useContext(Context);
+
+  const handleSignOut = async () => {
+    await signOut({ redirectUrl: "/" });
+    clearHabitData();
+  };
 
   return (
     <div className="w-full text-white mt-auto">
@@ -21,10 +26,15 @@ const Footer = () => {
           alt="profile picture"
         />
 
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center items-center gap-1">
           <p className="lowercase text-sm">{user.fullName}</p>
 
-          <SignOutButton redirectUrl="/">log out</SignOutButton>
+          <button
+            className="rounded-md text-sm border border-dark py-2 px-4 hover:bg-destructive"
+            onClick={handleSignOut}
+          >
+            log out
+          </button>
         </div>
       </div>
     </div>

@@ -54,7 +54,7 @@ export default async function RootLayout({
               </HabitsContext>
             </ThemeProvider>
           </ClerkProvider>
-          <Toaster richColors />
+          <Toaster richColors duration={1500} />
         </div>
       </body>
     </html>
