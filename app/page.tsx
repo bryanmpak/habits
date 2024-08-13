@@ -1,15 +1,15 @@
-import { getDate } from "../lib/dates"
-import HabitClient from "../components/HabitClient"
-import { prisma } from "@/lib/prisma"
-import { auth } from "@clerk/nextjs"
+import { getDate } from "../lib/dates";
+import HabitClient from "../components/HabitClient";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
-  const dates = getDate()
+  const dates = getDate();
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
     isIncluded: true,
-  }))
+  }));
 
   const defaultHabitData = {
     id: "",
@@ -17,7 +17,7 @@ export default async function Home() {
     habitName: "",
     color: "",
     completions: datesArr,
-  }
+  };
 
-  return <HabitClient habitData={defaultHabitData} />
+  return <HabitClient habitData={defaultHabitData} />;
 }

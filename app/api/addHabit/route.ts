@@ -1,19 +1,18 @@
-import { prisma } from "@/lib/prisma"
-// import { getAuthSession } from "@/lib/auth"
-import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs"
-import { revalidatePath } from "next/cache"
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: NextRequest) {
-  const { userId } = auth()
+  const { userId } = auth();
 
   if (!userId) {
-    return new Response("Unauthorized", { status: 401 })
+    return new Response("Unauthorized", { status: 401 });
   }
 
-  const body = await req.json()
+  const body = await req.json();
 
-  const { slug, habitName, completions, color }: Habit = body
+  const { slug, habitName, completions, color }: Habit = body;
 
   const newHabit = await prisma.habit.create({
     data: {
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
       color,
       userId: userId as string,
     },
-  })
+  });
 
   // Then bulk insert HabitCompletion records
   const completionRecords = completions.map((completion) => ({
@@ -32,19 +31,19 @@ export async function POST(req: NextRequest) {
     isComplete: completion.isComplete,
     isIncluded: completion.isIncluded,
     habitId: newHabit.id,
-  }))
+  }));
 
   await prisma.habitCompletion.createMany({
     data: completionRecords,
-  })
+  });
 
   const response = new Response(JSON.stringify(newHabit), {
     status: 200,
     headers: { "Content-Type": "application/json" },
-  })
+  });
 
   // TODO: check if this helps
-  revalidatePath("/habits")
+  revalidatePath("/habits");
 
-  return response
+  return response;
 }

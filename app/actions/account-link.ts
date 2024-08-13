@@ -1,27 +1,27 @@
-"use server"
+"use server";
 
-import { prisma } from "@/lib/prisma"
-import { accountLinkValidator } from "@/lib/validators/accountLinkValidator"
-import { auth } from "@clerk/nextjs"
+import { prisma } from "@/lib/prisma";
+import { accountLinkValidator } from "@/lib/validators/accountLinkValidator";
+import { auth } from "@clerk/nextjs/server";
 
 export const createLink = async (newLink: unknown) => {
-  const { userId } = auth()
+  const { userId } = auth();
 
   if (!userId) {
-    throw new Error("unauthorized")
+    throw new Error("unauthorized");
   }
 
-  const validateResult = accountLinkValidator.safeParse(newLink)
+  const validateResult = accountLinkValidator.safeParse(newLink);
   if (!validateResult.success) {
-    let errorMsg = ""
+    let errorMsg = "";
 
     validateResult.error.issues.forEach((issue) => {
-      errorMsg = errorMsg + issue.path[0] + ": " + issue.message
-    })
+      errorMsg = errorMsg + issue.path[0] + ": " + issue.message;
+    });
 
     return {
       error: errorMsg,
-    }
+    };
   }
 
   const link = await prisma.linkingRequest.upsert({
@@ -42,15 +42,15 @@ export const createLink = async (newLink: unknown) => {
     select: {
       id: true,
     },
-  })
+  });
 
-  return link
-}
+  return link;
+};
 
 export const submitLink = async (partnerEmail: string, passcode: string) => {
-  const { userId } = auth()
+  const { userId } = auth();
   if (!userId) {
-    throw new Error("unauthorized")
+    throw new Error("unauthorized");
   }
   const linkingRequest = await prisma.linkingRequest.findFirst({
     where: {
@@ -63,12 +63,12 @@ export const submitLink = async (partnerEmail: string, passcode: string) => {
       passcode: true,
       partnerId: true,
     },
-  })
+  });
   if (!linkingRequest || linkingRequest.partnerEmail !== partnerEmail) {
-    throw new Error("request not found or you're not the intended recipient")
+    throw new Error("request not found or you're not the intended recipient");
   }
   if (linkingRequest.passcode !== passcode) {
-    throw new Error("incorrect passcode")
+    throw new Error("incorrect passcode");
   }
   await prisma.linkingRequest.update({
     where: {
@@ -77,7 +77,7 @@ export const submitLink = async (partnerEmail: string, passcode: string) => {
     data: {
       partnerId: userId,
     },
-  })
+  });
   if (!!linkingRequest.partnerId) {
     await prisma.user.update({
       where: {
@@ -87,7 +87,7 @@ export const submitLink = async (partnerEmail: string, passcode: string) => {
         isAccountLinked: true,
         linkedUserId: linkingRequest.userId,
       },
-    })
+    });
 
     await prisma.user.update({
       where: {
@@ -97,6 +97,6 @@ export const submitLink = async (partnerEmail: string, passcode: string) => {
         isAccountLinked: true,
         linkedUserId: linkingRequest.partnerId,
       },
-    })
+    });
   }
-}
+};

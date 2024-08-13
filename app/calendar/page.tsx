@@ -1,20 +1,20 @@
-import Calendar from "@/components/Calendar"
+import Calendar from "@/components/Calendar";
 // import { getAuthSession } from "@/lib/auth"
-import { getDateRange } from "@/lib/dates"
-import { prisma } from "@/lib/prisma"
-import { auth } from "@clerk/nextjs"
-import { toast } from "sonner"
+import { getDateRange } from "@/lib/dates";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
+import { toast } from "sonner";
 
 const page = async () => {
-  const [startDate, endDate] = getDateRange()
+  const [startDate, endDate] = getDateRange();
   // const session = await getAuthSession()
-  const { userId } = auth()
+  const { userId } = auth();
 
   if (!userId) {
     toast("sign in to see this feature", {
       description: "only signed-in users can save and view habits",
-    })
-    return
+    });
+    return;
   }
 
   const linkedUser = await prisma.user.findFirst({
@@ -24,13 +24,13 @@ const page = async () => {
     select: {
       linkedUserId: true,
     },
-  })
+  });
 
-  console.log("linkedUser", linkedUser)
+  console.log("linkedUser", linkedUser);
 
-  let userIds = [userId]
+  let userIds = [userId];
   if (!!linkedUser?.linkedUserId) {
-    userIds.push(linkedUser.linkedUserId)
+    userIds.push(linkedUser.linkedUserId);
   }
 
   // if (session.user.linkedUserId) {
@@ -48,7 +48,7 @@ const page = async () => {
       name: true,
       linkedUserId: true,
     },
-  })
+  });
 
   const habits = await prisma.habit.findMany({
     where: { userId: { in: userIds } },
@@ -65,16 +65,16 @@ const page = async () => {
         },
       },
     },
-  })
+  });
 
-  console.log(habits)
+  console.log(habits);
 
   return (
     // set up an overflow section on the calendar div
-    <div className='flex justify-center mt-6'>
+    <div className="flex justify-center mt-6">
       <Calendar users={userInfo} habits={habits} />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
