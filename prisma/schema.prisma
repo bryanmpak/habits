@@ -89,7 +89,6 @@ model LinkingRequest {
 }
 
 model Habit {
-  // id             String  @id @default(auto()) @map("_id") @db.ObjectId
   id                String  @id @default(uuid())
   habitName      String
   completions    HabitCompletion[]
@@ -102,7 +101,6 @@ model Habit {
 }
 
 model HabitCompletion {
-  // id             String   @id @default(auto()) @map("_id") @db.ObjectId
   id                String  @id @default(uuid())
   date           DateTime
   dayOfWeek      String
