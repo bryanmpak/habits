@@ -1,7 +1,6 @@
 import { useClerk, useUser } from "@clerk/nextjs";
 import React, { useContext } from "react";
 import { Context } from "../HabitsContext";
-import { Button } from "../ui/Button";
 
 const Footer = () => {
   const { user } = useUser();

@@ -52,7 +52,7 @@ const HabitsContext = ({ children }: Props) => {
   const datesArr = dates.map((date) => ({
     ...date,
     isComplete: false,
-    isIncluded: false,
+    isIncluded: true,
   }));
   // const { data: session } = useSession()
   const { user, isLoaded } = useUser();

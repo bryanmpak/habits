@@ -25,8 +25,6 @@ const HabitClient = ({ habitData }: Props) => {
       let activeCompletion = { ...activeHabit.completions[id] };
       activeCompletion.isComplete = true;
 
-      // console.log("activeCompletion before sending:", activeCompletion)
-
       setActiveHabit((prevHabit) => {
         const updatedHabit = {
           ...prevHabit,

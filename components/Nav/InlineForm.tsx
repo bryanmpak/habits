@@ -52,8 +52,6 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     toggleItem();
   };
 
-  console.log("completions", completions);
-
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
