@@ -80,18 +80,19 @@ const HabitMenubar = ({ user }: HabitMenubarProps) => {
           </motion.svg>
         </button>
 
-        {/* have fun with the animations here */}
-        <motion.div
-          className="absolute px-4 flex flex-col top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10"
-          variants={variants}
-          initial="closed"
-          animate={isOpen ? "open" : "closed"}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="border border-light bg-nav_bg rounded-md">
-            {habitNamesArr}
-          </div>
-        </motion.div>
+        {habitNamesArr.length > 0 && (
+          <motion.div
+            className="absolute flex flex-col top-full left-0 w-full overflow-hidden bg-transparent text-center text-title font-sans z-10"
+            variants={variants}
+            initial="closed"
+            animate={isOpen ? "open" : "closed"}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="border border-light p-4 bg-nav_bg rounded-md">
+              {habitNamesArr}
+            </div>
+          </motion.div>
+        )}
 
         {!user ? <SignInButton /> : !user.linkedUserId ? <LinkButton /> : null}
       </div>

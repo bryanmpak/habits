@@ -60,6 +60,7 @@ const page = async () => {
     },
   });
 
+  // not sure if this is necessary
   const formattedHabits = habits.map((habit) => ({
     id: habit.id,
     habitName: habit.habitName,

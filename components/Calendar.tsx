@@ -27,16 +27,24 @@ const Calendar = async ({ users, habits }: Props) => {
     return;
   }
 
+  const mainUser = users.find((user) => user.userId === userId);
+  const linkedUser = users.find(
+    (user) => user.userId === mainUser?.linkedUserId
+  );
+
   const datesEl = habits[0].completions.map((completion, i) => (
-    <div key={i} className="flex gap-2">
-      <div className="h-4 text-text text-xs text-center">
+    <div
+      key={i}
+      className="grid grid-cols-[auto,1fr] gap-2 items-center w-16 h-4"
+    >
+      <div className="w-9 text-text text-xs whitespace-nowrap">
         {new Date(completion.date).toLocaleDateString("en-US", {
           month: "2-digit",
           day: "2-digit",
         })}
       </div>
-      <div className="h-4 text-text text-[8px] leading-loose">
-        {completion.dayOfWeek}
+      <div className="text-text text-[8px] uppercase">
+        {completion.dayOfWeek.slice(0, 3)}
       </div>
     </div>
   ));
@@ -44,9 +52,8 @@ const Calendar = async ({ users, habits }: Props) => {
   const isIncludedCSS = "w-[2px] h-[2px] rounded-full bg-title";
   const isNotIncludedCSS = "w-[2px] h-[2px] rounded-full bg-light";
 
-  const mainUserHabitsEl = habits
-    .filter((habit) => habit.userId === userId)
-    .map((habit) => (
+  const renderHabits = (userHabits: Habit[]) =>
+    userHabits.map((habit) => (
       <div key={habit.id} className="flex flex-col gap-1">
         {habit.completions.map((completion, i) => (
           <div key={i} className="w-4 h-4 flex justify-center items-center">
@@ -67,28 +74,33 @@ const Calendar = async ({ users, habits }: Props) => {
       </div>
     ));
 
-  console.log();
+  const mainUserHabits = habits.filter((habit) => habit.userId === userId);
+  const linkedUserHabits = linkedUser
+    ? habits.filter((habit) => habit.userId === linkedUser.userId)
+    : [];
 
   return (
     <div className="flex gap-6">
-      <div className="flex flex-col gap-1 items-center">
+      <div className="flex flex-col gap-1">
         <div className="h-4"></div>
         {datesEl}
       </div>
       <div className="flex gap-8">
         <div className="flex flex-col gap-1 items-center">
           <p className="text-text text-xs underline decoration-shadow">
-            {users[0].name}
+            {mainUser?.name || "Main User"}
           </p>
-          <div className="flex gap-1">{mainUserHabitsEl}</div>
+          <div className="flex gap-1">{renderHabits(mainUserHabits)}</div>
         </div>
 
-        {/* <div className="flex flex-col gap-1 items-center">
-          <p className="text-text text-xs underline decoration-shadow">
-            {linkedUser[0].name}
-          </p>
-          <div className="flex gap-1">{linkedUserHabitsEl}</div>
-        </div> */}
+        {linkedUser && (
+          <div className="flex flex-col gap-1 items-center">
+            <p className="text-text text-xs underline decoration-shadow">
+              {linkedUser.name}
+            </p>
+            <div className="flex gap-1">{renderHabits(linkedUserHabits)}</div>
+          </div>
+        )}
       </div>
     </div>
   );
