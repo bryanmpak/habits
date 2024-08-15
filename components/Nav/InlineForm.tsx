@@ -27,9 +27,17 @@ const InlineForm = ({ toggleItem, handleDismiss }: Props) => {
     }
   }, []);
 
+  function generateSlug(input: string) {
+    return input
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "") // Remove all non-word chars (except whitespace and hyphens)
+      .replace(/[\s_-]+/g, "-") // Replace spaces, underscores, and hyphens with a single hyphen
+      .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const slug = habitInput.replace(/\s+/g, "-").toLowerCase();
+    const slug = generateSlug(habitInput);
     if (user) {
       try {
         await addHabit(habitInput, completions, slug, color);
