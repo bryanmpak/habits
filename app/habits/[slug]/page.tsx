@@ -48,7 +48,6 @@ const page = async ({ params }: PageProps) => {
       },
     },
   })) as Habit;
-  console.log(habitData);
 
   return <HabitClient habitData={habitData} />;
 };

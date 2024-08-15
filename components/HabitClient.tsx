@@ -14,6 +14,7 @@ type Props = {
 const HabitClient = ({ habitData }: Props) => {
   const activeWeek = getDate();
   const activeIndex = activeWeek.findIndex((day) => day.isActive);
+  console.log("index", activeIndex);
 
   const [activeId, setActiveId] = useState(activeIndex);
   const [activeHabit, setActiveHabit] = useState(habitData);

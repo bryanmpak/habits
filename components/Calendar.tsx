@@ -41,7 +41,6 @@ const Calendar = async ({ users, habits }: Props) => {
     </div>
   ));
 
-  console.log(datesEl.length);
   const isIncludedCSS = "w-[2px] h-[2px] rounded-full bg-title";
   const isNotIncludedCSS = "w-[2px] h-[2px] rounded-full bg-light";
 

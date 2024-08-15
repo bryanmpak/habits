@@ -29,7 +29,7 @@ const HabitsFooter = ({ activeHabit, activeId, setActiveId }: Props) => {
             id={index}
             dayOfWeek={dayInfo.dayOfWeek}
             dateOfWeek={dayInfo.date.getDate()}
-            isActive={dayInfo.isActive}
+            isActive={index === activeId}
             isComplete={completion?.isComplete || false}
             isIncluded={completion?.isIncluded || false}
             onClick={() => handleClick(index)}
