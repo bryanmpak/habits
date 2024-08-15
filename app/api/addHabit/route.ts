@@ -23,16 +23,14 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const completionRecords = completions
-    .filter((completion) => completion.isIncluded)
-    .map((completion) => ({
-      date: completion.date,
-      dayOfWeek: completion.dayOfWeek,
-      isActive: completion.isActive,
-      isComplete: completion.isComplete,
-      isIncluded: completion.isIncluded,
-      habitId: newHabit.id,
-    }));
+  const completionRecords = completions.map((completion) => ({
+    date: new Date(completion.date),
+    dayOfWeek: completion.dayOfWeek,
+    isActive: completion.isActive,
+    isComplete: completion.isComplete,
+    isIncluded: completion.isIncluded,
+    habitId: newHabit.id,
+  }));
 
   await prisma.habitCompletion.createMany({
     data: completionRecords,

@@ -19,24 +19,6 @@ const page = async ({ params }: PageProps) => {
   endOfWeek.setDate(startOfWeek.getDate() + 7);
   endOfWeek.setHours(0, 0, 0, 0);
 
-  // Reset all isIncluded flags to false
-  await prisma.habitCompletion.updateMany({
-    where: { habit: { slug } },
-    data: { isIncluded: false },
-  });
-
-  // Set isIncluded to true for the current week
-  await prisma.habitCompletion.updateMany({
-    where: {
-      habit: { slug },
-      date: {
-        gte: startOfWeek,
-        lt: endOfWeek,
-      },
-    },
-    data: { isIncluded: true },
-  });
-
   // Fetch the updated habit data
   const habitData = (await prisma.habit.findFirst({
     where: { slug },
@@ -66,6 +48,7 @@ const page = async ({ params }: PageProps) => {
       },
     },
   })) as Habit;
+  console.log(habitData);
 
   return <HabitClient habitData={habitData} />;
 };

@@ -87,22 +87,12 @@ const HabitsContext = ({ children }: Props) => {
     slug: string,
     color: string
   ): Promise<Habit> => {
-    // Filter out completions where isIncluded is false
-    const includedCompletions = completions.filter(
-      (completion) => completion.isIncluded
-    );
-
     const response = await fetch("/api/addHabit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        slug,
-        habitName,
-        completions: includedCompletions,
-        color,
-      }),
+      body: JSON.stringify({ slug, habitName, completions, color }),
     });
 
     if (!response.ok) {

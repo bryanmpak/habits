@@ -7,7 +7,6 @@ import { toast } from "sonner";
 
 const page = async () => {
   const [startDate, endDate] = getDateRange();
-  // const session = await getAuthSession()
   const { userId } = auth();
 
   if (!userId) {
@@ -26,16 +25,10 @@ const page = async () => {
     },
   });
 
-  console.log("linkedUser", linkedUser);
-
   let userIds = [userId];
   if (!!linkedUser?.linkedUserId) {
     userIds.push(linkedUser.linkedUserId);
   }
-
-  // if (session.user.linkedUserId) {
-  //   userIds.push(session.user.linkedUserId)
-  // }
 
   const userInfo = await prisma.user.findMany({
     where: {
@@ -67,12 +60,24 @@ const page = async () => {
     },
   });
 
-  console.log(habits);
+  const formattedHabits = habits.map((habit) => ({
+    id: habit.id,
+    habitName: habit.habitName,
+    userId: habit.userId,
+    color: habit.color,
+    completions: habit.completions.map((completion) => ({
+      date: completion.date.toISOString(),
+      isIncluded: completion.isIncluded,
+      isComplete: completion.isComplete,
+      dayOfWeek: completion.date.toLocaleDateString("en-US", {
+        weekday: "short",
+      }),
+    })),
+  }));
 
   return (
-    // set up an overflow section on the calendar div
     <div className="flex justify-center mt-6">
-      <Calendar users={userInfo} habits={habits} />
+      <Calendar users={userInfo} habits={formattedHabits} />
     </div>
   );
 };
