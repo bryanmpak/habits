@@ -4,11 +4,12 @@ import { Context } from "../HabitsContext";
 
 const Footer = () => {
   const { user } = useUser();
+  const { signOut } = useClerk();
+  const { clearHabitData } = useContext(Context);
+
   if (!user) {
     return null;
   }
-  const { signOut } = useClerk();
-  const { clearHabitData } = useContext(Context);
 
   const handleSignOut = async () => {
     await signOut({ redirectUrl: "/" });

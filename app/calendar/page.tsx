@@ -67,9 +67,7 @@ export default async function CalendarPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">Oops! Something went wrong.</h1>
-        <p>
-          We're having trouble loading your calendar. Please try again later.
-        </p>
+        <p>Issue loading calendar. Please try again later.</p>
       </div>
     );
   }
