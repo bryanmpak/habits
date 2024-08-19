@@ -24,7 +24,7 @@ export const createLink = async (newLink: unknown) => {
     };
   }
 
-  const link = await prisma.linkingRequest.upsert({
+  const link = await prisma.accountLink.upsert({
     where: {
       unique_user_partnerEmail: {
         userId: userId,
@@ -52,7 +52,7 @@ export const submitLink = async (partnerEmail: string, passcode: string) => {
   if (!userId) {
     throw new Error("unauthorized");
   }
-  const linkingRequest = await prisma.linkingRequest.findFirst({
+  const accountLink = await prisma.accountLink.findFirst({
     where: {
       partnerEmail,
     },
@@ -64,38 +64,38 @@ export const submitLink = async (partnerEmail: string, passcode: string) => {
       partnerId: true,
     },
   });
-  if (!linkingRequest || linkingRequest.partnerEmail !== partnerEmail) {
+  if (!accountLink || accountLink.partnerEmail !== partnerEmail) {
     throw new Error("request not found or you're not the intended recipient");
   }
-  if (linkingRequest.passcode !== passcode) {
+  if (accountLink.passcode !== passcode) {
     throw new Error("incorrect passcode");
   }
-  await prisma.linkingRequest.update({
+  await prisma.accountLink.update({
     where: {
-      id: linkingRequest.id,
+      id: accountLink.id,
     },
     data: {
       partnerId: userId,
     },
   });
-  if (!!linkingRequest.partnerId) {
+  if (!!accountLink.partnerId) {
     await prisma.user.update({
       where: {
-        userId: linkingRequest.partnerId,
+        userId: accountLink.partnerId,
       },
       data: {
         isAccountLinked: true,
-        linkedUserId: linkingRequest.userId,
+        linkedUserId: accountLink.userId,
       },
     });
 
     await prisma.user.update({
       where: {
-        userId: linkingRequest.userId,
+        userId: accountLink.userId,
       },
       data: {
         isAccountLinked: true,
-        linkedUserId: linkingRequest.partnerId,
+        linkedUserId: accountLink.partnerId,
       },
     });
   }

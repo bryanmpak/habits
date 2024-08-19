@@ -57,13 +57,15 @@ export async function POST(req: Request) {
     const eventType = evt.type;
 
     if (eventType === "user.created") {
-      const { id, first_name, last_name, ...attributes } = evt.data;
+      const { id, first_name, last_name, image_url, ...attributes } = evt.data;
 
       try {
         await prisma.user.create({
           data: {
             userId: id,
             name: first_name + " " + last_name,
+            firstName: first_name,
+            image: image_url,
           },
         });
       } catch (error) {

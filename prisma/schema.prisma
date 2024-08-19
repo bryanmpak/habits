@@ -1,112 +1,106 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Unified Prisma schema for our OS and habits.our-os
+
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
-// commented out sections are refactors based on DB migration + nextauth -> clerk refactor
-
-// model Account {
-//   // mongodb
-//   // id                String  @id @default(auto()) @map("_id") @db.ObjectId
-//   id                String  @id @default(uuid())
-//   userId            String
-//   type              String
-//   provider          String
-//   providerAccountId String
-//   refresh_token     String? // for OAuth
-//   access_token      String? // for OAuth
-//   expires_at        Int?
-//   token_type        String?
-//   scope             String?
-//   id_token          String? // for OAuth
-//   session_state     String?
-//   user              User    @relation(fields: [userId], references: [id])
-
-//   @@unique([provider, providerAccountId])
-// }
-
-// model Session {
-//   // id           String   @id @default(auto()) @map("_id") @db.ObjectId
-//   id                String  @id @default(uuid())
-//   sessionToken String   @unique
-//   userId       String
-//   expires      DateTime
-//   user         User     @relation(fields: [userId], references: [id])
-// }
-
+// Shared User model
 model User {
-  // id            String    @id @default(auto()) @map("_id") @db.ObjectId 
-  id                String  @id @default(uuid())
-  userId            String  @unique
-  name          String?
-  // email         String?   @unique
-  // emailVerified DateTime?
-  // username String? @unique
-  image         String?
-  // accounts      Account[]
-  // sessions      Session[]
-  habits        Habit[]
-  // linkedUserId    String?   @db.ObjectId
-  isAccountLinked Boolean @default(false)
-  linkedUserId    String? 
-  linkingRequests LinkingRequest[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  name              String?
+  image             String?
+  firstName         String?
+  isAccountLinked   Boolean   @default(false)
+  linkedUserId      String?
+  partnerId         String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
+  // Relationships
+  habits            Habit[]
+  linkingRequests   AccountLink[]
+  letters           Letter[]
+  timer             Timer?
+
+  @@index([userId], name: "by_userId")
   @@index([linkedUserId], name: "linkedUserId_idx")
 }
 
-model LinkingRequest {
-  // id               String   @id @default(auto()) @map("_id") @db.ObjectId  
-  // requestorId      String   @map("requestor_id") @db.ObjectId
-  // requestorUserId      String   @map("requestor_id")
-  // responderUserId      String?
-  // responderEmail   String?
-  // secretQuestion   String
-  // secretAnswerHash String
-  // expiryDate       DateTime
-  // linkType         String
-  id              String @id @default(uuid())
+// Unified LinkingRequest / AccountLink model
+model AccountLink {
+  id              String    @id @default(uuid())
   userId          String
   userEmail       String?
   partnerId       String?
   partnerEmail    String?
   passcode        String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  user            User     @relation(fields: [userId], references: [userId]) 
+  user            User      @relation(fields: [userId], references: [userId])
 
   @@index([userId], name: "by_user")
   @@unique([userId, partnerEmail], name: "unique_user_partnerEmail")
 }
 
+// Habits app models
 model Habit {
-  id                String  @id @default(uuid())
-  habitName      String
-  completions    HabitCompletion[]
-  user           User  @relation(fields: [userId], references: [userId])
-  userId         String
-  color          String
-  slug           String @unique
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String    @id @default(uuid())
+  habitName       String
+  color           String
+  slug            String    @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relationships
+  user            User      @relation(fields: [userId], references: [userId])
+  userId          String
+  completions     HabitCompletion[]
 }
 
 model HabitCompletion {
-  id                String  @id @default(uuid())
-  date           DateTime
-  dayOfWeek      String
-  isActive       Boolean
-  isComplete     Boolean
-  isIncluded     Boolean
-  habit          Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
-  habitId        String
+  id              String    @id @default(uuid())
+  date            DateTime
+  dayOfWeek       String
+  isActive        Boolean
+  isComplete      Boolean
+  isIncluded      Boolean
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relationships
+  habit           Habit     @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  habitId         String
+}
+
+// Main app models
+model Letter {
+  id              String    @id @default(uuid())
+  content         Json      @db.Json
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relationships
+  user            User      @relation(fields: [userId], references: [userId])
+  userId          String
+}
+
+model Timer {
+  id              String    @id @default(uuid())
+  timeElapsed     Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relationships
+  user            User      @relation(fields: [userId], references: [userId])
+  userId          String    @unique
 }
