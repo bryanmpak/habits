@@ -1,8 +1,13 @@
 import { useClerk, useUser } from "@clerk/nextjs";
 import React, { useContext } from "react";
 import { Context } from "../HabitsContext";
+import { Cycle } from "framer-motion";
 
-const Footer = () => {
+type FooterProps = {
+  toggleOpen: Cycle;
+};
+
+const Footer = ({ toggleOpen }: FooterProps) => {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { clearHabitData } = useContext(Context);
@@ -14,6 +19,7 @@ const Footer = () => {
   const handleSignOut = async () => {
     await signOut({ redirectUrl: "/" });
     clearHabitData();
+    toggleOpen();
   };
 
   return (
