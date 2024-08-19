@@ -111,7 +111,11 @@ const Sidebar = ({ isOpen, handleDismiss, toggleOpen }: Props) => {
                 </>
               )}
 
-              <Footer />
+              <Footer
+                toggleOpen={() => {
+                  toggleOpen();
+                }}
+              />
             </motion.div>
           </motion.aside>
         )}
